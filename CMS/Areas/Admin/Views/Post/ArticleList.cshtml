@@ -1,0 +1,237 @@
+﻿@model IEnumerable<DataLayer.Post>
+
+@{
+    
+    ViewBag.Title = "لیست مقالات";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+ 
+
+
+<div class="row">
+    <div class="col-sm-12">
+
+        <ol class="breadcrumb">
+            <li>
+                @Html.ActionLink("میز کار", "index", "index")
+            </li>
+            <li class="active">
+                لیست مقالات
+            </li>
+        </ol>
+
+        <div id="sticky-anchor"></div>
+        <div class="tobesticky" id="sticky">
+            <div class="pull-left mainbtns">
+                <a href="@Url.Action("index", "postgroup")" class="btn btn-dropbox waves-effect"><i class='fa fa-list'></i> دسته بندی ها</a>
+                <a href="/admin/article/add" class="btn btn-inverse waves-effect"><i class='fa fa-plus'></i> افزودن مقاله</a>
+            </div>
+            <h4 class="page-title">لیست مقالات</h4>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="k-rtl">
+
+
+            @Html.AntiForgeryToken()
+            <div id="grid"></div>
+
+
+
+
+
+
+
+        </div>
+    </div>
+</div>
+ 
+
+
+@section styles{
+
+
+    <link href="~/Areas/Admin/Content/css/KendoCss/kendo.common-bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Content/css/KendoCss/kendo.default.min.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Content/css/KendoCss/kendo.bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Content/css/KendoCss/kendo.rtl.min.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Content/css/jamali-kendo-grid-bootstarp-darkblue.css" rel="stylesheet" />
+     
+}
+
+@section Scripts { 
+    <script src="~/Areas/Admin/content/js/KendoJs/kendo.all.min.js"></script>
+    <script src="~/Areas/Admin/content/js/KendoJs/kendo.fa-IR.js"></script> 
+
+    <script src="~/Areas/Admin/content/plugins/bootstrap-sweetalert/sweet-alert.min.js"></script>
+    <script src="~/Areas/Admin/content/pages/jquery.sweet-alert.init.js"></script>
+
+
+
+
+    <script>
+
+    $(function () {
+
+
+
+
+
+
+
+
+            $("#grid").kendoGrid({
+
+                scrollable: false   ,
+                columns: [
+
+                    {
+                        field: "Title", title: 'عنوان مقاله', template: "<div class='grid-photo leftrectangle'" +
+                                    "style='background-image: url(\"#:data.Pic#\");'></div>#if(IsPublished == true) {# <i class='fa fa-bell isfeatured' title='خبر فوری'></i> #}#" +
+                                "<div class='grid-title'><a  href='/article/#=ID#/#=Url#' target='_blank'>#: Title #</a></div>"
+                    },
+                    //{
+                    //    field: "LanguageID", title: 'زبان', template: "<div class='text-center'><img src='~/areas/admin/Content/images/flags/#= LanguageID #.png'> </div>", width: 80
+                    //},
+                    {
+                        field: "RegDate", title: 'تاریخ درج', template: "<div class='text-center'>#= RegDate #</div>", width: 100
+                    },
+                    { field: "ViewCount", title: 'بازدید', width: 100, template: "<div class='text-center'>#=ViewCount#</div>" },
+                    {
+                        field: "", title: "تنظیمات", width:90,
+                        template: "<div class='text-center gridbtn'><a title=\"ویرایش رکورد\" href=\"/admin/article/edit/#=ID#\"><i class=\"fa fa-edit\"></i></a><a title=\"حذف رکورد\" class=\"deleteconfirm\" onclick=\"deleteRecord(#=ID#);\"  ><i class=\"fa fa-times\"></i></a></div>"
+                    }
+
+
+                ],
+                editable: false, // enable editing
+
+                pageable: {
+                    pageSizes: [5, 10, 20, 50, 100],
+                    messages: {
+                        itemsPerPage: ""
+                    }, buttonCount: 4
+                },
+                sortable: true,
+                filterable: true,
+                //toolbar: [
+                //   {
+                //       template: "<button type='button' data-price=\"0\" data-idtype=\"0\" data-title=\"مورد جدید\" data-namekala=\"\" data-idview=\"0\" data-idpk=\"0\" class='btn btn-default' style=\"margin-right:10px;\" value='مورد جدید' data-toggle=\"modal\" data-target=\"\\#exampleModal\" >مورد جدید</button>"
+                //   }
+
+                //], // specify toolbar commands
+                dataSource: {
+                    serverPaging: true,
+                    serverFiltering: true,
+                    serverSorting: true,
+                    pageSize: 10,
+                    schema: {
+                        data: "Data",
+                        total: "Total",
+                        model: { // define the model of the data source. Required for validation and property types.
+                            id: "ID",
+                            fields: {
+                                ID: { type: "number" },
+                                Title: { type: "string"},
+                                Url: { type: "string" },
+                                ViewCount: { type: "number" }
+                            }
+                        }
+                    },
+
+                    batch: true, // enable batch editing - changes will be saved when the user clicks the "Save changes" button
+                    transport: {
+                        read: {
+                            url: "@Url.Action("ListArticles", "post")", //specify the URL which should return the records. This is the Read method of the HomeController.
+                            contentType: "application/json",
+                            type: "POST" //use HTTP POST request as by default GET is not allowed by ASP.NET MVC
+
+                        },
+                        parameterMap: function (data, operation) {
+                            if (operation == "read") {
+                                $('.dataloading').hide();
+                                return JSON.stringify(data)
+                            }
+                        }
+                    }
+                }
+            });
+
+
+
+
+
+    });
+
+
+
+
+    </script>
+
+    <script>
+
+        function deleteRecord(recID) {
+
+            swal({
+                title: "از حذف رکورد اطمینان دارید؟",
+                text: "تمام اطلاعات مرتبط حذف خواهند شد!",
+                type: "error",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonClass: 'btn btn-success',
+                confirmButtonClass: 'btn btn-danger',
+                confirmButtonText: 'بله حذف شود!',
+                cancelButtonText: "انصراف",
+                closeOnConfirm: false
+            },
+            function () {
+
+                $.ajax(
+                  {
+                      url: 'post/DeleteConfirmed',
+                      method: 'POST',
+                      data: 'id=' + recID,
+                      dataType: 'JSON',
+                      success: function (result) {
+                          if (result == "success") {
+                              swal({
+                                  title: 'حذف شد!',
+                                  text: 'رکورد مورد نظر با موفقیت حذف شد',
+                                  type: 'success',
+                                  confirmButtonText: 'اوکی'
+                              });
+                              var grid = $("#grid").data("kendoGrid");
+                              grid.dataSource.read();
+                          }
+                          else
+                          swal({
+                              title: 'حذف نشد!',
+                              text: 'عملیات موفقیت آمیز نبود',
+                              type: 'warning',
+                              confirmButtonText: 'اوکی'
+                          });
+
+                      }
+                  }
+                  );
+            });
+        };
+
+
+
+        
+
+
+
+    </script>
+} 

@@ -1,0 +1,50 @@
+﻿@model ViewModels.PageUiDetails
+@using Westwind.Globalization;
+@{
+    ViewBag.Title = Model.SeoTitle;
+}
+
+@section head{
+
+    
+<meta name="description" content="@Model.Description" />
+<meta name="keywords" content="@Model.KeyWords" />
+<meta name="Title" content="@Model.SeoTitle" /> 
+
+<meta itemprop="name" content="@Model.SeoTitle">
+<meta itemprop="description" content="@Model.Description"> 
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="@Model.SeoTitle">
+<meta name="twitter:description" content="@Model.Description">
+
+<meta property="og:title" content="@Model.SeoTitle" />
+<meta property="og:type" content="article" />
+<meta property="og:description" content="@Model.Description" />
+
+}
+
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 ">
+                <br /><br />
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">@DbRes.T("Home.Menu.Home", "txt")</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">@Model.Title</li>
+                    </ol>
+                </nav>
+                <div class="pagecontent min-200">
+                    <div class="prtitle">
+                        <h1>@Model.Title</h1> 
+                    </div>
+                    <div class="txt">
+                        @Html.Raw(Model.Text)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

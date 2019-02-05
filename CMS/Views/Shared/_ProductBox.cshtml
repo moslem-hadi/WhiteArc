@@ -1,0 +1,25 @@
+﻿@model ViewModels.ProductListUiViewModel
+
+<li class="portfolio-item @Model.GroupUrl">
+    <div class="portfolio-col portfolio-hover-01">
+        <a href="/view/@Model.Url">
+            <img src="@Model.Pic" title="@Model.Title" alt="@Model.Title">
+        </a>
+
+        <div class="hover text-center theme-bg">
+            <div class="hover-middle">
+                <p class="font-w-700 theme-1st">@Model.Title</p>
+                <label class="theme-1st">@Model.GroupTitle</label>
+                <div class="action-btn">
+                    <a class="lightbox-gallery theme-color" href="/view/@Model.Url" title="@Model.Title">
+                        <i class="ti-layout-slider"></i>
+                    </a>
+                </div>  
+            </div>  
+        </div> 
+
+    </div> 
+</li>
+
+
+

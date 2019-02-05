@@ -1,0 +1,63 @@
+﻿ 
+@{
+    ViewBag.Title = "کد و دیکد";
+}
+
+
+
+<div class="row">
+    <div class="col-sm-12">
+
+        <ol class="breadcrumb">
+            <li>
+                @Html.ActionLink("میز کار", "index", "index")
+            </li>
+            <li>
+                @Html.ActionLink("مدیریت سیستم", "index", "sysadmin")
+            </li>
+            <li class="active">
+                کد و دیکد
+            </li>
+        </ol>
+
+        <div id="sticky-anchor"></div>
+        <div class="tobesticky" id="sticky"> 
+            <h4 class="page-title">کد و دیکد</h4>
+        </div>
+
+    </div>
+</div>
+        
+ 
+
+
+
+<div class="card-box  "> 
+
+    <form method="post" action="/admin/sysadmin/Crypt">
+        <div class="form-group">
+            <label class="control-label col-md-2">کد کردن</label>
+            <div class="col-md-10">
+                <input name="pre" type="text" class="form-control inline ltr" style="width:80px" />
+                <input name="text" type="text" class="form-control inline ltr" style="width:250px" />
+                <select name="type" class="form-control inline ltr" style="width:80px" >
+                    <option value="code">code</option>
+                    <option value="decode">decode</option>
+                </select>
+                <input value="کد کردن" type="submit" class="btn btn-success" />
+            </div>
+            <div class="col-md-12 m-t-20">
+                @if (!string.IsNullOrEmpty(ViewBag.Encrypted))
+                {
+                    <div class="alert alert-info ltr ">
+                        Response:
+                        <input type="text" value="@ViewBag.Encrypted" class="form-control m-t-10" onclick="select();" />
+                    </div>
+                } 
+            </div>
+
+
+        </div>
+        <div class="clearfix"></div>
+    </form>
+</div>

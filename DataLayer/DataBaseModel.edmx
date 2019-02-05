@@ -1,0 +1,1622 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CMSDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CodeValue">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="120" />
+          <Property Name="Value" Type="ntext" />
+          <Property Name="GroupName" Type="nvarchar" MaxLength="30" />
+          <Property Name="Value2" Type="ntext" />
+        </EntityType>
+        <EntityType Name="ContactPM">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Tell" Type="nvarchar" MaxLength="25" />
+          <Property Name="Email" Type="nvarchar" MaxLength="80" />
+          <Property Name="Text" Type="nvarchar" MaxLength="2000" />
+          <Property Name="RegDateFa" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TraceCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="Reply" Type="ntext" />
+          <Property Name="IsRead" Type="bit" Nullable="false" />
+          <Property Name="ReplyDateFa" Type="nvarchar" MaxLength="50" />
+          <Property Name="IP" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Language">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="LanguageCulture" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="UniqueSeoCode" Type="nvarchar" MaxLength="2" />
+          <Property Name="FlagImageFileName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Rtl" Type="bit" Nullable="false" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Localizations">
+          <Key>
+            <PropertyRef Name="pk" />
+          </Key>
+          <Property Name="pk" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ResourceId" Type="nvarchar" MaxLength="1024" Nullable="false" />
+          <Property Name="Value" Type="nvarchar(max)" />
+          <Property Name="LocaleId" Type="nvarchar" MaxLength="10" />
+          <Property Name="ResourceSet" Type="nvarchar" MaxLength="512" />
+          <Property Name="Type" Type="nvarchar" MaxLength="512" />
+          <Property Name="BinFile" Type="varbinary(max)" />
+          <Property Name="TextFile" Type="nvarchar(max)" />
+          <Property Name="Filename" Type="nvarchar" MaxLength="128" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="512" />
+          <Property Name="ValueType" Type="int" Nullable="false" />
+          <Property Name="Updated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="LocalizedProperty">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EntityID" Type="int" Nullable="false" />
+          <Property Name="LanguageID" Type="int" Nullable="false" />
+          <Property Name="LocaleKeyGroup" Type="nvarchar" MaxLength="400" Nullable="false" />
+          <Property Name="LocaleKey" Type="nvarchar" MaxLength="400" Nullable="false" />
+          <Property Name="LocaleValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="NewsLetterEmail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="RegDate" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Type" Type="int" />
+        </EntityType>
+        <EntityType Name="PageContent">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Url" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="100" />
+          <Property Name="Text" Type="nvarchar(max)" />
+          <Property Name="ViewCount" Type="int" Nullable="false" />
+          <Property Name="OnlyUsersCanSee" Type="bit" Nullable="false" />
+          <Property Name="RobotAccess" Type="nvarchar" MaxLength="50" />
+          <Property Name="SeoTitle" Type="nvarchar" MaxLength="100" />
+          <Property Name="Description" Type="nvarchar" MaxLength="200" />
+          <Property Name="KeyWords" Type="nvarchar" MaxLength="300" />
+          <Property Name="Editable" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Url" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="SeoTitle" Type="nvarchar" MaxLength="70" />
+          <Property Name="Text" Type="nvarchar(max)" />
+          <Property Name="KeyWords" Type="nvarchar" MaxLength="300" />
+          <Property Name="SeoDescription" Type="nvarchar" MaxLength="200" />
+          <Property Name="Pic" Type="nvarchar" MaxLength="150" />
+          <Property Name="Cover" Type="nvarchar" MaxLength="150" />
+          <Property Name="RegDate" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="RobotAccess" Type="nvarchar" MaxLength="50" />
+          <Property Name="OnlyUserCanComment" Type="bit" Nullable="false" />
+          <Property Name="IsCommentActive" Type="bit" Nullable="false" />
+          <Property Name="ViewCount" Type="int" Nullable="false" />
+          <Property Name="Brief" Type="nvarchar" MaxLength="500" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="IsPublished" Type="bit" Nullable="false" />
+          <Property Name="PublishDate" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="LikeCount" Type="int" Nullable="false" />
+          <Property Name="Type" Type="smallint" />
+          <Property Name="LanguageID" Type="int" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="DeleteDesc" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="PostComment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PostID" Type="int" Nullable="false" />
+          <Property Name="ParentID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="Text" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="AuthorEmail" Type="nvarchar" MaxLength="50" />
+          <Property Name="AuthorName" Type="nvarchar" MaxLength="70" />
+          <Property Name="AuthorUrl" Type="nvarchar" MaxLength="50" />
+          <Property Name="AuthorIP" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="RegDate" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="RegTime" Type="nvarchar" MaxLength="8" Nullable="false" />
+          <Property Name="IsRead" Type="bit" Nullable="false" />
+          <Property Name="IsApproved" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PostGroup">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentID" Type="int" />
+          <Property Name="Title" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Text" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Url" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="SeoTitle" Type="nvarchar" MaxLength="100" />
+          <Property Name="SeoDescription" Type="nvarchar" MaxLength="150" />
+          <Property Name="Priority" Type="int" Nullable="false" />
+          <Property Name="Type" Type="smallint" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="LanguageID" Type="int" />
+        </EntityType>
+        <EntityType Name="PostGroupMapping">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PostGroupID" Type="int" Nullable="false" />
+          <Property Name="PostID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="SeoTitle" Type="nvarchar" MaxLength="100" />
+          <Property Name="SeoDescription" Type="nvarchar" MaxLength="200" />
+          <Property Name="CategoryID" Type="int" Nullable="false" />
+          <Property Name="Url" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Pic" Type="nvarchar" MaxLength="700" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="FullDescription" Type="ntext" />
+          <Property Name="ViewCount" Type="int" Nullable="false" />
+          <Property Name="Priority" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product_Group_Mapping">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductGroupID" Type="int" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="MainGroup" Type="bit" />
+        </EntityType>
+        <EntityType Name="ProductGroup">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentID" Type="int" />
+          <Property Name="Title" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="FullTitle" Type="nvarchar" MaxLength="100" />
+          <Property Name="Text" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Url" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="SeoTitle" Type="nvarchar" MaxLength="100" />
+          <Property Name="SeoDescription" Type="nvarchar" MaxLength="150" />
+          <Property Name="SeoKeywords" Type="nvarchar" MaxLength="150" />
+          <Property Name="Priority" Type="int" Nullable="false" />
+          <Property Name="Show" Type="bit" Nullable="false" />
+          <Property Name="Pic" Type="nvarchar" MaxLength="300" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="RegDate" Type="datetime" />
+          <Property Name="DeleteDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SettingValue">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Value" Type="nvarchar(max)" />
+          <Property Name="NameFa" Type="nvarchar" MaxLength="100" />
+          <Property Name="LoadAtFirst" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SiteStat">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IpAddress" Type="nvarchar(max)" />
+          <Property Name="UserAgent" Type="nvarchar(max)" />
+          <Property Name="UserOs" Type="nvarchar(max)" />
+          <Property Name="Referer" Type="nvarchar(max)" />
+          <Property Name="PageViewed" Type="nvarchar(max)" />
+          <Property Name="DateStamp" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UsersData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Avatar" Type="nvarchar" MaxLength="128" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="15" />
+          <Property Name="MobileConFirmed" Type="bit" Nullable="false" />
+          <Property Name="LastMobConfRequest" Type="datetime" />
+          <Property Name="LastLoginDate" Type="nvarchar" MaxLength="30" />
+          <Property Name="IsBanned" Type="bit" Nullable="false" />
+          <Property Name="BannedMsg" Type="nvarchar" MaxLength="100" />
+          <Property Name="About" Type="nvarchar(max)" />
+          <Property Name="MoarefID" Type="nvarchar" MaxLength="128" />
+          <Property Name="Money" Type="int" Nullable="false" />
+          <Property Name="AccountType" Type="smallint" Nullable="false" />
+          <Property Name="AccountExpireDateEn" Type="datetime" />
+          <Property Name="AutoUpgrade" Type="bit" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="RegDateEn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_LocalizedProperty_Language">
+          <End Role="Language" Type="Self.Language" Multiplicity="1" />
+          <End Role="LocalizedProperty" Type="Self.LocalizedProperty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="LocalizedProperty">
+              <PropertyRef Name="LanguageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostComment_Post">
+          <End Role="Post" Type="Self.Post" Multiplicity="1" />
+          <End Role="PostComment" Type="Self.PostComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PostComment">
+              <PropertyRef Name="PostID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostComment_PostComment">
+          <End Role="PostComment" Type="Self.PostComment" Multiplicity="1" />
+          <End Role="PostComment1" Type="Self.PostComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PostComment">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PostComment1">
+              <PropertyRef Name="ParentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostGroup_PostGroup">
+          <End Role="PostGroup" Type="Self.PostGroup" Multiplicity="0..1" />
+          <End Role="PostGroup1" Type="Self.PostGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PostGroup">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PostGroup1">
+              <PropertyRef Name="ParentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostGroupMapping_Post">
+          <End Role="Post" Type="Self.Post" Multiplicity="1" />
+          <End Role="PostGroupMapping" Type="Self.PostGroupMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PostGroupMapping">
+              <PropertyRef Name="PostID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostGroupMapping_PostGroup">
+          <End Role="PostGroup" Type="Self.PostGroup" Multiplicity="1" />
+          <End Role="PostGroupMapping" Type="Self.PostGroupMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PostGroup">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PostGroupMapping">
+              <PropertyRef Name="PostGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductGroupMapping_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Product_Group_Mapping" Type="Self.Product_Group_Mapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Product_Group_Mapping">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductGroupMapping_ProductGroup">
+          <End Role="ProductGroup" Type="Self.ProductGroup" Multiplicity="1" />
+          <End Role="Product_Group_Mapping" Type="Self.Product_Group_Mapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductGroup">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Product_Group_Mapping">
+              <PropertyRef Name="ProductGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="f_GetDeafultLanquageId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="getFreelancerOffers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userID" Type="nvarchar" Mode="In" />
+          <Parameter Name="take" Type="int" Mode="In" />
+          <Parameter Name="skip" Type="int" Mode="In" />
+        </Function>
+        <Function Name="getGroupDetailsByUrl" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="url" Type="nvarchar" Mode="In" />
+          <Parameter Name="LangID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="getGroupProductList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LangID" Type="int" Mode="In" />
+          <Parameter Name="groupID" Type="int" Mode="In" />
+          <Parameter Name="take" Type="int" Mode="In" />
+          <Parameter Name="skip" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetGroupsByLang" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LangID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="getLatestDoneProjectHome" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="count" Type="int" Mode="In" />
+          <Parameter Name="showHidden" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="getLatestNewsByLang" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LangID" Type="int" Mode="In" />
+          <Parameter Name="take" Type="int" Mode="In" />
+          <Parameter Name="skip" Type="int" Mode="In" />
+          <Parameter Name="type" Type="int" Mode="In" />
+        </Function>
+        <Function Name="getLatestProductByLang" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LangID" Type="int" Mode="In" />
+          <Parameter Name="take" Type="int" Mode="In" />
+          <Parameter Name="skip" Type="int" Mode="In" />
+        </Function>
+        <Function Name="getMainProductGroupsList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LangID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="getPageByUrl" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="url" Type="nvarchar" Mode="In" />
+          <Parameter Name="LangID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="getProductByLang" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="url" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="langID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="getProjectOffers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="projID" Type="int" Mode="In" />
+          <Parameter Name="Take" Type="int" Mode="In" />
+          <Parameter Name="Skip" Type="int" Mode="In" />
+        </Function>
+        <Function Name="getSubGroupsList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LangID" Type="int" Mode="In" />
+          <Parameter Name="ParentID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="getUserChats" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userID" Type="nvarchar" Mode="In" />
+          <Parameter Name="take" Type="int" Mode="In" />
+          <Parameter Name="skip" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="CMSDataModelStoreContainer">
+          <EntitySet Name="CodeValue" EntityType="Self.CodeValue" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ContactPM" EntityType="Self.ContactPM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Language" EntityType="Self.Language" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Localizations" EntityType="Self.Localizations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LocalizedProperty" EntityType="Self.LocalizedProperty" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NewsLetterEmail" EntityType="Self.NewsLetterEmail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PageContent" EntityType="Self.PageContent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Post" EntityType="Self.Post" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PostComment" EntityType="Self.PostComment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PostGroup" EntityType="Self.PostGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PostGroupMapping" EntityType="Self.PostGroupMapping" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product_Group_Mapping" EntityType="Self.Product_Group_Mapping" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductGroup" EntityType="Self.ProductGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SettingValue" EntityType="Self.SettingValue" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SiteStat" EntityType="Self.SiteStat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsersData" EntityType="Self.UsersData" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_LocalizedProperty_Language" Association="Self.FK_LocalizedProperty_Language">
+            <End Role="Language" EntitySet="Language" />
+            <End Role="LocalizedProperty" EntitySet="LocalizedProperty" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostComment_Post" Association="Self.FK_PostComment_Post">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="PostComment" EntitySet="PostComment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostComment_PostComment" Association="Self.FK_PostComment_PostComment">
+            <End Role="PostComment" EntitySet="PostComment" />
+            <End Role="PostComment1" EntitySet="PostComment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostGroup_PostGroup" Association="Self.FK_PostGroup_PostGroup">
+            <End Role="PostGroup" EntitySet="PostGroup" />
+            <End Role="PostGroup1" EntitySet="PostGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostGroupMapping_Post" Association="Self.FK_PostGroupMapping_Post">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="PostGroupMapping" EntitySet="PostGroupMapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostGroupMapping_PostGroup" Association="Self.FK_PostGroupMapping_PostGroup">
+            <End Role="PostGroup" EntitySet="PostGroup" />
+            <End Role="PostGroupMapping" EntitySet="PostGroupMapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductGroupMapping_Product" Association="Self.FK_ProductGroupMapping_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Product_Group_Mapping" EntitySet="Product_Group_Mapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductGroupMapping_ProductGroup" Association="Self.FK_ProductGroupMapping_ProductGroup">
+            <End Role="ProductGroup" EntitySet="ProductGroup" />
+            <End Role="Product_Group_Mapping" EntitySet="Product_Group_Mapping" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CMSDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="CMSDataEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="f_GetDeafultLanquageId" />
+          <FunctionImport Name="getMainProductGroupsList" ReturnType="Collection(CMSDataModel.getMainProductGroupsList_Result)">
+          <Parameter Name="LangID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getGroupDetailsByUrl" ReturnType="Collection(CMSDataModel.getGroupDetailsByUrl_Result)">
+            <Parameter Name="url" Mode="In" Type="String" />
+            <Parameter Name="LangID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getSubGroupsList" ReturnType="Collection(CMSDataModel.getSubGroupsList_Result)">
+            <Parameter Name="LangID" Mode="In" Type="Int32" />
+            <Parameter Name="ParentID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getProductListByLang" ReturnType="Collection(CMSDataModel.getProductListByLang_Result)">
+            <Parameter Name="LangID" Mode="In" Type="Int32" />
+            <Parameter Name="Take" Mode="In" Type="Int32" />
+            <Parameter Name="Skip" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getPageByUrl" ReturnType="Collection(CMSDataModel.getPageByUrl_Result)">
+            <Parameter Name="url" Mode="In" Type="String" />
+            <Parameter Name="LangID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getLatestNewsByLang" ReturnType="Collection(CMSDataModel.getLatestNewsByLang_Result)">
+            <Parameter Name="LangID" Mode="In" Type="Int32" />
+            <Parameter Name="take" Mode="In" Type="Int32" />
+            <Parameter Name="skip" Mode="In" Type="Int32" />
+            <Parameter Name="type" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getLatestProjectHome" ReturnType="Collection(CMSDataModel.getLatestProjectHome_Result)">
+            <Parameter Name="count" Mode="In" Type="Int32" />
+            <Parameter Name="showHidden" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="getLatestDoneProjectHome" ReturnType="Collection(CMSDataModel.getLatestDoneProjectHome_Result)">
+            <Parameter Name="count" Mode="In" Type="Int32" />
+            <Parameter Name="showHidden" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="getProjectOffers" ReturnType="Collection(CMSDataModel.getProjectOffers_Result)">
+            <Parameter Name="projID" Mode="In" Type="Int32" />
+            <Parameter Name="Take" Mode="In" Type="Int32" />
+            <Parameter Name="Skip" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getFreelancerOffers" ReturnType="Collection(CMSDataModel.getFreelancerOffers_Result)">
+            <Parameter Name="userID" Mode="In" Type="String" />
+            <Parameter Name="take" Mode="In" Type="Int32" />
+            <Parameter Name="skip" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getUserChats" ReturnType="Collection(CMSDataModel.getUserChats_Result)">
+            <Parameter Name="userID" Mode="In" Type="String" />
+            <Parameter Name="take" Mode="In" Type="Int32" />
+            <Parameter Name="skip" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="ContactPMs" EntityType="CMSDataModel.ContactPM" />
+          <EntitySet Name="Languages" EntityType="CMSDataModel.Language" />
+          <EntitySet Name="Localizations" EntityType="CMSDataModel.Localization" />
+          <EntitySet Name="LocalizedProperties" EntityType="CMSDataModel.LocalizedProperty" />
+          <EntitySet Name="NewsLetterEmails" EntityType="CMSDataModel.NewsLetterEmail" />
+          <EntitySet Name="PageContents" EntityType="CMSDataModel.PageContent" />
+          <EntitySet Name="Posts" EntityType="CMSDataModel.Post" />
+          <EntitySet Name="PostComments" EntityType="CMSDataModel.PostComment" />
+          <EntitySet Name="PostGroups" EntityType="CMSDataModel.PostGroup" />
+          <EntitySet Name="PostGroupMappings" EntityType="CMSDataModel.PostGroupMapping" />
+          <EntitySet Name="Product_Group_Mapping" EntityType="CMSDataModel.Product_Group_Mapping" />
+          <EntitySet Name="ProductGroups" EntityType="CMSDataModel.ProductGroup" />
+          <EntitySet Name="Roles" EntityType="CMSDataModel.Role" />
+          <EntitySet Name="SettingValues" EntityType="CMSDataModel.SettingValue" />
+          <EntitySet Name="SiteStats" EntityType="CMSDataModel.SiteStat" />
+          <EntitySet Name="UsersDatas" EntityType="CMSDataModel.UsersData" />
+          <AssociationSet Name="FK_LocalizedProperty_Language" Association="CMSDataModel.FK_LocalizedProperty_Language">
+            <End Role="Language" EntitySet="Languages" />
+            <End Role="LocalizedProperty" EntitySet="LocalizedProperties" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostComment_Post" Association="CMSDataModel.FK_PostComment_Post">
+            <End Role="Post" EntitySet="Posts" />
+            <End Role="PostComment" EntitySet="PostComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostGroupMapping_Post" Association="CMSDataModel.FK_PostGroupMapping_Post">
+            <End Role="Post" EntitySet="Posts" />
+            <End Role="PostGroupMapping" EntitySet="PostGroupMappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostComment_PostComment" Association="CMSDataModel.FK_PostComment_PostComment">
+            <End Role="PostComment" EntitySet="PostComments" />
+            <End Role="PostComment1" EntitySet="PostComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostGroup_PostGroup" Association="CMSDataModel.FK_PostGroup_PostGroup">
+            <End Role="PostGroup" EntitySet="PostGroups" />
+            <End Role="PostGroup1" EntitySet="PostGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostGroupMapping_PostGroup" Association="CMSDataModel.FK_PostGroupMapping_PostGroup">
+            <End Role="PostGroup" EntitySet="PostGroups" />
+            <End Role="PostGroupMapping" EntitySet="PostGroupMappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductGroupMapping_ProductGroup" Association="CMSDataModel.FK_ProductGroupMapping_ProductGroup">
+            <End Role="ProductGroup" EntitySet="ProductGroups" />
+            <End Role="Product_Group_Mapping" EntitySet="Product_Group_Mapping" />
+          </AssociationSet>
+          <EntitySet Name="CodeValues" EntityType="CMSDataModel.CodeValue" />
+          <EntitySet Name="Products" EntityType="CMSDataModel.Product" />
+          <AssociationSet Name="FK_ProductGroupMapping_Product" Association="CMSDataModel.FK_ProductGroupMapping_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Product_Group_Mapping" EntitySet="Product_Group_Mapping" />
+          </AssociationSet>
+          <FunctionImport Name="getLatestProductByLang" ReturnType="Collection(CMSDataModel.getLatestProductByLang_Result)">
+            <Parameter Name="LangID" Mode="In" Type="Int32" />
+            <Parameter Name="take" Mode="In" Type="Int32" />
+            <Parameter Name="skip" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getProductByLang" ReturnType="Collection(CMSDataModel.getProductByLang_Result)">
+            <Parameter Name="url" Mode="In" Type="String" />
+            <Parameter Name="langID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getGroupProductList" ReturnType="Collection(CMSDataModel.getGroupProductList_Result)">
+            <Parameter Name="LangID" Mode="In" Type="Int32" />
+            <Parameter Name="groupID" Mode="In" Type="Int32" />
+            <Parameter Name="take" Mode="In" Type="Int32" />
+            <Parameter Name="skip" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetGroupsByLang" ReturnType="Collection(CMSDataModel.GetGroupsByLang_Result)">
+            <Parameter Name="LangID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          </EntityContainer>
+        <ComplexType Name="getMainProductGroupsList_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Url" Nullable="false" MaxLength="150" />
+          <Property Type="String" Name="Pic" Nullable="true" MaxLength="300" />
+        </ComplexType>
+        <ComplexType Name="getGroupDetailsByUrl_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Url" Nullable="false" MaxLength="150" />
+          <Property Type="String" Name="Pic" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="Text" Nullable="true" MaxLength="2000" />
+          <Property Type="String" Name="SeoTitle" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="SeoKeywords" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="SeoDescription" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="FullTitle" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="getSubGroupsList_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Url" Nullable="false" MaxLength="150" />
+          <Property Type="String" Name="Pic" Nullable="true" MaxLength="300" />
+        </ComplexType>
+        <ComplexType Name="getProductListByLang_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" />
+          <Property Type="String" Name="FullDescription" Nullable="true" />
+          <Property Type="String" Name="SeoTitle" Nullable="true" />
+          <Property Type="String" Name="SeoDescription" Nullable="true" />
+          <Property Type="String" Name="KeyWords" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getPageByUrl_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Url" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Text" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="SeoTitle" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Keywords" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="200" />
+          <Property Type="Boolean" Name="OnlyUsersCanSee" Nullable="true" />
+          <Property Type="String" Name="RobotAccess" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="getLatestNewsByLang_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Url" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Pic" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Brief" Nullable="true" MaxLength="1000" />
+          <Property Type="DateTime" Name="PublishDate" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="LikeCount" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="getLatestProjectHome_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="120" />
+          <Property Type="String" Name="Url" Nullable="false" MaxLength="100" />
+          <Property Type="Int16" Name="OffersCount" Nullable="false" />
+          <Property Type="Int32" Name="OffersAvgAmount" Nullable="false" />
+          <Property Type="Boolean" Name="UrgentBadge" Nullable="false" />
+          <Property Type="Boolean" Name="SpecialBadge" Nullable="false" />
+          <Property Type="Boolean" Name="HiddenOffersBadge" Nullable="false" />
+          <Property Type="String" Name="CategoryUrl" Nullable="false" MaxLength="150" />
+          <Property Type="String" Name="CategoryTitle" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="getLatestDoneProjectHome_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="120" />
+          <Property Type="String" Name="Url" Nullable="false" MaxLength="100" />
+          <Property Type="Int16" Name="OffersCount" Nullable="false" />
+          <Property Type="Int32" Name="OffersAvgAmount" Nullable="false" />
+          <Property Type="Boolean" Name="UrgentBadge" Nullable="false" />
+          <Property Type="Boolean" Name="SpecialBadge" Nullable="false" />
+          <Property Type="Boolean" Name="HiddenOffersBadge" Nullable="false" />
+          <Property Type="String" Name="CategoryUrl" Nullable="false" MaxLength="150" />
+          <Property Type="String" Name="CategoryTitle" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="getProjectOffers_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="Amount" Nullable="true" />
+          <Property Type="Int32" Name="DueDay" Nullable="true" />
+          <Property Type="Int32" Name="ExpertiseGuarantee" Nullable="true" />
+          <Property Type="Int32" Name="PrePayment" Nullable="true" />
+          <Property Type="DateTime" Name="RegDateEn" Nullable="false" Precision="23" />
+          <Property Type="Boolean" Name="IsAccepted" Nullable="false" />
+          <Property Type="String" Name="UserID" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="FullName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Avatar" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="AccountType" Nullable="true" />
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="256" />
+        </ComplexType>
+        <ComplexType Name="getFreelancerOffers_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="ProjectID" Nullable="false" />
+          <Property Type="String" Name="ToUser" Nullable="false" MaxLength="256" />
+          <Property Type="DateTime" Name="LastPostDateEn" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="RegDateEn" Nullable="false" Precision="23" />
+          <Property Type="Boolean" Name="IsAccepted" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="120" />
+          <Property Type="String" Name="Url" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="ChatCount" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getUserChats_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="ProjectID" Nullable="false" />
+          <Property Type="String" Name="ToUser" Nullable="false" MaxLength="256" />
+          <Property Type="Int32" Name="ChatCount" Nullable="true" />
+          <Property Type="Int32" Name="HasUnread" Nullable="false" />
+          <Property Type="DateTime" Name="LastPostDateEn" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="120" />
+          <Property Type="String" Name="Url" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <EntityType Name="ContactPM">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Tell" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Text" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="RegDateFa" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TraceCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Reply" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsRead" Type="Boolean" Nullable="false" />
+          <Property Name="ReplyDateFa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Language">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LanguageCulture" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UniqueSeoCode" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="FlagImageFileName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Rtl" Type="Boolean" Nullable="false" />
+          <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="LocalizedProperties" Relationship="CMSDataModel.FK_LocalizedProperty_Language" FromRole="Language" ToRole="LocalizedProperty" />
+        </EntityType>
+        <EntityType Name="Localization">
+          <Key>
+            <PropertyRef Name="pk" />
+          </Key>
+          <Property Name="pk" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ResourceId" Type="String" Nullable="false" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LocaleId" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ResourceSet" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="BinFile" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="TextFile" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Filename" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Comment" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="ValueType" Type="Int32" Nullable="false" />
+          <Property Name="Updated" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="LocalizedProperty">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EntityID" Type="Int32" Nullable="false" />
+          <Property Name="LanguageID" Type="Int32" Nullable="false" />
+          <Property Name="LocaleKeyGroup" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="LocaleKey" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="LocaleValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Language" Relationship="CMSDataModel.FK_LocalizedProperty_Language" FromRole="LocalizedProperty" ToRole="Language" />
+        </EntityType>
+        <EntityType Name="NewsLetterEmail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="RegDate" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="Int32" />
+        </EntityType>
+        <EntityType Name="PageContent">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Url" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ViewCount" Type="Int32" Nullable="false" />
+          <Property Name="OnlyUsersCanSee" Type="Boolean" Nullable="false" />
+          <Property Name="RobotAccess" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SeoTitle" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="KeyWords" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Editable" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Url" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SeoTitle" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="KeyWords" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="SeoDescription" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Pic" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Cover" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="RegDate" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="RobotAccess" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OnlyUserCanComment" Type="Boolean" Nullable="false" />
+          <Property Name="IsCommentActive" Type="Boolean" Nullable="false" />
+          <Property Name="ViewCount" Type="Int32" Nullable="false" />
+          <Property Name="Brief" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="IsPublished" Type="Boolean" Nullable="false" />
+          <Property Name="PublishDate" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="LikeCount" Type="Int32" Nullable="false" />
+          <Property Name="Type" Type="Int16" />
+          <Property Name="LanguageID" Type="Int32" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="DeleteDesc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PostComments" Relationship="CMSDataModel.FK_PostComment_Post" FromRole="Post" ToRole="PostComment" />
+          <NavigationProperty Name="PostGroupMappings" Relationship="CMSDataModel.FK_PostGroupMapping_Post" FromRole="Post" ToRole="PostGroupMapping" />
+        </EntityType>
+        <EntityType Name="PostComment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PostID" Type="Int32" Nullable="false" />
+          <Property Name="ParentID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="Text" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="AuthorEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AuthorName" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
+          <Property Name="AuthorUrl" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AuthorIP" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="RegDate" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="RegTime" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="IsRead" Type="Boolean" Nullable="false" />
+          <Property Name="IsApproved" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Post" Relationship="CMSDataModel.FK_PostComment_Post" FromRole="PostComment" ToRole="Post" />
+          <NavigationProperty Name="PostComment1" Relationship="CMSDataModel.FK_PostComment_PostComment" FromRole="PostComment" ToRole="PostComment1" />
+          <NavigationProperty Name="PostComment2" Relationship="CMSDataModel.FK_PostComment_PostComment" FromRole="PostComment1" ToRole="PostComment" />
+        </EntityType>
+        <EntityType Name="PostGroup">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentID" Type="Int32" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Text" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Url" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="SeoTitle" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="SeoDescription" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Priority" Type="Int32" Nullable="false" />
+          <Property Name="Type" Type="Int16" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="LanguageID" Type="Int32" />
+          <NavigationProperty Name="PostGroup1" Relationship="CMSDataModel.FK_PostGroup_PostGroup" FromRole="PostGroup" ToRole="PostGroup1" />
+          <NavigationProperty Name="PostGroup2" Relationship="CMSDataModel.FK_PostGroup_PostGroup" FromRole="PostGroup1" ToRole="PostGroup" />
+          <NavigationProperty Name="PostGroupMappings" Relationship="CMSDataModel.FK_PostGroupMapping_PostGroup" FromRole="PostGroup" ToRole="PostGroupMapping" />
+        </EntityType>
+        <EntityType Name="PostGroupMapping">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PostGroupID" Type="Int32" Nullable="false" />
+          <Property Name="PostID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Post" Relationship="CMSDataModel.FK_PostGroupMapping_Post" FromRole="PostGroupMapping" ToRole="Post" />
+          <NavigationProperty Name="PostGroup" Relationship="CMSDataModel.FK_PostGroupMapping_PostGroup" FromRole="PostGroupMapping" ToRole="PostGroup" />
+        </EntityType>
+        <EntityType Name="Product_Group_Mapping">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductGroupID" Type="Int32" Nullable="false" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <Property Name="MainGroup" Type="Boolean" />
+          <NavigationProperty Name="ProductGroup" Relationship="CMSDataModel.FK_ProductGroupMapping_ProductGroup" FromRole="Product_Group_Mapping" ToRole="ProductGroup" />
+          <NavigationProperty Name="Product" Relationship="CMSDataModel.FK_ProductGroupMapping_Product" FromRole="Product_Group_Mapping" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="ProductGroup">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentID" Type="Int32" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FullTitle" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Text" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Url" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="SeoTitle" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="SeoDescription" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="SeoKeywords" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Priority" Type="Int32" Nullable="false" />
+          <Property Name="Show" Type="Boolean" Nullable="false" />
+          <Property Name="Pic" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="RegDate" Type="DateTime" Precision="3" />
+          <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Product_Group_Mapping" Relationship="CMSDataModel.FK_ProductGroupMapping_ProductGroup" FromRole="ProductGroup" ToRole="Product_Group_Mapping" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SettingValue">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NameFa" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LoadAtFirst" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SiteStat">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IpAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserAgent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserOs" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Referer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PageViewed" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateStamp" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="UsersData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Avatar" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="MobileConFirmed" Type="Boolean" Nullable="false" />
+          <Property Name="LastMobConfRequest" Type="DateTime" Precision="3" />
+          <Property Name="LastLoginDate" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="IsBanned" Type="Boolean" Nullable="false" />
+          <Property Name="BannedMsg" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="About" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MoarefID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Money" Type="Int32" Nullable="false" />
+          <Property Name="AccountType" Type="Int16" Nullable="false" />
+          <Property Name="AccountExpireDateEn" Type="DateTime" Precision="3" />
+          <Property Name="AutoUpgrade" Type="Boolean" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="RegDateEn" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <Association Name="FK_LocalizedProperty_Language">
+          <End Type="CMSDataModel.Language" Role="Language" Multiplicity="1" />
+          <End Type="CMSDataModel.LocalizedProperty" Role="LocalizedProperty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="LocalizedProperty">
+              <PropertyRef Name="LanguageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostComment_Post">
+          <End Type="CMSDataModel.Post" Role="Post" Multiplicity="1" />
+          <End Type="CMSDataModel.PostComment" Role="PostComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PostComment">
+              <PropertyRef Name="PostID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostGroupMapping_Post">
+          <End Type="CMSDataModel.Post" Role="Post" Multiplicity="1" />
+          <End Type="CMSDataModel.PostGroupMapping" Role="PostGroupMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PostGroupMapping">
+              <PropertyRef Name="PostID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostComment_PostComment">
+          <End Type="CMSDataModel.PostComment" Role="PostComment" Multiplicity="1" />
+          <End Type="CMSDataModel.PostComment" Role="PostComment1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PostComment">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PostComment1">
+              <PropertyRef Name="ParentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostGroup_PostGroup">
+          <End Type="CMSDataModel.PostGroup" Role="PostGroup" Multiplicity="0..1" />
+          <End Type="CMSDataModel.PostGroup" Role="PostGroup1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PostGroup">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PostGroup1">
+              <PropertyRef Name="ParentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostGroupMapping_PostGroup">
+          <End Type="CMSDataModel.PostGroup" Role="PostGroup" Multiplicity="1" />
+          <End Type="CMSDataModel.PostGroupMapping" Role="PostGroupMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PostGroup">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PostGroupMapping">
+              <PropertyRef Name="PostGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductGroupMapping_ProductGroup">
+          <End Type="CMSDataModel.ProductGroup" Role="ProductGroup" Multiplicity="1" />
+          <End Type="CMSDataModel.Product_Group_Mapping" Role="Product_Group_Mapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductGroup">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Product_Group_Mapping">
+              <PropertyRef Name="ProductGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CodeValue">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="GroupName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Value2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SeoTitle" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="SeoDescription" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <Property Name="Url" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Pic" Type="String" MaxLength="700" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="FullDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ViewCount" Type="Int32" Nullable="false" />
+          <Property Name="Priority" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Product_Group_Mapping" Relationship="CMSDataModel.FK_ProductGroupMapping_Product" FromRole="Product" ToRole="Product_Group_Mapping" />
+        </EntityType>
+        <Association Name="FK_ProductGroupMapping_Product">
+          <End Type="CMSDataModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="CMSDataModel.Product_Group_Mapping" Role="Product_Group_Mapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Product_Group_Mapping">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="getLatestProductByLang_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="GroupTitle" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="GroupUrl" Nullable="false" MaxLength="150" />
+          <Property Type="String" Name="Url" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Pic" Nullable="true" MaxLength="700" />
+        </ComplexType>
+        <ComplexType Name="getProductByLang_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="FullDescription" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="SeoTitle" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="SeoDescription" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Url" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Pic" Nullable="true" MaxLength="700" />
+          <Property Type="String" Name="GroupTitle" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="GroupUrl" Nullable="false" MaxLength="150" />
+        </ComplexType>
+        <ComplexType Name="getGroupProductList_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="GroupTitle" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="GroupUrl" Nullable="false" MaxLength="150" />
+          <Property Type="String" Name="Url" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Pic" Nullable="true" MaxLength="700" />
+        </ComplexType>
+        <ComplexType Name="GetGroupsByLang_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Url" Nullable="false" MaxLength="150" />
+        </ComplexType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CMSDataModelStoreContainer" CdmEntityContainer="CMSDataEntities">
+          <FunctionImportMapping FunctionImportName="f_GetDeafultLanquageId" FunctionName="CMSDataModel.Store.f_GetDeafultLanquageId" />
+          <FunctionImportMapping FunctionImportName="getMainProductGroupsList" FunctionName="CMSDataModel.Store.getMainProductGroupsList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CMSDataModel.getMainProductGroupsList_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Pic" ColumnName="Pic" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getGroupDetailsByUrl" FunctionName="CMSDataModel.Store.getGroupDetailsByUrl">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CMSDataModel.getGroupDetailsByUrl_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Pic" ColumnName="Pic" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="SeoTitle" ColumnName="SeoTitle" />
+                <ScalarProperty Name="SeoKeywords" ColumnName="SeoKeywords" />
+                <ScalarProperty Name="SeoDescription" ColumnName="SeoDescription" />
+                <ScalarProperty Name="FullTitle" ColumnName="FullTitle" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getSubGroupsList" FunctionName="CMSDataModel.Store.getSubGroupsList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CMSDataModel.getSubGroupsList_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Pic" ColumnName="Pic" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getPageByUrl" FunctionName="CMSDataModel.Store.getPageByUrl">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CMSDataModel.getPageByUrl_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="SeoTitle" ColumnName="SeoTitle" />
+                <ScalarProperty Name="Keywords" ColumnName="Keywords" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="OnlyUsersCanSee" ColumnName="OnlyUsersCanSee" />
+                <ScalarProperty Name="RobotAccess" ColumnName="RobotAccess" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getLatestNewsByLang" FunctionName="CMSDataModel.Store.getLatestNewsByLang">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CMSDataModel.getLatestNewsByLang_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Pic" ColumnName="Pic" />
+                <ScalarProperty Name="Brief" ColumnName="Brief" />
+                <ScalarProperty Name="PublishDate" ColumnName="PublishDate" />
+                <ScalarProperty Name="LikeCount" ColumnName="LikeCount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getLatestDoneProjectHome" FunctionName="CMSDataModel.Store.getLatestDoneProjectHome">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CMSDataModel.getLatestDoneProjectHome_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="OffersCount" ColumnName="OffersCount" />
+                <ScalarProperty Name="OffersAvgAmount" ColumnName="OffersAvgAmount" />
+                <ScalarProperty Name="UrgentBadge" ColumnName="UrgentBadge" />
+                <ScalarProperty Name="SpecialBadge" ColumnName="SpecialBadge" />
+                <ScalarProperty Name="HiddenOffersBadge" ColumnName="HiddenOffersBadge" />
+                <ScalarProperty Name="CategoryUrl" ColumnName="CategoryUrl" />
+                <ScalarProperty Name="CategoryTitle" ColumnName="CategoryTitle" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getProjectOffers" FunctionName="CMSDataModel.Store.getProjectOffers">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CMSDataModel.getProjectOffers_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="DueDay" ColumnName="DueDay" />
+                <ScalarProperty Name="ExpertiseGuarantee" ColumnName="ExpertiseGuarantee" />
+                <ScalarProperty Name="PrePayment" ColumnName="PrePayment" />
+                <ScalarProperty Name="RegDateEn" ColumnName="RegDateEn" />
+                <ScalarProperty Name="IsAccepted" ColumnName="IsAccepted" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Avatar" ColumnName="Avatar" />
+                <ScalarProperty Name="AccountType" ColumnName="AccountType" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getFreelancerOffers" FunctionName="CMSDataModel.Store.getFreelancerOffers">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CMSDataModel.getFreelancerOffers_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="ToUser" ColumnName="ToUser" />
+                <ScalarProperty Name="LastPostDateEn" ColumnName="LastPostDateEn" />
+                <ScalarProperty Name="RegDateEn" ColumnName="RegDateEn" />
+                <ScalarProperty Name="IsAccepted" ColumnName="IsAccepted" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="ChatCount" ColumnName="ChatCount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getUserChats" FunctionName="CMSDataModel.Store.getUserChats">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CMSDataModel.getUserChats_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="ToUser" ColumnName="ToUser" />
+                <ScalarProperty Name="ChatCount" ColumnName="ChatCount" />
+                <ScalarProperty Name="HasUnread" ColumnName="HasUnread" />
+                <ScalarProperty Name="LastPostDateEn" ColumnName="LastPostDateEn" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="ContactPMs">
+            <EntityTypeMapping TypeName="CMSDataModel.ContactPM">
+              <MappingFragment StoreEntitySet="ContactPM">
+                <ScalarProperty Name="IP" ColumnName="IP" />
+                <ScalarProperty Name="ReplyDateFa" ColumnName="ReplyDateFa" />
+                <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+                <ScalarProperty Name="Reply" ColumnName="Reply" />
+                <ScalarProperty Name="TraceCode" ColumnName="TraceCode" />
+                <ScalarProperty Name="RegDateFa" ColumnName="RegDateFa" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Tell" ColumnName="Tell" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Languages">
+            <EntityTypeMapping TypeName="CMSDataModel.Language">
+              <MappingFragment StoreEntitySet="Language">
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Rtl" ColumnName="Rtl" />
+                <ScalarProperty Name="FlagImageFileName" ColumnName="FlagImageFileName" />
+                <ScalarProperty Name="UniqueSeoCode" ColumnName="UniqueSeoCode" />
+                <ScalarProperty Name="LanguageCulture" ColumnName="LanguageCulture" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Localizations">
+            <EntityTypeMapping TypeName="CMSDataModel.Localization">
+              <MappingFragment StoreEntitySet="Localizations">
+                <ScalarProperty Name="Updated" ColumnName="Updated" />
+                <ScalarProperty Name="ValueType" ColumnName="ValueType" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="Filename" ColumnName="Filename" />
+                <ScalarProperty Name="TextFile" ColumnName="TextFile" />
+                <ScalarProperty Name="BinFile" ColumnName="BinFile" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="ResourceSet" ColumnName="ResourceSet" />
+                <ScalarProperty Name="LocaleId" ColumnName="LocaleId" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="ResourceId" ColumnName="ResourceId" />
+                <ScalarProperty Name="pk" ColumnName="pk" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LocalizedProperties">
+            <EntityTypeMapping TypeName="CMSDataModel.LocalizedProperty">
+              <MappingFragment StoreEntitySet="LocalizedProperty">
+                <ScalarProperty Name="LocaleValue" ColumnName="LocaleValue" />
+                <ScalarProperty Name="LocaleKey" ColumnName="LocaleKey" />
+                <ScalarProperty Name="LocaleKeyGroup" ColumnName="LocaleKeyGroup" />
+                <ScalarProperty Name="LanguageID" ColumnName="LanguageID" />
+                <ScalarProperty Name="EntityID" ColumnName="EntityID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NewsLetterEmails">
+            <EntityTypeMapping TypeName="CMSDataModel.NewsLetterEmail">
+              <MappingFragment StoreEntitySet="NewsLetterEmail">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="RegDate" ColumnName="RegDate" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PageContents">
+            <EntityTypeMapping TypeName="CMSDataModel.PageContent">
+              <MappingFragment StoreEntitySet="PageContent">
+                <ScalarProperty Name="Editable" ColumnName="Editable" />
+                <ScalarProperty Name="KeyWords" ColumnName="KeyWords" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="SeoTitle" ColumnName="SeoTitle" />
+                <ScalarProperty Name="RobotAccess" ColumnName="RobotAccess" />
+                <ScalarProperty Name="OnlyUsersCanSee" ColumnName="OnlyUsersCanSee" />
+                <ScalarProperty Name="ViewCount" ColumnName="ViewCount" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Posts">
+            <EntityTypeMapping TypeName="CMSDataModel.Post">
+              <MappingFragment StoreEntitySet="Post">
+                <ScalarProperty Name="DeleteDesc" ColumnName="DeleteDesc" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="LanguageID" ColumnName="LanguageID" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="LikeCount" ColumnName="LikeCount" />
+                <ScalarProperty Name="PublishDate" ColumnName="PublishDate" />
+                <ScalarProperty Name="IsPublished" ColumnName="IsPublished" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Brief" ColumnName="Brief" />
+                <ScalarProperty Name="ViewCount" ColumnName="ViewCount" />
+                <ScalarProperty Name="IsCommentActive" ColumnName="IsCommentActive" />
+                <ScalarProperty Name="OnlyUserCanComment" ColumnName="OnlyUserCanComment" />
+                <ScalarProperty Name="RobotAccess" ColumnName="RobotAccess" />
+                <ScalarProperty Name="RegDate" ColumnName="RegDate" />
+                <ScalarProperty Name="Cover" ColumnName="Cover" />
+                <ScalarProperty Name="Pic" ColumnName="Pic" />
+                <ScalarProperty Name="SeoDescription" ColumnName="SeoDescription" />
+                <ScalarProperty Name="KeyWords" ColumnName="KeyWords" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="SeoTitle" ColumnName="SeoTitle" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PostComments">
+            <EntityTypeMapping TypeName="CMSDataModel.PostComment">
+              <MappingFragment StoreEntitySet="PostComment">
+                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+                <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+                <ScalarProperty Name="RegTime" ColumnName="RegTime" />
+                <ScalarProperty Name="RegDate" ColumnName="RegDate" />
+                <ScalarProperty Name="AuthorIP" ColumnName="AuthorIP" />
+                <ScalarProperty Name="AuthorUrl" ColumnName="AuthorUrl" />
+                <ScalarProperty Name="AuthorName" ColumnName="AuthorName" />
+                <ScalarProperty Name="AuthorEmail" ColumnName="AuthorEmail" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="PostID" ColumnName="PostID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PostGroups">
+            <EntityTypeMapping TypeName="CMSDataModel.PostGroup">
+              <MappingFragment StoreEntitySet="PostGroup">
+                <ScalarProperty Name="LanguageID" ColumnName="LanguageID" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
+                <ScalarProperty Name="SeoDescription" ColumnName="SeoDescription" />
+                <ScalarProperty Name="SeoTitle" ColumnName="SeoTitle" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PostGroupMappings">
+            <EntityTypeMapping TypeName="CMSDataModel.PostGroupMapping">
+              <MappingFragment StoreEntitySet="PostGroupMapping">
+                <ScalarProperty Name="PostID" ColumnName="PostID" />
+                <ScalarProperty Name="PostGroupID" ColumnName="PostGroupID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product_Group_Mapping">
+            <EntityTypeMapping TypeName="CMSDataModel.Product_Group_Mapping">
+              <MappingFragment StoreEntitySet="Product_Group_Mapping">
+                <ScalarProperty Name="MainGroup" ColumnName="MainGroup" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ProductGroupID" ColumnName="ProductGroupID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductGroups">
+            <EntityTypeMapping TypeName="CMSDataModel.ProductGroup">
+              <MappingFragment StoreEntitySet="ProductGroup">
+                <ScalarProperty Name="DeleteDate" ColumnName="DeleteDate" />
+                <ScalarProperty Name="RegDate" ColumnName="RegDate" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="Pic" ColumnName="Pic" />
+                <ScalarProperty Name="Show" ColumnName="Show" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
+                <ScalarProperty Name="SeoKeywords" ColumnName="SeoKeywords" />
+                <ScalarProperty Name="SeoDescription" ColumnName="SeoDescription" />
+                <ScalarProperty Name="SeoTitle" ColumnName="SeoTitle" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="FullTitle" ColumnName="FullTitle" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="CMSDataModel.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SettingValues">
+            <EntityTypeMapping TypeName="CMSDataModel.SettingValue">
+              <MappingFragment StoreEntitySet="SettingValue">
+                <ScalarProperty Name="LoadAtFirst" ColumnName="LoadAtFirst" />
+                <ScalarProperty Name="NameFa" ColumnName="NameFa" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SiteStats">
+            <EntityTypeMapping TypeName="CMSDataModel.SiteStat">
+              <MappingFragment StoreEntitySet="SiteStat">
+                <ScalarProperty Name="DateStamp" ColumnName="DateStamp" />
+                <ScalarProperty Name="PageViewed" ColumnName="PageViewed" />
+                <ScalarProperty Name="Referer" ColumnName="Referer" />
+                <ScalarProperty Name="UserOs" ColumnName="UserOs" />
+                <ScalarProperty Name="UserAgent" ColumnName="UserAgent" />
+                <ScalarProperty Name="IpAddress" ColumnName="IpAddress" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsersDatas">
+            <EntityTypeMapping TypeName="CMSDataModel.UsersData">
+              <MappingFragment StoreEntitySet="UsersData">
+                <ScalarProperty Name="RegDateEn" ColumnName="RegDateEn" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="AutoUpgrade" ColumnName="AutoUpgrade" />
+                <ScalarProperty Name="AccountExpireDateEn" ColumnName="AccountExpireDateEn" />
+                <ScalarProperty Name="AccountType" ColumnName="AccountType" />
+                <ScalarProperty Name="Money" ColumnName="Money" />
+                <ScalarProperty Name="MoarefID" ColumnName="MoarefID" />
+                <ScalarProperty Name="About" ColumnName="About" />
+                <ScalarProperty Name="BannedMsg" ColumnName="BannedMsg" />
+                <ScalarProperty Name="IsBanned" ColumnName="IsBanned" />
+                <ScalarProperty Name="LastLoginDate" ColumnName="LastLoginDate" />
+                <ScalarProperty Name="LastMobConfRequest" ColumnName="LastMobConfRequest" />
+                <ScalarProperty Name="MobileConFirmed" ColumnName="MobileConFirmed" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Avatar" ColumnName="Avatar" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CodeValues">
+            <EntityTypeMapping TypeName="CMSDataModel.CodeValue">
+              <MappingFragment StoreEntitySet="CodeValue">
+                <ScalarProperty Name="Value2" ColumnName="Value2" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="CMSDataModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
+                <ScalarProperty Name="ViewCount" ColumnName="ViewCount" />
+                <ScalarProperty Name="FullDescription" ColumnName="FullDescription" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Pic" ColumnName="Pic" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="SeoDescription" ColumnName="SeoDescription" />
+                <ScalarProperty Name="SeoTitle" ColumnName="SeoTitle" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="getLatestProductByLang" FunctionName="CMSDataModel.Store.getLatestProductByLang">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CMSDataModel.getLatestProductByLang_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="GroupTitle" ColumnName="GroupTitle" />
+                <ScalarProperty Name="GroupUrl" ColumnName="GroupUrl" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Pic" ColumnName="Pic" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getProductByLang" FunctionName="CMSDataModel.Store.getProductByLang">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CMSDataModel.getProductByLang_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="FullDescription" ColumnName="FullDescription" />
+                <ScalarProperty Name="SeoTitle" ColumnName="SeoTitle" />
+                <ScalarProperty Name="SeoDescription" ColumnName="SeoDescription" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Pic" ColumnName="Pic" />
+                <ScalarProperty Name="GroupTitle" ColumnName="GroupTitle" />
+                <ScalarProperty Name="GroupUrl" ColumnName="GroupUrl" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getGroupProductList" FunctionName="CMSDataModel.Store.getGroupProductList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CMSDataModel.getGroupProductList_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="GroupTitle" ColumnName="GroupTitle" />
+                <ScalarProperty Name="GroupUrl" ColumnName="GroupUrl" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Pic" ColumnName="Pic" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetGroupsByLang" FunctionName="CMSDataModel.Store.GetGroupsByLang">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CMSDataModel.GetGroupsByLang_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

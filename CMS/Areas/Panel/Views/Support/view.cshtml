@@ -1,0 +1,403 @@
+﻿@model ViewModels.ShowTicketViewModel
+@{
+    ViewBag.Title = "مشاهده تیکت " + Model.Details.ISID;
+    Layout = "~/Areas/panel/Views/Shared/_Layout.cshtml";
+    int ticketID = int.Parse(ViewContext.RouteData.Values["id"] as string);
+}
+
+
+<style>
+    .content-page > .content {
+        margin-bottom: 0px;
+        margin-top: 60px;
+        padding: 20px 5px 0px 5px;
+    }
+
+    /*.row, .col-md-9, .container, .content, .content-page, #wrapper, body, html {
+        height: 100%;
+    }*/
+</style>
+<link href="~/Areas/Panel/Content/js/RateYo-v2.3.2/jquery.rateyo.min.css" rel="stylesheet" />
+<link href="~/Areas/Admin/Content/plugins/emoji-picker/lib/css/emoji.css" rel="stylesheet" />
+
+
+
+<div class="row">
+    <div class="col-md-9">
+        <div id="chats">
+            <div class="chatcontent">
+
+                <div class="chatmessages slimscroll" id="chatmessages">
+                    <ol class="discussion" id="discussion">
+                        @*اولین پیام، متن تیکت هست*@
+                        <li class="self" id="firstpm">
+                            <div class="avatar">
+                                <img src="/Content/images/users/@Model.Details.Pic">
+
+                            </div>
+                            <div class="messages">
+                                <p id="txt">
+                                    @Html.Raw(Model.Details.CDesc)
+                                </p>
+                                <time id="time">@Model.Details.ADate</time>
+                                <img id="check" src="~/Content/images/double-check.png" />
+                            </div>
+                        </li>
+                        @foreach (var item in Model.Replies)
+                        {
+                            bool userReply = item.FromUserID == Model.Details.MainID.ToString();
+                            <li class="@(userReply? "self" : "other")">
+                                <div class="avatar"> 
+                                    <img src="/Content/images/users/@(userReply? Model.Details.Pic : "asp.jpg")"
+                                         data-placement="@(!userReply ? "right" : "left")" data-toggle="tooltip" title="@(!userReply ? "مشتری" : "شما")" />
+                                </div>
+                                <div class="messages">
+                                    <p>
+                                      @Html.Raw(item.Text)
+                                    </p>
+                                    <time>@item.RegDateFa</time>
+                                    @if (userReply)
+                                    {
+                                        if (item.IsAdminRead)
+                                        {<img src="~/Content/images/double-check.png" alt="خوانده" />}
+                                        else
+                                        {<img src="/Content/images/check.png" alt="ارسال شده" />}
+                                    }
+                                </div>
+                            </li>
+                        }
+
+
+
+                    </ol>
+                </div>
+
+
+            </div>
+
+            <div class="message-input">
+                <div class="wrap">
+
+                    @if (Model.Details.IsClosed)
+                    {
+                        <div class="closed">
+                            <a href="#">ارسال تیکت جدید</a>
+                            <p>تیکت بسته شده است. در صورت نیاز، تیکت جدید ثبت کنید.</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <textarea id="replytext" data-emojiable="true" placeholder="پاسخ خود را اینجا بنویسید و ارسال کنید..."></textarea>
+
+                   
+                            <i class="fa fa-paperclip attachment" aria-hidden="true" data-toggle="tooltip" title="ضمیمه"></i>
+                    
+                        <button id="btnsubmit" data-toggle="tooltip" title="ارسال با اینتر و خط جدید با shift و اینتر"  class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                    }
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!--SIde-->
+    <div class="col-md-3">
+
+
+        <ul class="list-group">
+            <li class="list-group-item active text-center">
+                توضیحات تیکت
+                <a href="/panel/support" class="pull-left text-bold" style="font-size:18px; font-weight:bold;" data-placement="right" data-toggle="tooltip" title="برگشت به لیست تیکت ها">
+                    <i class="fa fa-angle-left fa-lg"></i>
+                </a>
+            </li>
+            <li class="list-group-item">وضعیت: <span class="pull-left">@Html.Raw(Model.Details.IsClosed ? "<div class='label label-default'>اتمام</span>" : "<div class='label label-success'>جاری</span>")</span></li>
+            <li class="list-group-item">آخرین پاسخ: <span class="pull-left" id="spnLastDate">@Model.Details.LastResponseDate</span></li>
+            <li class="list-group-item">
+                امتیاز:
+                @if (Model.Details.IsClosed)
+                {
+                    if (string.IsNullOrEmpty(Model.Details.PollRate))
+                    {
+                        <button type="button" id="rateShowModalBtn" class="btn btn-linkedin pull-left" data-toggle="modal" data-target="#rateModal"><i class="fa fa-star"></i> ارسال امتیاز</button>
+                    }
+
+                    <div id="ratedone" class="pull-left"></div>
+
+
+
+
+                }
+                else
+                { <span class="pull-left text-muted">پس از اتمام تیکت</span> }
+                <div class="clearfix"></div>
+            </li>
+        </ul>
+
+
+
+        <div class="box ticket-timeline slimscroll">
+            <div class="timeline">
+                <div class="line text-muted"></div>
+
+
+                @foreach (var item in Model.Refferences)
+                {
+                    <article class="panel panel-default">
+                        <div class="panel-heading icon">
+                            <i class="fa fa-flag-o"></i>
+                        </div>
+                        <div class="panel-body">
+                            <span class="reftime pull-left">@Html.Raw(item.Date)</span>
+                            <h5>@item.Name</h5>
+                        </div>
+                    </article>
+
+                }
+
+
+
+
+                @if (!string.IsNullOrEmpty(Model.Details.EndDate))
+                {
+                    <div class="separator text-muted">
+                        <time> اتمام - @Html.Raw(Model.Details.EndDate)</time>
+                    </div>
+                }
+
+
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+
+    <div class="clear"></div>
+</div>
+
+
+@section scripts{
+<script src="~/Areas/Panel/Content/js/RateYo-v2.3.2/jquery.rateyo.min.js"></script>
+<script src="~/Areas/Admin/Content/plugins/emoji-picker/lib/js/config.js"></script>
+<script src="~/Areas/Admin/Content/plugins/emoji-picker/lib/js/util.js"></script>
+<script src="~/Areas/Admin/Content/plugins/emoji-picker/lib/js/jquery.emojiarea.js"></script>
+<script src="~/Areas/Admin/Content/plugins/emoji-picker/lib/js/emoji-picker.js"></script>
+
+<script>
+    //برای ایموجی
+      //$(function() {
+      //  // Initializes and creates emoji set from sprite sheet
+      //  window.emojiPicker = new EmojiPicker({
+      //    emojiable_selector: '[data-emojiable=true]',
+      //    assetsPath: '../../../areas/admin/content/plugins/emoji-picker/lib/img',
+      //    popupButtonClasses: 'fa fa-smile-o'
+      //  });
+      //  // Finds all elements with `emojiable_selector` and converts them to rich emoji input fields
+      //  // You may want to delay this step if you have dynamically created input fields that appear later in the loading process
+      //  // It can be called as many times as necessary; previously converted input fields will not be converted again
+      //  window.emojiPicker.discover();
+      //});
+ 
+
+        $(document).ready(function () {
+            //var id = @ticketID;
+            //readTicket(id);
+
+            $(window).resize(function() {
+                var bodyheight = $(this).height();
+                $("#chats").height(bodyheight-80);
+                scrollDown();
+            }).resize();
+
+            @if (!string.IsNullOrEmpty(Model.Details.PollRate))
+            {
+                 <text>
+            $("#ratedone").rateYo({
+                fullStar: true,
+                starWidth: "22px",
+                rating: @Model.Details.PollRate,
+                readOnly: true
+            });
+            </text>
+            }
+
+
+            scrollDown();
+            $('#replytext,.emoji-wysiwyg-editor').keydown(function (e) {
+                if(event.shiftKey)
+                    return;
+                if (e.keyCode == 13) {  
+                    if($("#replytext").val().length<=1){
+                        $("#replytext").val('');
+                        return false;
+                    }
+                    $("#btnsubmit").click();
+                }
+            });
+
+
+             
+
+            $("#btnsubmit").click(function(){
+                var txt= $("#replytext").val();
+
+                if (!txt)
+                {
+                    $.Notification.notify('error', 'top center', '', 'پاسخ را وارد کنید');
+
+                    return; }
+
+                $("#btnsubmit").html('<i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i>');
+                $('#replytext').prop('disabled', true);
+
+                $.ajax({
+                    url: '/panel/support/SendReply',
+                    data: { text:txt, isid: @Model.Details.ISID },
+                    type: "POST",
+                    dataType: "json",
+                    success: function (data, status)
+                    {
+                        if(data.stat){
+                           
+                            var $divpm = $('#firstpm').clone();
+                            $divpm.find("#txt").html(txt.replace(/\n/g, "<br />"));
+                            $divpm.find("#check").attr("src","/Content/images/check.png");
+                            $('#discussion').append($divpm);
+                            $divpm.find("time").html('الان');
+                            $("#spnLastDate").html("الان");
+                            
+                            $("#btnsubmit").html('<i class="fa fa-paper-plane" aria-hidden="true"></i>');
+                            $('#replytext').prop('disabled', false).val('').focus(); 
+
+                            scrollDown();
+
+                            $.Notification.notify('success', 'top left', '', 'پاسخ ارسال شد');
+                        }
+                        else{
+                            $.Notification.notify('error', 'top left', '', data.msg);
+                        }
+                    },
+                    error: errorFunc
+
+                });
+            });
+
+
+
+            $("#rateYo").rateYo({
+                fullStar: true,
+                starWidth: "40px",
+                normalFill: "gray",
+                ratedFill: "#f39c12",
+                numStars: 5,
+                precision: 1,
+                minValue: 0,
+                maxValue: 5,
+                spacing   : "5px",
+                onSet: function (rating, rateYoInstance) {
+                    rating = Math.ceil(rating);
+                    $('#rating_input').val(rating);//setting up rating value to hidden field
+
+                }
+            });
+
+
+            $("#btnSaveRating").click(function(){
+                var rating= $("#rating_input").val();
+                var ratingDesc= $("#ratingtext").val();
+
+                if (!rating)
+                {
+                    $.Notification.notify('error', 'top center', '', 'بر روی ستاره ها کلیک کنید تا امتیاز دهید');
+                    return; }
+
+                $("#btnSaveRating").html('<i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i>');
+                $('#ratingtext').prop('disabled', true);
+
+                $.ajax({
+                    url: '/panel/support/SendRating',
+                    data: { text:ratingDesc, rate:rating, isid: @Model.Details.ISID },
+                    type: "POST",
+                    dataType: "json",
+                    success: function (data, status)
+                    {
+                        if(data.stat){
+                            $.Notification.notify('success', 'top left', '', 'تشکر. نظر شما ارسال شد');
+                            $("#rateModal").modal("hide") ;
+                            $("#rateShowModalBtn").remove();
+
+
+
+                            $("#ratedone").rateYo({
+                                fullStar: true,
+                                starWidth: "22px",
+                                rating: parseInt(rating,10),
+                                readOnly: true
+                            });
+                        }
+                        else{
+                            $.Notification.notify('error', 'top left', '', data.msg);
+                        }
+                    },
+                    error: errorFunc
+
+                });
+            });
+        });
+
+        function scrollDown(){ 
+            var objDiv = document.getElementById("chatmessages");
+            objDiv.scrollTop = objDiv.scrollHeight;
+        }
+
+        function errorFunc (xhr, status, error) {
+
+            $.Notification.notify('error', 'top center', '', error);
+        }
+
+    </script> 
+}
+
+
+
+<div id="rateModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">ارسال امتیاز</h4>
+            </div>
+            <div class="modal-body">
+                <div class="text-center m-b-20">
+                    <p class="text-muted">
+                        به عملکرد و نحوه انجام کار توسط کارشناسان ما، از 1 تا 5 ستاره امتیاز دهید.
+                    </p>
+                    <div style="display:inline-block;" id="rateYo"></div>
+                    <input type="hidden" name="rating" id="rating_input" />
+                </div>
+
+                <div class="form-group m-b-20">
+                    <label class="col-md-3">توضیحات </label>
+                    <div class="col-md-9">
+                        <textarea type="text" class="form-control" rows="2" placeholder="در صورت تمایل در مورد عملکرد کارشناس یا... توضیح دهید"
+                                  id="ratingtext"></textarea>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="text-center">
+                    <button type="button" id="btnSaveRating" class="btn btn-info ">ارسال نظـــر</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+

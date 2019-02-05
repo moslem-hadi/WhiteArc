@@ -1,0 +1,47 @@
+﻿@model List<ViewModels.HomePagePostViewModel>
+
+
+
+<div class="section-empty section-bg-color border-botton ">
+
+    <div class="container content">
+
+        <div class="row">
+
+            <div class="col-xs-12">
+                <h4 class="section-title">آمـــوزش ها</h4>
+                <p class="section-sub">
+                    آموزش های مرتبط با نرم افزارهای آرمان سیستم  را در بخش آموزش بررسی کنید.
+                </p>
+                <div class="flexslider carousel ltr grey shop" data-options="numItems:4,minWidth:250,itemMargin:30,directionNav:false">
+                    <ul class="slides">
+                        @foreach (var item in Model)
+                        {
+
+                        <li>
+                            <div class="img-box adv-img adv-img-down-text">
+                                <a class="img-box img-scale-up lightbox i-center" href="/learn/@item.ID/@item.Url">
+                                    <div class="caption">
+                                        <i class="fa fa-plus"></i>
+                                    </div>
+                                    <img src="@item.Pic" alt="" />
+                                </a>
+                                <div class="caption-bottom">
+                                    <h4><a href="/tutorial/@item.ID/@item.Url">@item.Title</a></h4>
+                                    @*<p class="price">@item.Brief</p>*@
+
+                                </div>
+
+                            </div>
+
+                        </li> 
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div><a class="btn btn-primary btn-sm pull-left" href="/tutorials">ادامه لیست آموزش ها <i class="fa fa-angle-left"></i></a>
+
+
+
+    </div>
+</div>

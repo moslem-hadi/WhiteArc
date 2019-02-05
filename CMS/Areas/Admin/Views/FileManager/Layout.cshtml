@@ -1,0 +1,15 @@
+﻿@using GleamTech.Web.Mvc
+@using GleamTech.FileUltimate
+@model FileManager
+
+@{
+    ViewBag.Title = "Layout"; 
+}
+ 
+    @Html.RenderJs(Model)
+ 
+    @Html.RenderCss(Model)
+ 
+
+@Html.RenderControl(Model)
+

@@ -1,0 +1,35 @@
+﻿@model List<ViewModels.PostListViewModel>
+@if (Model.Count > 0)
+{
+
+<section class="news-blog spacetb tbsmall">
+    <div class="container">
+        <div class="big-title text-center">
+            
+            <h2 class="tt02">مقالات</h2>
+
+        </div>
+
+
+        <div class="row">
+
+
+            @foreach (var item in Model)
+            {
+                @Html.Partial("_ArticleBox", @item)
+            }
+
+
+        </div>
+
+
+
+        <div class="action-button text-left">
+            <a class="btn-yellow" href="/articlelist">آرشیو مقالات</a>
+        </div>
+    </div>
+</section>
+
+}
+
+

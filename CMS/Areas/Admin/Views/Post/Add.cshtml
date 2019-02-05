@@ -1,0 +1,321 @@
+﻿@model ViewModels.PostViewModel
+@using DomainClasses;
+@{
+    //چون این فرم برای چند جدول استفاده میشه، نمایش عناوین بستگی به تایپ داره.
+    string typeName = ViewBag.TypeName;
+    string type = ViewBag.Type;
+    string postCode = ViewBag.TypeCode;
+    string title = @Model.ID == 0 ? string.Format("ایجاد {0} جدید", typeName) : string.Format("ویرایش {0}", typeName);
+    ViewBag.Title = title;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+            {
+
+
+    <div class="row ">
+        <div class="col-sm-12">
+            <ol class="breadcrumb">
+                <li>
+                    @Html.ActionLink("میز کار", "index", "index")
+                </li>
+                <li>
+
+                    <text>@Html.ActionLink("لیست " + typeName, "index", type)</text>
+
+
+                </li>
+                <li class="active">
+                    @title
+                </li>
+            </ol>
+
+            <div id="sticky-anchor"></div>
+            <div class="tobesticky" id="sticky">
+                <div class="pull-left mainbtns">
+
+                    <button type="submit" name="postType" value="save-continue" class="btn btn-default"><i class="fa fa-retweet delay"></i>ذخیره و ادامه</button>
+                    <button type="submit" name="postType" value="save" class="btn btn-primary"><i class="fa fa-floppy-o delay"></i>ذخیــره</button>
+
+
+                    @if (Model.ID != 0)
+                    {
+
+                        <div class="btn-group product-action-links">
+                            <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light"
+                                    data-toggle="dropdown" aria-expanded="false">
+                                دسترسی<span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li><a href="/@type/@Model.ID/@Model.Url"><i class="fa fa-eye"></i>  نمایش</a></li>
+                                <li>
+                                    <button type="submit" name="postType" value="delete" class="text-danger "><i class="fa fa-times delay"></i> حذف</button>
+                                </li>
+                            </ul>
+                        </div>
+                    }
+                </div>
+
+                <h4 class="page-title">
+                    @title
+
+                    @Html.ActionLink("لیست " + typeName, "index", type, null, htmlAttributes: new { @class = "innersmall" })
+
+                </h4>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card-box padding0 nobg">
+
+
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.ViewCount)
+                @Html.HiddenFor(model => model.RegDate)
+                @Html.HiddenFor(model => model.PublishDate)
+                @Html.HiddenFor(model => model.LikeCount)
+                @Html.HiddenFor(model => model.IsActive)
+
+                <div class="form-horizontal formhr">
+
+
+
+
+                    <div class="tabs-vertical-env">
+                       @if (type != "faq")
+                       { <ul class="nav tabs-vertical">
+                           <li class="active">
+                                <a href="#main" data-toggle="tab" aria-expanded="false">اطلاعات اصلی</a>
+                            </li>
+                            
+                            <li class="">
+                                <a href="#seo" data-toggle="tab" aria-expanded="false">سئو</a>
+                            </li>
+                           
+                        </ul> }
+
+                        <div class="tab-content">
+
+                            <div class="tab-pane active  in fade" id="main">
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger notifyjs-metro-base notifyjs-metro-error" })
+
+
+
+
+
+
+                                <div class="form-group ">
+                                    @Html.LabelFor(model => model.LanguageID, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-5">
+                                        <div style="width:120px;" class="inline">
+                                            @Html.DropDownList("LanguageID", new SelectList(ViewBag.LanguageList, "ID", "Text"),
+                            htmlAttributes: new { @class = "form-control", id = "LanguageList" })
+                                        </div>
+                                        <img src="@Url.Content("~/areas/admin/content/images/loading.gif")" id="imgloading" />
+                                    </div>
+                                </div>
+
+
+
+                                <input type="hidden" name="Type" id="Type" value="@(ViewBag.TypeCode)" />
+                               <div class="form-group">
+                                    <label class="control-label col-md-2">دسته بندی ها</label>
+                                    <div class="col-md-7">
+                                        @Html.ListBoxFor(model => model.SelectedGroupIDs, (MultiSelectList)ViewBag.Categories,
+                            htmlAttributes: new { @class = "form-control", id = "groups", multiple = "multiple" })
+
+                                    </div>
+                                </div>
+                              
+
+
+
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-7">
+                                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control counter", autocomplete = "off", maxlength = 200, onblur = "setUrl(this,'Url')" } })
+                                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+
+@if (type != "faq")
+{
+                                <div class="form-group">
+                                    <label class="control-label col-md-2 help" data-toggle="tooltip" title="توضیحاتی مختصر که در لیست ها نمایش داده می شود.">
+                                        توضیح    مختصر
+                                    </label>
+                                    <div class="col-md-7">
+                                        @Html.TextAreaFor(model => model.Brief,  htmlAttributes  : new { @class = "form-control counter", autocomplete = "off", maxlength = 500  })
+                                        @Html.ValidationMessageFor(model => model.Brief, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+}
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Text, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.Text, new { htmlAttributes = new { id = "editor1" } })
+                                        @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+
+@if (type != "faq")
+{
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Pic, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-6">
+                                        @Html.FileChooseFor(model => model.Pic, "انتخاب تصویر", "software")
+                                    </div>
+                                </div>
+}
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">وضعیت</label>
+                                    <div class="col-md-7">
+                                        @Html.CheckBoxFor(model => model.IsPublished, htmlAttributes: new
+                                           {
+                                           data_plugin="switchery" ,data_color="#81c868",
+                                                        data_size="small"})
+                                        <label for="IsPublished">منتشر شود</label>
+
+
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+
+
+                            <div class="tab-pane fade" id="seo">
+
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2 help" data-toggle="tooltip" title="آدرسی که در Url قرار می گیرد. تغییر آدرس پس از انتشار موجب کاهش رتبه سایت می شود. ترجیحا انگلیسی باشد.">
+                                        آدرس در URL
+                                    </label>
+                                    <div class="col-md-7">
+                                        <div class="input-group urlinput">
+                                            @Html.EditorFor(model => model.Url, new { htmlAttributes = new { @class = "form-control ltr counter", autocomplete = "off", maxlength = 70, onkeyup = "nospaces(this)" } })
+                                            <i class="fa fa-copy waves-effect waves-green" data-toggle="tooltip" data-placement="left" title="کپی کردن آدرس" onclick="copyTextToClipboard('@Utilities.Functions.GetSettingVal("siteurl","",false)/blog/@Model.ID/','Url')"></i>
+                                            <span class="input-group-addon">@Utilities.Functions.GetSettingVal("siteurl", "",false)/blog/@Model.ID/</span>
+
+                                        </div>
+
+                                        @Html.ValidationMessageFor(model => model.Url, "", new { @class = "text-danger" })
+
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.SeoTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-7">
+                                        @Html.EditorFor(model => model.SeoTitle, new { htmlAttributes = new { @class = "form-control counter", autocomplete = "off", maxlength = 70 } })
+                                        @Html.ValidationMessageFor(model => model.SeoTitle, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.SeoDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-7">
+                                        @Html.EditorFor(model => model.SeoDescription, new { htmlAttributes = new { @class = "form-control counter", autocomplete = "off", maxlength = 150 } })
+                                        @Html.ValidationMessageFor(model => model.SeoDescription, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.KeyWords, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-7">
+                                        @Html.EditorFor(model => model.KeyWords, new { htmlAttributes = new { @class = "form-control counter", autocomplete = "off", maxlength = 200 } })
+                                        @Html.ValidationMessageFor(model => model.KeyWords, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+
+
+            </div>
+        </div>
+    </div> }
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="~/Areas/Admin/Content/ckeditor/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('editor1', {
+            filebrowserBrowseUrl: '/admin/filemanager?chooser=1',
+            filebrowserImageBrowseUrl: '/admin/filemanager?Type=Images&chooser=1',
+            filebrowserFlashBrowseUrl: '/admin/filemanager?Type=Flash&chooser=1' 
+            //filebrowserWindowHeight: '600'
+        });
+
+
+
+
+            function getGroup(languageID) {
+                $("#imgloading").show();
+                $("#groups").empty();
+                $.ajax({
+                url: '@Url.Action("GetGroupListByLangAndType", "PostGroup")',
+                data: { type: @postCode,lang: languageID },
+                    type: "POST",
+                    datatype: 'json',
+                    success: function (result) {
+
+                        result.forEach(function (item, index) {
+                            $('#groups')
+                                .append($("<option></option>")
+                                .attr("value", item.ID)
+                                .text(item.Text));
+
+                        });
+                        $("#imgloading").hide();
+                    }
+                });
+            }
+
+            $("#LanguageList").select2({
+                minimumResultsForSearch: Infinity,
+                dir: "rtl",
+                templateResult: formatLang,
+                templateSelection: formatLang
+            }).on("change", function (e) {
+                getGroup(this.value);
+            });
+
+            function formatLang(state) {
+                if (!state.id) { return state.text; }
+                var $state = $(
+                  '<span><img src="/content/images/flags/' + state.element.value.toLowerCase() + '.png" class="img-flag" /> ' + state.text + '</span>'
+                );
+                return $state;
+            };
+
+
+
+        $("#groups").select2({
+            dir: "rtl"
+        });
+
+
+
+    </script>
+
+} 

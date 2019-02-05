@@ -1,0 +1,52 @@
+
+
+
+@font-face {
+    font-family: main;
+    font-style: normal;
+    font-weight: bold;
+    src: url('fonts/iranyekanwebbold.eot');
+    src: url('fonts/iranyekanwebbold.eot?#iefix') format('embedded-opentype'),url('fonts/iranyekanwebbold.woff2') format('woff2'),url('fonts/iranyekanwebbold.woff') format('woff'),url('fonts/iranyekanwebbold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: main;
+    font-style: normal;
+    font-weight: normal;
+    src: url('fonts/iranyekanwebregular.eot');
+    src: url('fonts/iranyekanwebregular.eot?#iefix') format('embedded-opentype'),url('fonts/iranyekanwebregular.woff2') format('woff2'),url('fonts/iranyekanwebregular.woff') format('woff'),url('fonts/iranyekanwebregular.ttf') format('truetype');
+}
+
+
+body, html {
+    direction: rtl;
+    text-align: right;
+}
+
+body {
+    font-family: 'main', Tahoma, sans-serif;
+}
+
+.feature-box {
+    padding: 0 20px 0 10px;
+}
+
+    .feature-box .icon {
+        right: 15px;
+        left: auto;
+    }
+
+    .feature-box:after {
+        right: 5px;
+        left:auto;
+    }
+
+
+    .ltr{direction:ltr !important}
+
+    .lang{
+         margin-left:0 !important;
+    margin-right: auto;}
+    .header-nav .navbar-nav > li {
+	margin: 0 0 0 20px;
+}

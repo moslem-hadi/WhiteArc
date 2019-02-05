@@ -1,0 +1,91 @@
+﻿@using Westwind.Globalization
+@model ViewModels.PostUiViewModel 
+@{
+    ViewBag.Title = @Model.SeoTitle;
+}
+
+@section head{
+
+
+    <meta name="description" content="@Model.SeoDescription" />
+    <meta name="keywords" content="@Model.KeyWords" />
+    <meta name="Title" content="@Model.SeoTitle" />
+
+    <meta itemprop="name" content="@Model.SeoTitle">
+    <meta itemprop="description" content="@Model.SeoDescription">
+
+<meta name="twitter:card" content="@Model.Pic">
+    <meta name="twitter:title" content="@Model.SeoTitle">
+    <meta name="twitter:description" content="@Model.SeoDescription">
+
+    <meta property="og:title" content="@Model.SeoTitle" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="@Model.SeoDescription" />
+
+}
+
+
+
+<div id="main" class="content-main">
+
+    <section class="banner blog-detail">
+        <div class="container">
+            <div class="morepage-banner">
+                <h2 class="title">@Model.SeoTitle</h2>
+                <ol class="breadcrumb">
+                    <li><a href="/" class="link">@DbRes.T("Home", "Words")</a></li>
+                    <li><a href="/blog" class="link">@DbRes.T("BlogListTitle", "Words")</a></li>
+                   
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <section class="page-main padding-top-100 padding-bottom-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-xs-12 main-left blog-wrapper">
+
+                    <div class="blogs-wrapper">
+                        <div class="image-wrapper">
+                            <img src="@Model.Pic" alt="" class="images img-responsive">
+
+                        </div>
+                        <div class="content-wrapper pagecontent text text-justify">
+                          
+
+                                @Html.Raw(Model.Text)
+                             
+                        </div>
+
+                    </div>
+
+
+                    </div>
+                <div class="col-md-4 col-xs-12 sidebar">
+                    @{Html.RenderAction("SideBarArticlePartial");
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+
+     
+</div>
+
+
+
+
+
+@section scripts{
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            var id = @Model.ID;
+            addPostViewCount(id);
+        });
+    </script>
+
+}
+ 

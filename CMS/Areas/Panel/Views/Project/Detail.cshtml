@@ -1,0 +1,57 @@
+﻿@model ViewModels.ProjectAddViewModel
+@{
+
+    string title = "مشاهده اطلاعات پروژه";
+    ViewBag.Title = title;
+    Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="row ">
+    <div class="col-sm-12">
+        <ol class="breadcrumb pull-left hidden-xs">
+            <li>
+                @Html.ActionLink("میز کار", "index", "index")
+            </li>
+            <li>
+                @Html.ActionLink("لیست پروژه ها", "index", "Product")
+
+            </li>
+            <li class="active">
+                @title
+            </li>
+        </ol>
+
+
+
+        <h4 class="page-title m-b-15">
+            @Model.Title
+
+        </h4>
+
+
+    </div>
+</div>
+
+
+
+
+
+<div class="row">
+    <div class="col-sm-12">
+
+
+        <div class="card-box ">
+
+            @if (ViewBag.ProjectStatus != null)
+            {
+            @Html.Partial("partial/"+ (string)ViewBag.ProjectStatus)
+            }
+
+
+        </div>
+    </div>
+</div>
+@section Scripts {
+}

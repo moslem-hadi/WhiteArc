@@ -1,0 +1,74 @@
+﻿@model Microsoft.AspNet.Identity.EntityFramework.IdentityRole
+
+@{
+    ViewBag.Title = "اطلاعات رول";
+} 
+
+
+<div class="row">
+    <div class="col-sm-12">
+
+        <ol class="breadcrumb">
+            <li>
+                @Html.ActionLink("میز کار", "index", "index")
+            </li>
+            <li>
+                @Html.ActionLink("مدیریت سیستم", "index", "sysadmin")
+            </li>
+            <li>
+                @Html.ActionLink("لیست رول ها", "roleslist", "sysadmin")
+            </li>
+            <li class="active">
+                اطلاعات رول
+            </li>
+        </ol>
+
+        <div id="sticky-anchor"></div>
+        <div class="tobesticky" id="sticky">
+
+            <h4 class="page-title">اطلاعات رول</h4>
+        </div>
+
+    </div>
+</div>
+<div class="card-box  ">
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                نام رول
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+        </dl>
+    </div> 
+    <h4>لیست کاربران این رول</h4>
+   <br />
+    @if (ViewBag.UserCount == 0)
+    {
+      
+        <p style="padding:40px 0; text-align:center; font-size:18px;">کاربری در این لیست نیست.</p>
+    }
+
+    <table class="table table-striped table-bordered">
+
+        @foreach (var item in ViewBag.Users)
+        {
+            <tr>
+                <td>
+                    @item.UserName
+                </td>
+                <td>
+                    @Html.ActionLink("ویرایش رول های کاربر", "edituserroles", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </table>
+    <hr />
+    <p>
+        @Html.ActionLink("ویرایش رول", "roleedit", new { id = Model.Id }) |
+        @Html.ActionLink("لیست رول ها", "roleslist")
+    </p>
+
+
+    </div>

@@ -1,0 +1,141 @@
+﻿
+@{
+    ViewBag.Title = "لیست کاربرها";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+
+        <ol class="breadcrumb">
+            <li>
+                @Html.ActionLink("میز کار", "index", "index")
+            </li>
+            <li class="active">
+                لیست کاربرها
+            </li>
+        </ol>
+         
+
+
+        <div id="sticky-anchor"></div>
+        <div class="tobesticky" id="sticky">
+            <div class="pull-left mainbtns">
+                <a href="@Url.Action("add","user")" class="btn btn-inverse waves-effect"><i class='fa fa-plus'></i> افزودن کاربر</a>
+   </div>
+             
+                <h4 class="page-title">لیست کاربرها</h4>
+             
+        </div>
+
+
+
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="k-rtl">
+            
+
+            @Html.AntiForgeryToken()
+
+            <div class="dataloading"></div>
+
+
+            <div id="grid"></div>
+
+
+        
+
+             
+
+
+        </div>
+    </div>
+</div>
+ 
+
+ 
+@section Scripts {
+
+
+<script>
+    
+    $(function () {
+            $("#grid").kendoGrid({
+             
+                scrollable: false   ,
+                columns: [
+                     {
+                         field: "FullName", title: 'نام', template: "#if(IsBanned == true) {# <i class='fa fa-ban' title='بن شده'></i> #}#" +
+                                 "<div class=''><a  href='/admin/user/edit/#=Id#' target='_blank' class='text-bold'>#: FullName #</a></div>"
+                     },
+                    { field: "UserName", title: 'کد کاربری/مشتری', width: 150, template: "<div class='text-center text-bold'>#=UserName#</div>" },
+                    //{ field: "LastLoginDate", title: 'آخرین ورود', width: 100, template: "<div class='text-center'>#=LastLoginDate#</div>" },
+                    {
+                        field: "", title: "تنظیمات", width:120,
+                        template: "<div class='text-center gridbtn'><a title=\"ویرایش رکورد\" href=\"/admin/user/edit/#=Id#\"><i class=\"fa fa-edit\"></i></a>  </div>"
+                    }
+
+
+                ],
+                editable: false, // enable editing
+
+                pageable: {
+                    pageSizes: [5, 10, 20, 50, 100],
+                    messages: {
+                        itemsPerPage: ""
+                    }, buttonCount: 4
+                },
+                sortable: true,
+                filterable: true, 
+                dataSource: {
+                    serverPaging: true,
+                    serverFiltering: true,
+                    serverSorting: true,
+                    pageSize: 20,
+                    schema: {
+                        data: "Data",
+                        total: "Total",
+                        model: { // define the model of the data source. Required for validation and property types.
+                            id: "ID",
+                            fields: {
+                                ID: { type: "number" },
+                                FullName: { type: "string"},
+                                UserName: { type: "string" },
+                                LastLoginDate: { type: "string" }
+                            }
+                        }
+                    },
+
+                    batch: false, // enable batch editing - changes will be saved when the user clicks the "Save changes" button
+                    transport: {
+                        read: {
+                            url: "@Url.Action("getList", "user")", //specify the URL which should return the records. This is the Read method of the HomeController.
+                            contentType: "application/json",
+                            type: "POST" //use HTTP POST request as by default GET is not allowed by ASP.NET MVC
+
+                        },
+                        parameterMap: function (data, operation) {
+                            if (operation == "read") {
+                                $('.dataloading').hide();
+                                return JSON.stringify(data)
+                            }
+                        }
+                    }
+                }
+            });
+
+
+
+             
+
+    });
+
+ 
+
+
+</script>
+     }

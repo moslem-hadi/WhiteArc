@@ -1,0 +1,103 @@
+﻿@using PagedList
+@using PagedList.Mvc
+
+@model List<ViewModels.ProjectList>
+
+@{
+    int pagenum = Request.QueryString["page"]!=null ? int.Parse(Request.QueryString["page"]) : 1;
+    ViewBag.Title = "لیست پروژه های شما " + (pagenum > 1 ? "- صفحه " + pagenum : "");
+    Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
+    int counter = (pagenum-1)*10+ 1;
+}
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="pull-left m-t-5">
+            <a href="/panel/project/add" class="btn btn-default"><span class="m-l-5"><i class="fa fa-plus"></i></span> ارسال پروژه جدید </a>
+
+        </div>
+        <h4 class="page-title">@ViewBag.Title</h4>
+        <p class="text-muted page-title-alt"></p>
+
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card-box">
+            @*<h4 class="m-t-0 header-title"><b>لیست پروژه های ثبت شده از طرف شما</b></h4>*@
+
+          
+
+    @if (Model.Count > 0)
+    {
+        <div class="table-responsive m-t-20 ">
+
+
+            <table class="table text-center">
+                <thead>
+                    <tr>
+                        <th class="text-center">#</th>
+                        <th class="text-right">عنوان پروژه</th>
+                        <th class="text-center">وضعیت</th>
+                        <th class="text-center">پیشنهاد ها</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model)
+                {
+                        <tr>
+                            <th scope="row">@(counter++)</th>
+                            <td class="text-right"><a href="/job/@item.ID-@item.Url">@item.Title</a></td>
+                            <td class="text-center"> @Html.Raw(item.ProjectStatus)</td>
+                            <td class="text-center">
+                                <label class="label label-success">@item.OffersCount پیشنهاد</label>
+                                @if (item.OffersAvgAmount > 0)
+                                {
+                                    <small class="center-block m-t-10">میانگین: @Utilities.Functions.SetCama(item.OffersAvgAmount) تومان</small>
+                                }
+                            </td>
+
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+
+
+
+
+
+            <div class="clearfix clear"></div>
+            <div class="text-center m-b-10">
+                <div class="info-pagination">
+                    @Html.PagedListPager((IPagedList)ViewBag.Projects, page => Url.Action("index", "project", new { page = page }),
+                   new PagedListRenderOptions { LinkToPreviousPageFormat = "<i class='fa fa-chevron-right'></i>", LinkToNextPageFormat = "<i class='fa fa-chevron-left'></i>", UlElementClasses = new List<string> { "pagination" } })
+
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+                    <div class="text-center">
+
+
+                        <img src="~/Areas/Panel/Content/images/job-board.png" alt="" />
+                        <h4 class="text-muted m-t-20">پروژه ای درج نشده است.</h4>
+                        <a href="/panel/project/add" class="btn btn-default m-t-10"><span class="m-l-5"><i class="fa fa-plus"></i></span> ارسال پروژه جدید  </a>
+
+                    </div>
+                }
+
+
+
+
+        </div>
+    </div>
+
+</div>

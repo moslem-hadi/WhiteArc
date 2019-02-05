@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9d81015480db4ee09c7efb490ec31125" Name="Diagram1" ZoomLevel="108" ShowGrid="false" DisplayType="false">
+        <EntityTypeShape EntityType="CMSDataModel.ContactPM" Width="1.5" PointX="7.75" PointY="4.75" />
+        <EntityTypeShape EntityType="CMSDataModel.Language" Width="1.5" PointX="5.75" PointY="1" />
+        <EntityTypeShape EntityType="CMSDataModel.Localization" Width="1.5" PointX="9.75" PointY="4.75" />
+        <EntityTypeShape EntityType="CMSDataModel.LocalizedProperty" Width="1.5" PointX="8" PointY="1" />
+        <EntityTypeShape EntityType="CMSDataModel.NewsLetterEmail" Width="1.5" PointX="5.75" PointY="9.75" />
+        <EntityTypeShape EntityType="CMSDataModel.PageContent" Width="1.5" PointX="7.75" PointY="9.75" />
+        <EntityTypeShape EntityType="CMSDataModel.Post" Width="1.5" PointX="0.75" PointY="9.5" />
+        <EntityTypeShape EntityType="CMSDataModel.PostComment" Width="1.5" PointX="3" PointY="10.25" />
+        <EntityTypeShape EntityType="CMSDataModel.PostGroup" Width="1.5" PointX="0.75" PointY="1" />
+        <EntityTypeShape EntityType="CMSDataModel.PostGroupMapping" Width="1.5" PointX="3" PointY="1.875" />
+        <EntityTypeShape EntityType="CMSDataModel.Product_Group_Mapping" Width="1.5" PointX="5" PointY="5.375" />
+        <EntityTypeShape EntityType="CMSDataModel.ProductGroup" Width="1.5" PointX="2.75" PointY="16.375" />
+        <EntityTypeShape EntityType="CMSDataModel.Role" Width="1.5" PointX="9.75" PointY="9.75" />
+        <EntityTypeShape EntityType="CMSDataModel.SettingValue" Width="1.5" PointX="10.75" PointY="0.75" />
+        <EntityTypeShape EntityType="CMSDataModel.SiteStat" Width="1.5" PointX="11.75" PointY="3.75" />
+        <EntityTypeShape EntityType="CMSDataModel.UsersData" Width="1.5" PointX="11.75" PointY="7.75" />
+        <AssociationConnector Association="CMSDataModel.FK_LocalizedProperty_Language" />
+        <AssociationConnector Association="CMSDataModel.FK_PostComment_Post" />
+        <AssociationConnector Association="CMSDataModel.FK_PostGroupMapping_Post" />
+        <AssociationConnector Association="CMSDataModel.FK_PostComment_PostComment" />
+        <AssociationConnector Association="CMSDataModel.FK_PostGroup_PostGroup" />
+        <AssociationConnector Association="CMSDataModel.FK_PostGroupMapping_PostGroup" />
+        <AssociationConnector Association="CMSDataModel.FK_ProductGroupMapping_ProductGroup" />
+        <EntityTypeShape EntityType="CMSDataModel.CodeValue" Width="1.5" PointX="13.375" PointY="0.75" />
+        <EntityTypeShape EntityType="CMSDataModel.Product" Width="1.5" PointX="2.75" PointY="21.75" />
+        <AssociationConnector Association="CMSDataModel.FK_ProductGroupMapping_Product" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

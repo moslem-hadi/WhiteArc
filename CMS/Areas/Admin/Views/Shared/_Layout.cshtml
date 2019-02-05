@@ -1,0 +1,263 @@
+﻿<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="~/areas/admin/content/images/favicon_1.ico">
+    <title> @ViewBag.Title </title>
+
+
+    <link href="~/areas/admin/content/plugins/morris/morris.css" rel="stylesheet">
+@*    <link href="~/areas/admin/content/plugins/bootstrap-sweetalert/sweetalert2.min.css" rel="stylesheet" type="text/css">*@
+    <link href="~/areas/admin/content/plugins/bootstrap-sweetalert/sweet-alert.css" rel="stylesheet" type="text/css">
+
+    <link href="~/areas/admin/content/css/bootstrap-rtl.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/areas/admin/content/css/core.css" rel="stylesheet" type="text/css" />
+    <link href="~/areas/admin/content/css/components.css" rel="stylesheet" type="text/css" />
+    <link href="~/areas/admin/content/css/icons.css" rel="stylesheet" type="text/css" />
+    <link href="~/areas/admin/content/css/pages.css" rel="stylesheet" type="text/css" />
+    <link href="~/areas/admin/content/css/responsive.css" rel="stylesheet" type="text/css" />
+    <link href="~/Areas/Admin/Content/css/KendoCss/kendo.common-bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Content/css/KendoCss/kendo.default.min.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Content/css/KendoCss/kendo.bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Content/css/KendoCss/kendo.rtl.min.css" rel="stylesheet" />
+    <link href="~/areas/admin/content/plugins/select2/dist/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Areas/Admin/Content/plugins/switchery/css/switchery.min.css" rel="stylesheet" />
+
+
+
+
+
+
+    @RenderSection("styles", required: false)
+    @{
+        int notificationCount = 0;
+        int pmCount = Utilities.Functions.GetUnreadContactPMCount(); 
+        
+        notificationCount = pmCount;
+    }
+
+
+
+</head>
+<body class="fixed-left" onload="clock()">
+
+    <div class="pageloading"></div>
+ 
+    <div id="wrapper">
+        <!-- Top Bar Start -->
+        <div class="topbar">
+            <!-- LOGO -->
+            <div class="topbar-left">
+                <div class="text-center">
+                    <a href="@Url.Action("index", "index")" class="logo"><i class="fa fa-home icon-c-logo"></i><span>مدیریت محتوای وبتینا</span></a>
+
+
+                </div>
+            </div>
+            <!-- Button mobile view to collapse sidebar menu -->
+            <div class="navbar navbar-default" role="navigation">
+                <div class="container">
+                    <div class="">
+                        <div class="pull-right">
+                            <button class="button-menu-mobile open-left waves-effect waves-light">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <span class="clearfix"></span>
+                        </div>
+                        <ul class="nav navbar-nav hidden-xs">
+                            <li><a href="/" class="waves-effect waves-light">وبسایت</a></li>
+                          
+                        </ul>
+                     
+                        <ul class="nav navbar-nav navbar-right pull-left">
+                            <li class="datetime">
+                                <span class="date">@Utilities.Functions.ConvertNumFa2La(Utilities.Functions.String2date(DateTime.Now, 2, "n"))</span>
+                                <span class="time" id="jsClock">00:00:00</span>
+                            </li>
+                            <li class="dropdown top-menu-item-xs">
+                                <a href="#" data-target="#" class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="true">
+                                    <i class="fa fa-bell"></i> @if (notificationCount != 0){<span class="badge badge-danger">@notificationCount</span>}
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-lg">
+                                    <li class="notifi-title"><span class="label label-default pull-left">@notificationCount جدید</span>اعلان ها</li>
+                                    <li class="list-group slimscroll-noti notification-list">
+                                        <!-- list item-->
+                                        @if (pmCount != 0)
+                                        {
+                                            <a href="/admin/message" class="list-group-item">
+                                                <div class="media">
+                                                    <div class="pull-right p-l-10">
+                                                        <em class="fa fa-envelope-o noti-primary"></em>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h5 class="media-heading">پیام جدید</h5>
+                                                        <p class="m-0">
+                                                            <small>@pmCount پیام خوانده نشده در صندوق پیام هست.</small>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        }
+ 
+
+                                    </li> 
+                                </ul>
+                            </li> 
+                            <li class="dropdown top-menu-item-xs">
+                                <a href="javascript:void(0)" class="dropdown-toggle profile waves-effect waves-light" data-toggle="dropdown" aria-expanded="true"><img src="/areas/admin/content/images/user.png" alt="user-img" class="img-circle"> </a>
+                                <ul class="dropdown-menu"> 
+                                    <li><a href="/logoff"><i class="fa fa-close m-l-10 text-danger"></i> خروج</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
+        <!-- Top Bar End -->
+        <!-- ========== Left Sidebar Start ========== -->
+        <div class="left side-menu">
+            <div class="sidebar-inner slimscrollleft">
+                <!--- Divider -->
+                <div id="sidebar-menu">
+                    <ul>
+                        <li>
+                            <a href="@Url.Action("index", "index")" class="waves-effect"><i class="fa fa-home"></i> <span> میز کار </span> </a>
+                        </li>
+                         
+
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-tasks"></i><span> محتوا </span> <span class="menu-arrow"></span></a>
+                            <ul class="list-unstyled"> 
+                                <li><a href="@Url.Action("index", "message")">پیام های دریافتی  </a></li>
+                                <li><a href="@Url.Action("index", "filemanager")" target="_blank">مدیریت فایل ها</a></li>
+                                <li><a href="@Url.Action("index", "lang")">متن زبان ها  </a></li>
+                            </ul>
+                        </li>
+
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect"><i class="fa  fa-files-o"></i><span> صفحات </span> <span class="menu-arrow"></span></a>
+                            <ul class="list-unstyled">
+                                <li><a href="/admin/page/add">افزودن صفحه</a></li>
+                                <li><a href="@Url.Action("index", "page")">لیست صفحات</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-user"></i><span> کاربر ها </span> <span class="menu-arrow"></span></a>
+                            <ul class="list-unstyled">
+                                <li><a href="@Url.Action("add", "user")">افزودن کاربر</a></li>
+                                <li><a href="@Url.Action("index", "user")">لیست کاربران</a></li>
+                            </ul>
+                        </li>
+                          
+
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-cubes"></i><span> پروژه ها </span> <span class="menu-arrow"></span></a>
+                            <ul class="list-unstyled">
+                                <li><a href="/admin/product/add">افزودن پروژه</a></li>
+                                <li><a href="@Url.Action("index", "product")">لیست پروژه ها</a></li> 
+
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("index", "stat")" class="waves-effect"><i class="fa fa-bar-chart"></i><span> آمار بازدید </span></a>
+
+                        </li> 
+
+                        <li class="text-muted menu-title">پشتیبانی وبتینا </li>
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-commenting-o"></i> <span> تیکت ها </span> <span class="menu-arrow"></span></a>
+                            <ul class="list-unstyled">
+                                <li><a href="@Url.Action("add", "support")">ارسال تیکت</a></li>
+                                <li><a href="@Url.Action("index", "support")">لیست تیکت ها</a></li>
+                            </ul>
+                        </li>
+
+
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <!-- Left Sidebar End -->
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="content-page">
+            <!-- Start content -->
+            <div class="content">
+                <div class="container">
+                    @RenderBody()
+                </div> <!-- container -->
+
+            </div> <!-- content -->
+         
+        </div>
+
+
+    </div>
+    <!-- END wrapper -->
+    @*@Scripts.Render("~/bundles/Admin/Adminjs")*@
+
+
+
+    <script src="~/areas/admin/content/js/modernizr.min.js"></script>
+    <script src="~/areas/admin/content/js/jquery.min.js"></script>
+    <script src="~/areas/admin/content/js/bootstrap-rtl.min.js"></script>
+    <script src="~/areas/admin/content/js/detect.js"></script>
+    <script src="~/areas/admin/content/js/fastclick.js"></script>
+    <script src="~/areas/admin/content/js/jquery.slimscroll.js"></script>
+    <script src="~/areas/admin/content/js/jquery.blockUI.js"></script>
+    <script src="~/areas/admin/content/js/waves.js"></script>
+    <script src="~/areas/admin/content/js/wow.min.js"></script>
+    <script src="~/areas/admin/content/js/jquery.nicescroll.js"></script>
+    <script src="~/areas/admin/content/js/jquery.scrollTo.min.js"></script>
+    <script src="~/Areas/Admin/Content/plugins/switchery/js/switchery.min.js"></script>
+
+    <script src="~/Areas/Admin/Content/plugins/notifyjs/js/notify.js"></script>
+    <script src="~/Areas/Admin/Content/plugins/notifications/notify-metro.js"></script>
+    <script src="~/Areas/Admin/content/js/KendoJs/kendo.all.min.js"></script>
+    <script src="~/Areas/Admin/content/js/KendoJs/kendo.fa-IR.js"></script>
+
+
+    <script src="~/Areas/Admin/content/plugins/bootstrap-sweetalert/sweet-alert.min.js"></script>
+    @*<script src="~/Areas/Admin/content/plugins/bootstrap-sweetalert/sweetalert2.min.js"></script>*@
+    <script src="~/Areas/Admin/content/pages/jquery.todo.js"></script>
+    <script src="~/areas/admin/content/plugins/select2/dist/js/select2.min.js" type="text/javascript"></script>
+    <script src="~/Areas/Admin/Content/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+
+    <script src="~/areas/admin/content/js/jquery.core.js"></script>
+    <script src="~/areas/admin/content/js/jquery.app.js"></script>
+    @*<script src="~/Scripts/tinymce/tinymce.min.js"></script>*@
+    @RenderSection("scripts", required: false)
+    <script src="~/Areas/Admin/Content/js/custome-script.js"></script>
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        var resizefunc = [];
+
+        
+
+    </script>
+    <!-- jQuery  -->
+
+
+    @{
+        if (TempData["Notify"] != null)
+        {
+            <script>
+
+                $.Notification.notify(@Html.Raw(TempData["Notify"]));
+            </script>
+            TempData["Notify"] = null;
+        }
+
+    }
+</body>
+
+</html>

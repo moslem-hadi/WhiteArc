@@ -1,0 +1,234 @@
+﻿@model ViewModels.DownloadFileListViewModel
+@using DomainClasses;
+@{
+    string title = @Model.ID == 0 ? "افزودن دانلودی" : "ویرایش دانلودی";
+    ViewBag.Title = title;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+    <div class="row ">
+        <div class="col-sm-12">
+            <ol class="breadcrumb">
+                <li>
+                    @Html.ActionLink("میز کار", "index", "index")
+                </li>
+                <li>
+                    @Html.ActionLink("لیست دانلودی ها", "index", "download")
+
+                </li>
+                <li class="active">
+                    @title
+                </li>
+            </ol>
+
+            <div id="sticky-anchor"></div>
+            <div class="tobesticky" id="sticky">
+                <div class="pull-left mainbtns">
+                    <button type="submit" name="postType" value="save-continue" class="btn btn-default"><i class="fa fa-retweet delay"></i>ذخیره و ادامه</button>
+                    <button type="submit" name="postType" value="save" class="btn btn-success"><i class="fa fa-floppy-o delay"></i>ذخیــره</button>
+
+                    @if (Model.ID != 0)
+                    {
+
+                        <div class="btn-group product-action-links">
+                            <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light"
+                                    data-toggle="dropdown" aria-expanded="false">
+                                دسترسی<span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li><a href="@Model.FileUrl"><i class="fa fa-eye"></i>  دانلود</a></li>
+                                <li>
+                                    <button type="submit" name="postType" value="delete" class="text-danger"><i class="fa fa-times delay"></i> حذف</button>
+                                </li>
+                            </ul>
+                        </div>
+                    }
+                </div>
+
+                <h4 class="page-title">
+                    @title
+                    <a href="@Url.Action("index", "download")" class="innersmall"> لیست دانلودی ها</a>
+                </h4>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card-box">
+
+
+
+                @Html.AntiForgeryToken()
+
+                @Html.HiddenFor(model => model.DownloadCount)
+
+                <div class="form-horizontal formhr">
+
+
+                    <div class="" id="main">
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger notifyjs-metro-base notifyjs-metro-error" })
+
+
+
+
+
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SubTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.SubTitle, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.SubTitle, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2 help" data-toggle="tooltip" title="دسته بندی(ها)ای که این محصول در آنها نمایش داده می شود.">دسته بندی</label>
+                            <div class="col-md-6">
+
+                                <div class="input-group ">
+
+                                    @Html.DropDownListFor(model => model.GroupName, (SelectList)ViewBag.Groups,
+                            htmlAttributes: new { @class = "form-control", id = "groups" })
+                                    <span class="input-group-btn" data-toggle="tooltip" title="افزودن گروه جدید" data-placement="right">
+                                        <span class="btn btn-inverse" data-target="#newgrpModal" data-toggle="modal"><i class="fa fa-plus"></i></span>
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FileUrl, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.FileChooseFor(model => model.FileUrl, "انتخاب فایل", "software")
+                                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.PicUrl, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.FileChooseFor(model => model.PicUrl, "انتخاب تصویر", "software")
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Priority, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.Priority, new { htmlAttributes = new { @class = "form-control", style = "width:80px" } })
+                                @Html.ValidationMessageFor(model => model.Priority, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Size, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.Size, new { htmlAttributes = new { @class = "form-control", style = "width:80px" } })
+                                @Html.ValidationMessageFor(model => model.Size, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+
+
+<div class="modal fade" id="newgrpModal">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">ایجاد گروه جدید</h4>
+            </div>
+            <div class="modal-body">
+                <br />
+                <div class="form-group">
+                    <div class="row">
+                        <label class="col-md-4">عنوان گروه</label>
+                        <div class="col-md-8">
+                            <input type="text" id="groupname_input" class="form-control" />
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <br />
+                    <div class="text-center"><button id="btnaddnewgroup" class="btn btn-success">ذخیـــره</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () {
+
+            $("#groups").select2({
+                dir: "rtl"
+            });
+
+            $("#btnaddnewgroup").click(function () {
+                addGroup();
+
+            });
+            $('#groupname_input').bind("enterKey", function (e) {
+                addGroup();
+            });
+            $('#groupname_input').keyup(function (e) {
+                if (e.keyCode == 13) {
+                    $(this).trigger("enterKey");
+                }
+            });
+
+            function addGroup() {
+                var data = {
+                    id: $("#groupname_input").val(),
+                    text: $("#groupname_input").val()
+                };
+
+                var newOption = new Option(data.text, data.id, false, false);
+                $('#groups').append(newOption).val(data.id).trigger('change');
+                $('#newgrpModal').modal('hide')
+            }
+
+        });
+
+
+    </script>
+}
+
+

@@ -1,0 +1,28 @@
+﻿@model Dictionary<string, string>
+@using Westwind.Globalization
+<div class="col-1">
+    <div class="search-widget widget">
+        @using (Html.BeginForm("SearchPosts", "blog", FormMethod.Get ))
+        {
+            <div class="input-group search-wrapper">
+                <input name="text" type="text" placeholder="@DbRes.T("Search", "Words")..." class="search-input form-control"><span class="input-group-btn">
+                    <button type="submit" class="btn submit-btn"><span class="fa fa-search"></span></button>
+                </span>
+            </div>
+        }
+    </div>
+</div>
+<div class="col-2">
+    <div class="categories-widget widget">
+        <div class="title-widget">@DbRes.T("ArticleCategories", "Words")</div>
+        <div class="content-widget">
+            <ul class="widget-list">
+                @foreach (var item in Model)
+                {
+                    <li class="single-widget-item"><a href="/blog/cat/@item.Value" class="link"><span class="category">@item.Key</span></a></li>
+                }
+            </ul>
+        </div>
+    </div>
+
+</div> 

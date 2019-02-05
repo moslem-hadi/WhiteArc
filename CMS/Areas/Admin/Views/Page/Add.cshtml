@@ -1,0 +1,393 @@
+﻿@model ViewModels.PageViewModel
+
+@{
+    string title = @Model.ID == 0 ? "ایجاد صفحه جدید" : "ویرایش صفحه";
+    ViewBag.Title = title;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var lanquages = ViewBag.LanguageList;
+}
+
+
+@using (Html.BeginForm())
+{
+    <div class="row ">
+        <div class="col-sm-12">
+            <ol class="breadcrumb">
+                <li>
+                    @Html.ActionLink("میز کار", "index", "index")
+                </li>
+                <li>
+                    @Html.ActionLink("لیست صفحات", "index", "page")
+
+                </li>
+                <li class="active">
+                    @title
+                </li>
+            </ol>
+
+            <div id="sticky-anchor"></div>
+            <div class="tobesticky" id="sticky">
+                <div class="pull-left mainbtns">
+                    <button type="submit" name="postType" value="save-continue" class="btn btn-default"><i class="fa fa-retweet delay"></i>ذخیره و ادامه</button>
+                    <button type="submit" name="postType" value="save" class="btn btn-success"><i class="fa fa-floppy-o delay"></i>ذخیــره</button>
+
+                    @if (Model.ID != 0)
+                    {
+
+                        <div class="btn-group product-action-links">
+                            <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light"
+                                    data-toggle="dropdown" aria-expanded="false">
+                                دسترسی<span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li><a href="/page/@Model.Url"><i class="fa fa-eye"></i>  نمایش</a></li>
+                                <li>
+                                    <button type="submit" name="postType" value="delete" class="text-danger pageDeleteConfirmation"><i class="fa fa-times delay"></i> حذف</button>
+                                </li>
+                            </ul>
+                        </div>
+                    }
+                </div>
+
+                <h4 class="page-title">
+                    @title
+                    <a href="@Url.Action("index", "page")" class="innersmall"> لیست صفحات</a>
+                </h4>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card-box padding0 nobg">
+
+
+
+                @Html.AntiForgeryToken()
+
+                @Html.HiddenFor(model => model.Editable)
+                @Html.HiddenFor(model => model.ViewCount)
+
+                <div class="form-horizontal formhr">
+
+
+                    <div class="tabs-vertical-env">
+                        <ul class="nav tabs-vertical">
+                            <li class="active">
+                                <a href="#main" data-toggle="tab" aria-expanded="false">اطلاعات اصلی</a>
+                            </li>
+                            <li class="">
+                                <a href="#seo" data-toggle="tab" aria-expanded="false">سئو</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+
+                            <div class="tab-pane active  in fade" id="main">
+
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger notifyjs-metro-base notifyjs-metro-error" })
+                                @if (Model.ID == 0 || Model.Editable == true)
+                                {
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2 help" data-toggle="tooltip"
+                                               title="آدرسی که در Url قرار می گیرد. تغییر آدرس پس از انتشار موجب کاهش رتبه سایت می شود. ترجیحا انگلیسی باشد.">
+                                            آدرس Url
+                                        </label>
+                                        <div class="col-md-5">
+                                            @Html.EditorFor(model => model.Url, new { htmlAttributes = new { @class = "form-control ltr", onkeyup = "nospaces(this)" } })
+
+                                            @Html.ValidationMessageFor(model => model.Url, "", new { @class = "text-danger" })
+
+
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    @Html.HiddenFor(model => model.Url)}
+
+                                <div class="form-group">
+
+                                    <div class="well well-small localize">
+
+
+                                        <ul class="nav nav-pills">
+                                            <li class="active"><a href="#standard" data-toggle="tab" data-loaded="true">پیشفرض</a></li>
+
+                                            @foreach (var item in lanquages)
+                                            {
+                                                <li class="">
+                                                    <a href="#lang_@item.ID" data-toggle="tab" data-loaded="true">
+                                                        <img src="/Content/images/flags/@(item.ID).png" alt="Icon">@item.Name
+                                                    </a>
+                                                </li>
+                                            }
+
+                                        </ul>
+
+
+
+
+
+
+
+
+                                        <div class="tab-content br-n pn">
+                                            <div id="standard" class="tab-pane in fade active">
+                                                <div>
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                        <div class="col-md-6">
+                                                            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(model => model.Text, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                        <div class="col-md-10">
+                                                            @Html.EditorFor(model => model.Text, new { htmlAttributes = new { @class = "form-control editor", id= "editor1" } })
+                                                            @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            @for (int i = 0; i < lanquages.Count; i++)
+                                            {
+                                                @Html.HiddenFor(model => model.Locales[i].LanguageId)
+
+                                                <div id="lang_@lanquages[i].ID" class="tab-pane  fade">
+                                                    <div>
+                                                        <div class="form-group">
+                                                            @Html.LabelFor(model => model.Locales[i].Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                            <div class="col-md-6">
+                                                                @Html.EditorFor(model => model.Locales[i].Title, new { htmlAttributes = new { @class = "form-control" + (lanquages[i].Rtl ? "" : " ltr") } })
+                                                            </div>
+                                                        </div>
+
+
+
+                                                        <div class="form-group">
+                                                            @Html.LabelFor(model => model.Locales[i].Text, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                            <div class="col-md-10">
+                                                                @Html.EditorFor(model => model.Locales[i].Text, new { htmlAttributes = new { @class = "form-control editor", id = "editor2" } })
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+
+
+
+
+
+
+                                            }
+
+
+
+
+
+
+
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                                @{
+                                    if (1 == 2)//نیازی نیست
+                                    {
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.OnlyUsersCanSee, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-5">
+                                                @Html.DropDownListFor(model => model.OnlyUsersCanSee, new SelectList(
+                                                        new List<Object>{
+                                               new { value = false , text = "همه بازدیدکننده ها"  },
+                                               new { value = true , text = "فقط کاربرهای عضو" },
+                                                          },
+                                                        "value",
+                                                        "text",
+                                                         false), new { @class = "form-control" })
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.RobotAccess, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-5">
+                                                @Html.DropDownListFor(model => model.RobotAccess, new SelectList(
+                                                        new List<Object>{
+                                               new { value = "INDEX, FOLLOW" , text = "ایندکس، پیروی"  },
+                                               new { value = "NOINDEX, FOLLOW" , text = "بدون ایندکس، پیروی" },
+                                               new { value = "INDEX, NOFOLLOW" , text = "ایندکس، بدون پیروی" },
+                                               new { value = "NOINDEX, NOFOLLOW" , text = "بدون ایندکس، بدون پیروی" },
+                                                          },
+                                                        "value",
+                                                        "text",
+                                                         "INDEX, FOLLOW"), new { @class = "form-control" })
+                                            </div>
+                                        </div>
+
+                                    }
+                                }
+
+
+                            </div>
+                            <div class="tab-pane fade" id="seo">
+
+
+                                <div class="form-group">
+
+                                    <div class="well well-small localize">
+
+
+                                        <ul class="nav nav-pills  ">
+                                            <li class="active"><a href="#seostandard" data-toggle="tab" data-loaded="true">پیشفرض</a></li>
+
+                                            @foreach (var item in lanquages)
+                                            {
+                                                <li class="">
+                                                    <a href="#seolang_@item.ID" data-toggle="tab" data-loaded="true">
+                                                        <img src="/Content/images/flags/@(item.ID).png" alt="Icon">@item.Name
+                                                    </a>
+                                                </li>
+                                            }
+
+                                        </ul>
+
+
+
+
+
+
+
+
+                                        <div class="tab-content br-n pn">
+                                            <div id="seostandard" class="tab-pane in fade active">
+                                                <div>
+
+
+
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(model => model.SeoTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                        <div class="col-md-5">
+                                                            @Html.EditorFor(model => model.SeoTitle, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.SeoTitle, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                        <div class="col-md-5">
+                                                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div> 
+
+
+
+
+
+                                                </div>
+                                            </div>
+
+                                            @for (int i = 0; i < lanquages.Count; i++)
+                                            {
+                                                @Html.HiddenFor(model => model.Locales[i].LanguageId)
+
+                                                <div id="seolang_@lanquages[i].ID" class="tab-pane  fade">
+                                                    <div>
+
+
+
+
+
+                                                        <div class="form-group">
+                                                            @Html.LabelFor(model => model.Locales[i].SeoTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                            <div class="col-md-5">
+                                                                @Html.EditorFor(model => model.Locales[i].SeoTitle, new { htmlAttributes = new { @class = "form-control" + (lanquages[i].Rtl ? "" : " ltr") } })
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            @Html.LabelFor(model => model.Locales[i].Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                            <div class="col-md-5">
+                                                                @Html.EditorFor(model => model.Locales[i].Description, new { htmlAttributes = new { @class = "form-control" + (lanquages[i].Rtl ? "" : " ltr") } })
+                                                            </div>
+                                                        </div>
+ 
+
+
+                                                    </div>
+                                                </div>
+
+
+
+
+
+
+
+                                            }
+
+
+
+
+
+
+
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                    }
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Areas/Admin/Content/ckeditor/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('editor1', {
+            filebrowserBrowseUrl: '/admin/filemanager?chooser=1',
+            filebrowserImageBrowseUrl: '/admin/filemanager?Type=Images&chooser=1',
+            filebrowserFlashBrowseUrl: '/admin/filemanager?Type=Flash&chooser=1'
+        });
+        CKEDITOR.replace('editor2', {
+            filebrowserBrowseUrl: '/admin/filemanager?chooser=1',
+            filebrowserImageBrowseUrl: '/admin/filemanager?Type=Images&chooser=1',
+            filebrowserFlashBrowseUrl: '/admin/filemanager?Type=Flash&chooser=1'
+        });
+    </script>
+}

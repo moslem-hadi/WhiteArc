@@ -1,0 +1,17 @@
+﻿@using Microsoft.AspNet.Identity
+@using CMS.Models
+@{
+    ViewBag.Title = "داشبورد کاربری";
+    Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
+}
+
+<dl>
+    <dt>Show success message after POST action</dt>
+    <dd>
+        @using (Html.BeginForm())
+        {
+            <label for="message">Message text:</label>
+            <input id="message" name="message" />
+            <input type="submit" value="Display message" />}
+    </dd>
+</dl>

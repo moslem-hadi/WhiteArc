@@ -1,0 +1,27 @@
+﻿@model List<ViewModels.LatestContactPmViewModel>
+
+<table class="table table-actions-bar m-b-0">
+    <thead>
+        <tr>
+            <th>طرف</th>
+            <th class="text-center" style="width: 80px;">وضعیت</th>
+        </tr>
+    </thead>
+    <tbody>
+   
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="text-muted">  @item.Name </td>
+                <td><a href="/admin/support/view/@item.ISID">@Utilities.Functions.SubStringHtml(item.CDesc, 0, 50)</a></td>
+                <td class="text-center">
+                    @Html.Raw(item.IsClosed ? "<span class='text-muted'>اتمام</span>" : "<span class='label text-success'>جاری</span>")
+                    
+                </td>
+            </tr>
+
+
+        } 
+         
+    </tbody>
+</table>

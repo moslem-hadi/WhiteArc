@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="RespondeTicket">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UserID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="TicketID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="text" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="secKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RespondeTicketResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="RespondeTicketResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddTicket">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UserID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="priority" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="part" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="text" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="title" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="secKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddTicketResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddTicketResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetTicketAsRead">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UserID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="tickeID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="secKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetTicketAsReadResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="UnreadTicketsCount">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="secKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UnreadTicketsCountResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UnreadTicketsCountResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteTicket">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="tickeID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="secKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteTicketResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="DeleteTicketResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTicketList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="take" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="skip" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="secKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTicketListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetTicketListResult" type="tns:ArrayOfTicKetList" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfTicKetList">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="TicKetList" nillable="true" type="tns:TicKetList" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TicKetList">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Part" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastUpdate" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Status" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsNew" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetTicketReplies">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="ticketID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="secKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTicketRepliesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetTicketRepliesResult" type="tns:TicketReplyViewModel" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="TicketReplyViewModel">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ReplyList" type="tns:ArrayOfReplies" />
+          <s:element minOccurs="0" maxOccurs="1" name="TicketTitle" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TicketStatus" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TicketLastUpdate" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TicketPart" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfReplies">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Replies" nillable="true" type="tns:Replies" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Replies">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="SendDate" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Text" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FileName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsManageReply" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="RespondeTicketSoapIn">
+    <wsdl:part name="parameters" element="tns:RespondeTicket" />
+  </wsdl:message>
+  <wsdl:message name="RespondeTicketSoapOut">
+    <wsdl:part name="parameters" element="tns:RespondeTicketResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddTicketSoapIn">
+    <wsdl:part name="parameters" element="tns:AddTicket" />
+  </wsdl:message>
+  <wsdl:message name="AddTicketSoapOut">
+    <wsdl:part name="parameters" element="tns:AddTicketResponse" />
+  </wsdl:message>
+  <wsdl:message name="SetTicketAsReadSoapIn">
+    <wsdl:part name="parameters" element="tns:SetTicketAsRead" />
+  </wsdl:message>
+  <wsdl:message name="SetTicketAsReadSoapOut">
+    <wsdl:part name="parameters" element="tns:SetTicketAsReadResponse" />
+  </wsdl:message>
+  <wsdl:message name="UnreadTicketsCountSoapIn">
+    <wsdl:part name="parameters" element="tns:UnreadTicketsCount" />
+  </wsdl:message>
+  <wsdl:message name="UnreadTicketsCountSoapOut">
+    <wsdl:part name="parameters" element="tns:UnreadTicketsCountResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteTicketSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteTicket" />
+  </wsdl:message>
+  <wsdl:message name="DeleteTicketSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteTicketResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetTicketListSoapIn">
+    <wsdl:part name="parameters" element="tns:GetTicketList" />
+  </wsdl:message>
+  <wsdl:message name="GetTicketListSoapOut">
+    <wsdl:part name="parameters" element="tns:GetTicketListResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetTicketRepliesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetTicketReplies" />
+  </wsdl:message>
+  <wsdl:message name="GetTicketRepliesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetTicketRepliesResponse" />
+  </wsdl:message>
+  <wsdl:portType name="SupportSoap">
+    <wsdl:operation name="RespondeTicket">
+      <wsdl:input message="tns:RespondeTicketSoapIn" />
+      <wsdl:output message="tns:RespondeTicketSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddTicket">
+      <wsdl:input message="tns:AddTicketSoapIn" />
+      <wsdl:output message="tns:AddTicketSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetTicketAsRead">
+      <wsdl:input message="tns:SetTicketAsReadSoapIn" />
+      <wsdl:output message="tns:SetTicketAsReadSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UnreadTicketsCount">
+      <wsdl:input message="tns:UnreadTicketsCountSoapIn" />
+      <wsdl:output message="tns:UnreadTicketsCountSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteTicket">
+      <wsdl:input message="tns:DeleteTicketSoapIn" />
+      <wsdl:output message="tns:DeleteTicketSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTicketList">
+      <wsdl:input message="tns:GetTicketListSoapIn" />
+      <wsdl:output message="tns:GetTicketListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTicketReplies">
+      <wsdl:input message="tns:GetTicketRepliesSoapIn" />
+      <wsdl:output message="tns:GetTicketRepliesSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SupportSoap" type="tns:SupportSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="RespondeTicket">
+      <soap:operation soapAction="http://tempuri.org/RespondeTicket" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddTicket">
+      <soap:operation soapAction="http://tempuri.org/AddTicket" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetTicketAsRead">
+      <soap:operation soapAction="http://tempuri.org/SetTicketAsRead" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnreadTicketsCount">
+      <soap:operation soapAction="http://tempuri.org/UnreadTicketsCount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteTicket">
+      <soap:operation soapAction="http://tempuri.org/DeleteTicket" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTicketList">
+      <soap:operation soapAction="http://tempuri.org/GetTicketList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTicketReplies">
+      <soap:operation soapAction="http://tempuri.org/GetTicketReplies" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="SupportSoap12" type="tns:SupportSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="RespondeTicket">
+      <soap12:operation soapAction="http://tempuri.org/RespondeTicket" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddTicket">
+      <soap12:operation soapAction="http://tempuri.org/AddTicket" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetTicketAsRead">
+      <soap12:operation soapAction="http://tempuri.org/SetTicketAsRead" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnreadTicketsCount">
+      <soap12:operation soapAction="http://tempuri.org/UnreadTicketsCount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteTicket">
+      <soap12:operation soapAction="http://tempuri.org/DeleteTicket" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTicketList">
+      <soap12:operation soapAction="http://tempuri.org/GetTicketList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTicketReplies">
+      <soap12:operation soapAction="http://tempuri.org/GetTicketReplies" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Support">
+    <wsdl:port name="SupportSoap" binding="tns:SupportSoap">
+      <soap:address location="http://webtina.ir/ws/Support.asmx" />
+    </wsdl:port>
+    <wsdl:port name="SupportSoap12" binding="tns:SupportSoap12">
+      <soap12:address location="http://webtina.ir/ws/Support.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

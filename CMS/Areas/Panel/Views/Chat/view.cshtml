@@ -1,0 +1,297 @@
+﻿
+@{
+    ViewBag.Title = "مشاهده تیکت: ";
+    Layout = "~/Areas/panel/Views/Shared/_Layout.cshtml";
+    int ticketID = int.Parse(ViewContext.RouteData.Values["id"] as string);
+}
+
+
+<div class="row ">
+    <div class="col-sm-12">
+        <ol class="breadcrumb pull-left hidden-xs">
+            <li>
+                @Html.ActionLink("میز کار", "index", "index")
+            </li>
+            <li>
+                @Html.ActionLink("لیست گفتگوها", "index", "chat")
+
+            </li>
+            <li class="active">
+                عتوان
+            </li>
+        </ol>
+
+
+
+        <h4 class="page-title m-b-15">
+            گفتگو در رابطه با پروژه:......
+        </h4>
+
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="row">
+    <div class="col-md-9">
+
+        <div class="panel panel-default">
+            <div class="p-t-10 p-l-r-10">
+                <div class="pull-left">
+
+                    <a class="btn btn-rounded bg-success btn-sm" href="#response" title="ارسال پیام جدید">
+                        <i class="fa fa-pencil"></i>
+                        <span class="hidden-xs">
+                            ارسال پیام جدید
+                        </span>
+                    </a>
+                    <a class="btn btn-rounded btn-default btn-icon-only" href="/conversation/364614" data-original-title="" title="همه پیام ها"><i class="fa fa-comments"></i></a>
+                    <a class="btn btn-rounded btn-default btn-icon-only" href="/conversation/364614/pinned" data-original-title="" title="سنجاق شده ها"><i class="fa-map-pin fa "></i></a>
+                    <a class="btn btn-rounded btn-default btn-icon-only" href="/conversation/364614/attachemet" data-original-title="" title="ضمیمه دارها"><i class="fa fa-paperclip "></i></a>
+
+                </div>
+
+                <h4>گفتگو با رضا عطار</h4>
+
+            </div>
+            <hr class="m-b-0" />
+
+            <div class="bg-muted p-20">
+                <div class="">
+                    <h3>شما برای این پروژه پیشنهاد ارسال کرده اید.</h3><span> مبلغ پیشنهادی شما:&zwnj; 4,700,000  تومان</span><p>
+                        <span>مقدار گروگذاری:</span>
+                        50%
+                        معادل
+                        2,350,000  تومان
+                        <br><span>ضمانت تخصص پیشنهادی:</span>
+                        20%
+                        معادل
+                        940,000  تومان
+                        زمان اجرا: 30 روز
+                    </p><i class="fa fa-money offer-icon-in-box hidden-xs"></i><br><br>
+                </div>
+            </div>
+            <hr class="m-t-0" />
+            <div class="panel-body">
+
+                <ol class="discussion">
+                    <li class="other">
+                        <div class="avatar">
+                            <img src="/areas/admin/content/images/webtina.png">
+
+
+                        </div>
+                        <div class="messages">
+
+
+                            <p>
+                                اینم از سمت سرور
+                            </p>
+                            <time>۱۳۹۵/۱۱/۱۳ ساعت: ۱۳:۲۵:۱۲ </time>
+
+
+
+
+
+
+
+                        </div>
+                    </li>
+                    <li class="self">
+                        <div class="avatar">
+                            <img src="/areas/admin/content/images/user.png">
+
+
+                        </div>
+                        <div class="messages">
+
+
+                            <p>
+                            </p><p>جواب از وبسایت</p>
+                            <p></p>
+                            <time>۱۳۹۵/۱۱/۱۳ ساعت: ۱۳:۲۴:۳۸ </time>
+
+
+
+
+
+
+
+                        </div>
+                    </li>
+                    <li class="self">
+                        <div class="avatar">
+                            <img src="/areas/admin/content/images/user.png">
+
+
+                        </div>
+                        <div class="messages">
+
+
+                            <p>
+                                سلام. وقتی بخیر<br>
+                            </p>
+                            <time>۱۳۹۵/۱۱/۱۳ ساعت: ۱۲:۴۲:۳۷ </time>
+
+
+
+
+
+
+
+                        </div>
+                    </li>
+                    <li class="other">
+                        <div class="avatar">
+                            <img src="/areas/admin/content/images/webtina.png">
+
+
+                        </div>
+                        <div class="messages">
+
+
+                            <p>
+
+                            </p>
+                            <time>۱۳۹۵/۱۱/۷ ساعت: ۱۳:۲۳:۵۲ </time>
+
+
+
+
+
+
+
+                        </div>
+                    </li>
+                    <li class="self">
+                        <div class="avatar">
+                            <img src="/areas/admin/content/images/user.png">
+
+
+                        </div>
+                        <div class="messages">
+
+
+                            <p>
+                            </p><p>تسزتیس متیس</p><p>نمایسز اس</p><p>تا یسن اسن سد مسئ مس سی ندم</p>
+                            <p></p>
+                            <time>۱۳۹۵/۱۰/۱۸ ساعت: ۲۳:۳:۱۷ </time>
+
+
+
+
+
+
+
+                        </div>
+                    </li>
+                </ol>
+
+            </div>
+            <hr id="response" />
+            <div class="panel-body">
+                <div>
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            @using (Html.BeginForm())
+                            {
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">پاسخ</label>
+
+                                    <div class="col-md-8">
+                                        <textarea id="responseText" name="responseText" class="form-control editor" height="100px" rows="5"></textarea>
+                                        <input type="hidden" value="@ticketID" name="ticketID" />
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <br />
+                                <div class="form-group text-center">
+                                    <button type="submit" name="postType" value="delete" class="btn btn-default"><i class="fa fa-plus delay"></i> ارسال پاسخ</button>
+
+
+                                </div>
+
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <!--SIde-->
+    <div class="col-md-3">
+
+
+        <ul class="list-group">
+            <li class="list-group-item active text-center">توضیحات گفتگو</li>
+            <li class="list-group-item">وضعیت: <span class="pull-left">در حال مذاکره</span></li>
+            <li class="list-group-item">آخرین پاسخ: <span class="pull-left">۱۳۹۵/۱۱/۱۳ ساعت: ۱۳:۲۵:۱۲</span></li>
+
+        </ul>
+
+
+
+        <ul class="list-group">
+            <li class="list-group-item active text-center">توضیحات پروژه</li>
+            <li class="list-group-item">کد پروژه: <span class="pull-left">1313</span></li>
+            <li class="list-group-item">نوع پروژه <span class="pull-left">خیلی کوچک</span></li>
+            <li class="list-group-item">حداقل قیمت: <span class="pull-left">5,000  تومان</span></li>
+            <li class="list-group-item">حداکثر قیمت: <span class="pull-left">100,000  تومان</span></li>
+            <li class="list-group-item">مهلت: <span class="pull-left">3 روز</span></li>
+            <li class="list-group-item">حداقل ضمانت تخصص: <span class="pull-left">0%</span></li>
+            <li class="list-group-item">تعداد مشاهده: <span class="pull-left">134</span></li>
+            <li class="list-group-item">
+                وضعیت پروژه:
+                <span class="pull-left">در حال انجام</span>
+                <div class="progress m-t-10"><div style="width: 25%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="40" role="progressbar" class="progress-bar  progress-bar-success"><span class="sr-only"></span></div></div>
+            </li>
+        </ul>
+
+
+        <div class="card-box">
+            <div class="contact-card">
+                <a class="pull-right" href="#">
+                    <img class="img-circle" src="~/areas/PANEL/Content/images/user.png" alt="">
+                </a>
+                <div class="member-info">
+                    <h4 class="m-t-0 m-b-5 header-title"><b>@@usernamr</b></h4>
+                    <p class="text-muted">رضا رئیسی</p>
+                    <div class="m-t-20">
+                        <a href="#" class="btn btn-purple waves-effect waves-light btn-sm">Send email</a>
+                        <a href="#" class="btn btn-success waves-effect waves-light btn-sm m-l-5">Edit</a>
+                        <a href="#" class="btn btn-pink waves-effect waves-light btn-sm m-l-5">Call</a>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="clear"></div>
+</div>
+
+
+@section scripts{
+    <script>
+
+        $(document).ready(function () {
+            var id = @ticketID;
+            readTicket(id);
+        });
+    </script>
+
+}

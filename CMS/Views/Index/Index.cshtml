@@ -1,0 +1,539 @@
+﻿@model ViewModels.HomePageViewModel
+@using Westwind.Globalization;
+@{
+    ViewBag.Title = Model.SeoTitle;
+}
+@section head{
+    <meta http-equiv="content-language" content="@DbRes.T("LangMeta", "AppInfo")" />
+    <meta name="description" content="@Model.SeoDescription" />
+    <meta http-equiv="Cache-control" content="private" />
+    <meta name="robots" content="index, follow" />
+    <meta name="expires" content="" />
+    <meta name="author" content="@Model.SiteName" />
+}
+<section id="home" class="home-banner">
+    <div class="container">
+        <div class="row justify-content-center full-screen">
+            <div class="col-md-10">
+                <div class="home-text-center text-center">
+                    <div class="logo m-b-20px"><img src="/content/images/logo.png" alt="@Model.SeoTitle" /></div>
+                    <div class="logo m-b-20px"><img src="/content/images/logoname@(DbRes.T("LangMeta", "AppInfo")).png" alt="@Model.SiteName" /></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#aboutus" data-scroll="smooth" class="mouse-icon hidden-sm"><span class="wheel"></span></a>
+</section>
+<section id="aboutus" class="section">
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-md-12">
+                <div class="about-left m-b-30px-md">
+                    <h3 class="font-alt">@DbRes.T("Home.AboutTitle", "txt")</h3>
+                    <p class="text-justify">
+                        @Html.Raw(DbRes.T("Home.AboutText", "txt"))
+                    </p>
+                    <a href="/page/about-us" class="btn btn-theme">@DbRes.T("Home.AboutMore", "txt")</a>
+                </div> <!-- about right -->
+            </div>
+        </div> <!-- row -->
+
+
+    </div> <!-- container -->
+</section>
+
+@{ 
+    var filenames = System.IO.Directory.EnumerateFiles(Server.MapPath("~/media/uploads/bg1/" + DbRes.T("LangMeta", "AppInfo")))
+               .Select(System.IO.Path.GetFileName);
+
+    var randomnum = Utilities.Functions.RandomNumber(0, filenames.Count());
+    string bg1 = "", bg2 = "";
+    if (filenames.Any()) {
+        bg1 = filenames.Skip(randomnum).Take(1).Single(); }
+
+
+    filenames = System.IO.Directory.EnumerateFiles(Server.MapPath("~/media/uploads/bg2/" + DbRes.T("LangMeta", "AppInfo")))
+              .Select(System.IO.Path.GetFileName);
+
+    if (filenames.Any()) {
+        bg2 = filenames.Skip(randomnum).Take(1).Single(); }
+
+
+
+}
+
+@if (!string.IsNullOrEmpty(bg1))
+{
+<div class="bg1">
+    <img src="/media/uploads/bg1/@(DbRes.T("LangMeta", "AppInfo") + "/" + bg1)" title="" alt="" />
+</div>
+}
+<section id="services" class="section">
+    <div class="container">
+        <div class="about-feacher">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>@DbRes.T("Home.ServicesTitle", "txt")</h4>
+
+                    @Html.Raw(DbRes.T("Home.ServicesDesc", "txt"))
+
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <div class="feature-box">
+                        <div class="feature-content">
+                            <h5>
+                                @DbRes.T("Home.Services1", "txt")
+                            </h5>
+                        </div>
+                    </div>
+                </div> <!-- col -->
+
+                <div class="col-12 col-md-6">
+                    <div class="feature-box">
+                        <div class="feature-content">
+                            <h5>
+                                @DbRes.T("Home.Services2", "txt")
+                            </h5>
+                        </div>
+                    </div>
+                </div> <!-- col -->
+
+                <div class="col-12 col-md-6">
+                    <div class="feature-box">
+                        <div class="feature-content">
+                            <h5>
+                                @DbRes.T("Home.Services3", "txt")
+                            </h5>
+                        </div>
+                    </div>
+                </div> <!-- col -->
+
+
+                <div class="col-12 col-md-6">
+                    <div class="feature-box">
+                        <div class="feature-content">
+                            <h5>
+                                @DbRes.T("Home.Services4", "txt")
+                            </h5>
+                        </div>
+                    </div>
+                </div> <!-- col -->
+
+
+
+                <div class="col-12 col-md-6">
+                    <div class="feature-box">
+                        <div class="feature-content">
+                            <h5>
+                                @DbRes.T("Home.Services5", "txt")
+                            </h5>
+                        </div>
+                    </div>
+                </div> <!-- col -->
+
+                <div class="col-12 col-md-6">
+                    <div class="feature-box">
+                        <div class="feature-content">
+                            <h5>
+                                @DbRes.T("Home.Services6", "txt")
+                            </h5>
+                        </div>
+                    </div>
+                </div> <!-- col -->
+            </div> <!-- row -->
+        </div>
+
+
+    </div>
+</section>
+<section class="middel-section" style="background-image: url('/media/uploads/bg2/@(DbRes.T("LangMeta", "AppInfo") + "/" + bg2)');">
+    <div class="container">
+        <div class="row justify-content-center text-center ">
+            <div class="col-md-8 col-lg-7  ">
+
+                <h4 class="font-alt m-t-60px">@DbRes.T("Home.MiddleTitle", "txt") </h4>
+                <p class="m-b-60px">@DbRes.T("Home.MiddleDesc", "txt")</p>
+            </div> <!-- col -->
+        </div> <!-- row -->
+    </div> <!-- container -->
+</section>
+<section id="services" class="section gray-bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-7">
+                <div class="section-title text-center m-b-60px">
+                    <h2>@DbRes.T("Home.HonorsTitle", "txt") </h2><br />
+                    @Html.Raw(DbRes.T("Home.HonorsText", "txt"))
+                </div>
+            </div>
+        </div> <!-- row -->
+
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="feature-box-01">
+                    <div class="feature-content">
+                        <h6>@DbRes.T("Home.HonorTitle1", "txt")</h6>
+                        <p>
+
+
+                            @DbRes.T("Home.HonorDesc1", "txt")
+                        </p>
+                    </div>
+                </div> <!-- feature-box-01 -->
+            </div> <!-- col -->
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="feature-box-01">
+                    <div class="feature-content">
+                        <h6>@DbRes.T("Home.HonorTitle2", "txt")</h6>
+                        <p>
+                            @DbRes.T("Home.HonorDesc2", "txt")
+                        </p>
+                    </div>
+                </div> <!-- feature-box-01 -->
+            </div> <!-- col -->
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="feature-box-01">
+                    <div class="feature-content">
+                        <h6>@DbRes.T("Home.HonorTitle3", "txt")</h6>
+                        <p>
+                            @DbRes.T("Home.HonorDesc3", "txt")
+
+                        </p>
+                    </div>
+                </div> <!-- feature-box-01 -->
+            </div> <!-- col -->
+            <div class="col-12 col-md-12 text-center m-t-20px">
+                <a href="/page/honors" class="btn btn-theme">@DbRes.T("Home.HonorMore", "txt")</a>
+            </div>
+        </div> <!-- row -->
+    </div> <!-- container -->
+</section>
+<section id="portfolio" class="section p-b-20px">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-7">
+                <div class="section-title text-center m-b-80px">
+                    <h2>@DbRes.T("Home.ProjectsTitle", "txt") </h2>
+                    <p>@DbRes.T("Home.ProjectsDesc", "txt")</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="portfolio-content container-fluid">
+        <div class="portfolio-cols portfolio-cols-3">
+            @{ 
+                var col1 = ((List<ViewModels.ProductListUiViewModel>)ViewBag.Products).Take(2).ToList();
+                var col2 = ((List<ViewModels.ProductListUiViewModel>)ViewBag.Products).Skip(2).Take(2).ToList();
+                var col3 = ((List<ViewModels.ProductListUiViewModel>)ViewBag.Products).Skip(4).Take(2).ToList();
+            }
+
+            <div class="row">
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    @foreach (var item in col1)
+        {
+
+            @Html.Partial("_ProductBox", item)
+}
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    @foreach (var item in col2)
+        {
+
+            @Html.Partial("_ProductBox", item)
+}
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    @foreach (var item in col3)
+        {
+
+            @Html.Partial("_ProductBox", item)
+}
+                </div>
+            </div>
+
+
+
+            @*@foreach (var item in (List<ViewModels.ProductListUiViewModel>)ViewBag.Products)
+            {
+
+                @Html.Partial("_ProductBox", item)
+            }*@
+
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-12 col-md-12 text-center m-t-20px">
+        <a href="/project" class="btn btn-theme">@DbRes.T("Home.ProjectsMore", "txt")</a>
+    </div>
+    <div class="clearfix"></div>
+</section>
+<section id="team" class="section gray-bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-7">
+                <div class="section-title text-center m-b-60px m-b-60px-md">
+                    <h2>@DbRes.T("Home.TeamTitle", "txt")</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-12 col-xs-12 col-sm-6 col-lg-3">
+                <div class="team-box">
+                    <div class="team-img">
+                        <img src="/content/images/team/team1.jpg" title="" alt="">
+
+                    </div>
+                    <div class="team-info">
+                        <h4 class="font-alt">@DbRes.T("Home.TeamName1", "txt")</h4>
+                        <span>@DbRes.T("Home.TeamPosition1", "txt")</span>
+                    </div>
+                </div> <!-- Team -->
+            </div>
+
+
+
+
+            <div class="col-12 col-xs-12 col-sm-6 col-lg-3">
+                <div class="team-box">
+                    <div class="team-img">
+                        <img src="/content/images/team/team2.jpg" title="" alt="">
+
+                    </div>
+                    <div class="team-info">
+                        <h4 class="font-alt">@DbRes.T("Home.TeamName2", "txt")</h4>
+                        <span>@DbRes.T("Home.TeamPosition2", "txt")</span>
+                    </div>
+                </div> <!-- Team -->
+            </div>
+
+
+
+
+
+            <div class="col-12 col-xs-12 col-sm-6 col-lg-3">
+                <div class="team-box">
+                    <div class="team-img">
+                        <img src="/content/images/team/team3.jpg" title="" alt="">
+
+                    </div>
+                    <div class="team-info">
+                        <h4 class="font-alt">@DbRes.T("Home.TeamName3", "txt")</h4>
+                        <span>@DbRes.T("Home.TeamPosition3", "txt")</span>
+                    </div>
+                </div> <!-- Team -->
+            </div>
+
+
+
+
+
+
+            <div class="col-12 col-xs-12 col-sm-6 col-lg-3">
+                <div class="team-box">
+                    <div class="team-img">
+                        <img src="/content/images/team/team4.jpg" title="" alt="">
+
+                    </div>
+                    <div class="team-info">
+                        <h4 class="font-alt">@DbRes.T("Home.TeamName4", "txt")</h4>
+                        <span>@DbRes.T("Home.TeamPosition4", "txt")</span>
+                    </div>
+                </div> <!-- Team -->
+            </div>
+
+
+
+
+
+            <div class="col-12 col-xs-12 col-sm-6 col-lg-3">
+                <div class="team-box">
+                    <div class="team-img">
+                        <img src="/content/images/team/team5.jpg" title="" alt="">
+
+                    </div>
+                    <div class="team-info">
+                        <h4 class="font-alt">@DbRes.T("Home.TeamName5", "txt")</h4>
+                        <span>@DbRes.T("Home.TeamPosition5", "txt")</span>
+                    </div>
+                </div> <!-- Team -->
+            </div>
+
+
+
+
+
+
+            <div class="col-12 col-xs-12 col-sm-6 col-lg-3">
+                <div class="team-box">
+                    <div class="team-img">
+                        <img src="/content/images/team/team6.jpg" title="" alt="">
+
+                    </div>
+                    <div class="team-info">
+                        <h4 class="font-alt">@DbRes.T("Home.TeamName6", "txt")</h4>
+                        <span>@DbRes.T("Home.TeamPosition6", "txt")</span>
+                    </div>
+                </div> <!-- Team -->
+            </div>
+
+
+
+
+
+            <div class="col-12 col-xs-12 col-sm-6 col-lg-3">
+                <div class="team-box">
+                    <div class="team-img">
+                        <img src="/content/images/team/team7.jpg" title="" alt="">
+
+                    </div>
+                    <div class="team-info">
+                        <h4 class="font-alt">@DbRes.T("Home.TeamName7", "txt")</h4>
+                        <span>@DbRes.T("Home.TeamPosition7", "txt")</span>
+                    </div>
+                </div> <!-- Team -->
+            </div>
+
+
+
+
+
+            <div class="col-12 col-xs-12 col-sm-6 col-lg-3">
+                <div class="team-box">
+                    <div class="team-img">
+                        <img src="/content/images/team/team8.jpg" title="" alt="">
+
+                    </div>
+                    <div class="team-info">
+                        <h4 class="font-alt">@DbRes.T("Home.TeamName8", "txt")</h4>
+                        <span>@DbRes.T("Home.TeamPosition8", "txt")</span>
+                    </div>
+                </div> <!-- Team -->
+            </div>
+
+
+        </div> <!-- row -->
+
+    </div> <!-- Container -->
+</section>
+<section id="contact" class="section gray-bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-7">
+                <div class="section-title text-center m-b-80px m-b-70px-md">
+                    <h2>@DbRes.T("Home.ContactTitle", "txt")</h2>
+                    <p>@DbRes.T("Home.ContactDesc", "txt")</p>
+                </div>
+            </div>
+        </div>
+        <div class="row m-b-30px contactinfo text-center">
+            <div class="col-6 col-md-4 col-sm-12 contactdetail">
+                <i class="icon ti-location-pin"></i>
+                <div class="font-alt">@DbRes.T("Home.ContactAddressTitle", "txt")</div>
+                <h6>
+                    @DbRes.T("Home.ContactAddress", "txt")
+                </h6>
+            </div>
+
+            <div class="col-6 col-md-4 col-sm-12 contactdetail">
+                <i class="icon ti-email"></i>
+                <div class="font-alt">@DbRes.T("Home.ContactEmailTitle", "txt")</div>
+                <h6>@DbRes.T("Home.ContactEmail", "txt")</h6>
+            </div>
+
+            <div class="col-6 col-md-4 col-sm-12 contactdetail">
+                <i class="icon ti-headphone-alt"></i>
+                <div class="font-alt">@DbRes.T("Home.ContactPhoneTitle", "txt")</div>
+                <h6 class="ltr">@Html.Raw(DbRes.T("Home.ContactPhone", "txt"))</h6>
+            </div>
+
+
+
+
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-6">
+                <!-- Contact Form -->
+                <div class="contact-form white-bg m-b-30px-md">
+                    <h2 class="font-alt">@DbRes.T("Home.ContactFormTitle", "txt")</h2>
+                    <div id="alert">
+
+                    </div>
+                    <div class="loadercon" id="form">
+                        @using (Ajax.BeginForm("ContactSubmit", "index",
+                        new AjaxOptions
+                        {
+                            OnSuccess = "OnSuccess",
+                            OnFailure = "OnFailure",
+                            LoadingElementId = "progress"
+                        }))
+                        {
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <input name="FullName" required id="FullName" placeholder="@DbRes.T("Home.ContactFormName", "txt")" class="form-control" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <input name="Email" required id="Email" placeholder="@DbRes.T("Home.ContactFormEmail", "txt")" class="form-control" type="email">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <textarea name="Text" required id="Text" placeholder="@DbRes.T("Home.ContactFormText", "txt")" rows="3" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12 text-left">
+                                    <button class="btn btn-theme"><i class="fa fa-envelope-o" aria-hidden="true"></i>@DbRes.T("Home.ContactFormButton", "txt")</button>
+                                </div>
+                            </div>
+                        }
+
+                        <div id="progress" class="progressmodal">
+                            <div class="center">
+                                <img src="~/content/images/loading-image.gif" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- / -->
+            </div> <!-- col -->
+
+            <div class="col-12 col-lg-6">
+                <!-- Contact map -->
+                <div class="contact-map">
+                    <img src="/content/images/map.jpg" alt="map" />
+                </div>
+                <!-- / -->
+            </div> <!-- col -->
+
+        </div> <!-- row -->
+    </div> <!-- Container -->
+</section>
+
+
+@section scripts{
+    <script src="~/Content/js/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript">
+        function OnSuccess(response) {
+            var message = response.Msg;
+            if (response.Stat) {
+                $("#form").remove();
+                $("#alert").removeClass().addClass("alert alert-success")
+                    .html("@Html.Raw(DbRes.T("Home.ContactSuccessMessage","txt"))" + message + "</span></h5>").show();
+            }
+            else {
+                $("#alert").removeClass().addClass("alert alert-warning").html(message).show();
+            }
+        }
+        function OnFailure(response) {
+            $("#alert").removeClass().addClass("alert alert-warning").html("@DbRes.T("Home.ContactFailedMessage", "txt")").show();
+        }
+
+    </script>
+}

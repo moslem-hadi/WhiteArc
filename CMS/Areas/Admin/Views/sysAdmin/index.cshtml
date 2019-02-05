@@ -1,0 +1,51 @@
+﻿ 
+
+@{
+    ViewBag.Title = "مدیریت سیستم";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+
+        <ol class="breadcrumb">
+            <li>
+                @Html.ActionLink("میز کار", "index", "index")
+            </li>
+            <li class="active">
+                مدیریت سیستم
+            </li>
+        </ol>
+
+        <div id="sticky-anchor"></div>
+        <div class="tobesticky" id="sticky">
+
+            <h4 class="page-title">مدیریت سیستم</h4>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+<div class="row">
+    <div class="col-sm-12">
+
+
+        <div class="card-box">
+            <ul>
+
+                <li><a href="@Url.Action("RolesList", "sysadmin")">مدیریت رول ها</a></li>
+                <li><a href="@Url.Action("crypt", "sysadmin")">کد و دیکد</a></li>
+                <li><a href="@Url.Action("settingvalue", "sysadmin")">جدول تنظیمات</a></li>
+            </ul>
+        </div>
+        </div>
+</div>
+
+
+<style>
+  .card-box ul{list-style:none;margin:0;padding:0;}
+   .card-box ul li a{display:block;font-weight:bold;  padding:0 10px 15px 0;margin:0 0 15px 0; border-bottom:1px solid #eee}
+</style>

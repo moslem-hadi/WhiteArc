@@ -1,0 +1,340 @@
+﻿@using System.ComponentModel.DataAnnotations;
+@using Microsoft.AspNet.Identity
+@using CMS.Models
+@model List<ViewModels.UpgradePageViewModel>
+@{
+    ViewBag.Title = "ارتقاء حساب کاربری";
+    Layout = "~/Areas/panel/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row ">
+    <div class="col-sm-12">
+        <ol class="breadcrumb pull-left hidden-xs">
+            <li>
+                @Html.ActionLink("میز کار", "index", "index")
+            </li> 
+            <li class="active">
+                ارتقاء حساب کاربری
+            </li>
+        </ol>
+
+
+
+        <h4 class="page-title m-b-15">
+            ارتقاء حساب کاربری
+
+        </h4>
+
+
+    </div>
+</div>
+
+<div class="row">
+
+
+    <div class="col-md-12">
+
+        <div class="card-box ">
+            <h5>وضعیت حساب کاربری شما</h5>
+
+            <br />
+
+            <div class="contact-card">
+                <a class="pull-right" href="#">
+                    <img class="img-circle" src="~/Areas/Panel/Content/images/user.png" alt="">
+
+                </a>
+                <div class="member-info">
+                    <h4 class="m-t-0 m-b-5 header-title"><b>@User.Identity.GetFullName()</b></h4>
+                    <p class="text-muted ltr text-right">@@@User.Identity.GetUserName()</p>
+                    <p class="text-dark">
+                        <i class="fa fa-user m-l-10"></i><small>
+                            حساب کاربری:
+                            <label class="label label-info">
+                                @(Utilities.Actions.GetUserLevel(User.Identity.GetUserId()).GetAttribute<DisplayAttribute>
+        ().Name)
+
+                            </label>
+                        </small>
+                    </p>
+                    <p class="text-dark"><i class="fa fa-calendar m-l-10"></i><small>تاریخ انقضا: 12 مرداد 95</small> </p>
+
+                </div>
+
+            </div>
+
+
+
+
+
+            <div class="table-responsive">
+                <div class="membership-pricing-table">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th class="no-visible"> </th>
+                                <th class="plan-header plan-header-free">
+                                    <div class="pricing-plan-name">@Model[0].Title</div>
+                                    <div class="pricing-plan-price">
+                                        @Utilities.Functions.SetCamaHezar(Model[0].Price) <sup>تومان</sup>
+                                    </div>
+                                    <div class="pricing-plan-period">ماهیانه</div>
+                                </th>
+                                <th class="plan-header plan-header-blue">
+                                    <div class="pricing-plan-name">@Model[1].Title</div>
+                                    <div class="pricing-plan-price">
+                                        @Utilities.Functions.SetCamaHezar(Model[1].Price)<span>,000</span> <sup>تومان</sup>
+                                    </div>
+                                    <div class="pricing-plan-period">ماهیانه</div>
+                                </th>
+                                <th class="plan-header plan-header-standard">
+                                    <div class="header-plan-inner">
+                                        <!--<span class="plan-head"> </span>-->
+                                        <span class="recommended-plan-ribbon">بهترین انتخاب </span>
+                                        <div class="pricing-plan-name">@Model[2].Title</div>
+                                        <div class="pricing-plan-price">
+                                            @Utilities.Functions.SetCamaHezar(Model[2].Price)<span>,000</span> <sup>تومان</sup>
+                                        </div>
+                                        <div class="pricing-plan-period">ماهیانه</div>
+                                    </div>
+                                </th>
+                                <th class="plan-header plan-header-blue">
+                                    <div class="pricing-plan-name">@Model[3].Title</div>
+                                    <div class="pricing-plan-price">
+                                        @Utilities.Functions.SetCamaHezar(Model[3].Price)<span>,000</span> <sup>تومان</sup>
+                                    </div>
+                                    <div class="pricing-plan-period">ماهیانه</div>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td class="no-visible"></td>
+                                <td class="action-header">
+                                    <a class="btn btn-info">
+                                        ارتقاء
+                                    </a>
+                                </td>
+                                <td class="action-header">
+                                    <a class="btn btn-info">
+                                        ارتقاء
+                                    </a>
+                                </td>
+                                <td class="action-header">
+                                    <a class="btn btn-success">
+                                        ارتقاء
+                                    </a>
+                                </td>
+                                <td class="action-header">
+                                    <a class="btn btn-info">
+                                        ارتقاء
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>تعداد پیشنهاد در ماه:</td>
+                                <td>@Model[0].OfferCount</td>
+                                <td>@Model[1].OfferCount</td>
+                                <td>@Model[2].OfferCount</td>
+                                <td>@Model[3].OfferCount</td>
+                            </tr>
+                            <tr>
+                                <td>کمیسیون کارفرما:</td>
+                                <td>@Model[0].EmployerCommission</td>
+                                <td>@Model[1].EmployerCommission</td>
+                                <td>@Model[2].EmployerCommission</td>
+                                <td>@Model[3].EmployerCommission</td>
+                            </tr>
+                            <tr>
+                                <td>کمیسیون مجری:</td>
+                                <td>@Model[0].FreelancerCommission</td>
+                                <td>@Model[1].FreelancerCommission</td>
+                                <td>@Model[2].FreelancerCommission</td>
+                                <td>@Model[3].FreelancerCommission</td>
+                            </tr>
+                            <tr>
+                                <td>مهارت ها:</td>
+                                <td>@Model[0].Skills</td>
+                                <td>@Model[1].Skills</td>
+                                <td>@Model[2].Skills</td>
+                                <td>@Model[3].Skills</td>
+                            </tr>
+                            <tr>
+                                <td>نمونه کار:</td>
+                                <td>@Model[0].PortfolioCount</td>
+                                <td>@Model[1].PortfolioCount</td>
+                                <td>@Model[2].PortfolioCount</td>
+                                <td>@Model[3].PortfolioCount</td>
+                            </tr>
+
+
+                            <tr>
+                                <td class="no-visible"></td>
+                                <td class="action-header">
+                                    <a class="btn btn-info btnmodal" data-id="@Model[0].ID" data-price="@Model[0].Price" data-title="@Model[0].Title">
+                                        ارتقاء
+                                    </a>
+                                </td>
+                                <td class="action-header">
+                                    <a class="btn btn-info btnmodal" data-id="@Model[1].ID" data-price="@Model[1].Price" data-title="@Model[1].Title">
+                                        ارتقاء
+                                    </a>
+                                </td>
+                                <td class="action-header">
+                                    <a class="btn btn-success btnmodal" data-id="@Model[2].ID" data-price="@Model[2].Price" data-title="@Model[2].Title">
+                                        ارتقاء
+                                    </a>
+                                </td>
+                                <td class="action-header">
+                                    <a class="btn btn-info btnmodal" data-id="@Model[3].ID" data-price="@Model[3].Price" data-title="@Model[3].Title">
+                                        ارتقاء
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+
+<!-- Modal -->
+<div id="payinfoModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">ارتقاء حساب کاربری</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <label class="col-md-3">ارتقاء به:</label>
+                    <div class="col-md-9"><b id="sptitle" class="text-info" data-id="@Model[1].ID">@Model[1].Title</b></div>
+                    <div class="clearfix m-b-10"></div>
+                    <label class="col-md-3 m-t-10 m-b-10">مدت زمان:</label>
+                    <div class="col-md-9 month">
+                        <div class="radio radio-primary inline">
+                            <input id="checkbox1" type="radio" name="month" checked>
+                            <label for="checkbox1">
+                                یک ماهه
+                            </label>
+                        </div>
+
+
+                        <div class="radio radio-primary inline">
+                            <input id="checkbox2" type="radio" name="month">
+                            <label for="checkbox2">
+                                دو ماهه
+                            </label>
+                        </div>
+
+
+
+                        <div class="radio radio-primary inline">
+                            <input id="checkbox3" type="radio" name="month">
+                            <label for="checkbox3">
+                                سه ماهه
+                            </label>
+                        </div>
+
+                    </div>
+
+
+                    <div class="clearfix m-b-10"></div>
+
+                    <div class="col-md-12">
+                        <label>مبلغ قابل پرداخت:</label>
+                        <div class="alert alert-success text-center m-t-10 col-md-8 col-md-offset-2 col-sm-12 col-sm-offset-0">
+                            <h3 id="spprice" class="inline" data-price="@Model[1].Price" >@Model[1].Price</h3> <small>تومان</small>
+                            <span id="spdiscount" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="clearfix m-b-10"></div>
+
+                    <label class="col-md-3">پرداخت از درگاه:</label>
+                    <div class="col-md-9 radios">
+                        <input id="acct" name="Bank" type="radio" value="-1"> <label for="acct">
+                            <img src="/areas/panel/Content/Images/coins.png"> حساب کاربری
+                        </label>
+                        <input checked="checked" id="meli" name="Bank" type="radio" value="0"> <label for="meli">
+                            <img src="/Content/Images/meli.png"> بانک ملی
+                        </label>
+                        <input id="tejarat" name="Bank" type="radio" value="1"> <label for="tejarat">
+                            <img src="/Content/Images/tejarat.png"> بانک تجارت
+                        </label>
+                    </div>
+
+                    <button type="button" class="btn btn-success pull-left" id="btnpay" onclick="Checkout(event);">پرداخت از درگاه ملی </button>
+
+
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+       
+        $("#payinfoModal").modal();
+
+        $(document).ready(function () {
+            $('.radios input[type=radio]').change(function () {
+                var ch = $("#meli").is(":checked");
+                if (ch)
+                    $("#btnpay").text("پرداخت از درگاه ملی");
+                else
+                    $("#btnpay").text("پرداخت از درگاه تجارت");
+
+            });
+
+
+
+            $('.month input[type=radio]').change(function () {
+                $("#spdiscount").text("");
+                if ($("#checkbox1").is(":checked"))
+                    $("#spprice").text(addCommas($("#spprice").data("price")));
+                else if ($("#checkbox2").is(":checked")) {
+                    var mainprice = parseInt($("#spprice").data("price"), 10);
+                    mainprice = (mainprice * 2) - (mainprice * 10) / 100;
+                    $("#spprice").text(addCommas(mainprice));
+                    $("#spdiscount").text("(10% تخفیف)");
+                }
+                else {
+                    var mainprice = parseInt($("#spprice").data("price"), 10);
+                    mainprice = (mainprice * 3) - (mainprice * 15) / 100;
+                    $("#spprice").text(addCommas(mainprice));
+                    $("#spdiscount").text("(15% تخفیف)");
+                }
+            });
+
+
+
+            $(".btnmodal").on("click", function () {
+                $("#sptitle").text($(this).data("title"));
+                $("#sptitle").attr("data-id", $(this).data("id"));
+                $("#spprice").attr("data-price", $(this).data("price"));
+                $("#spprice").text(addCommas($(this).data("price")));
+                $("#payinfoModal").modal();
+            });
+
+        });
+        function Checkout(e)
+        {
+            var id = $("#sptitle").attr("data-id");
+            var month = $("#checkbox1").is(":checked") ? 1 : $("#checkbox2").is(":checked") ? 2 : $("#checkbox3").is(":checked") ? 3 : 1;
+            var paymode = $("#meli").is(":checked") ? 1 : $("#tejarat").is(":checked") ? 2 : $("#acct").is(":checked") ? -1 : 1;
+
+        }
+
+    </script>
+}

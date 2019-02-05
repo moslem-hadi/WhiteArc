@@ -1,0 +1,20 @@
+﻿@model List<ViewModels.PostListViewModel>
+@if (Model.Count > 0)
+{
+
+    <div class="big-title text-center">
+        <h5 class="tt02">آخرین اخبار</h5>
+    </div>
+
+    <div class="newslist">
+        @foreach (var item in Model)
+        {
+        @Html.Partial("_NewsBox", @item)
+        }
+    </div>
+
+
+    <div class="action-button text-left">
+        <a class="btn-yellow" href="/news">آرشیو اخبار</a>
+    </div>
+}

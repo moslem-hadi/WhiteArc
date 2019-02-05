@@ -1,0 +1,164 @@
+﻿@model ViewModels.DashboardViewModel
+@{
+    ViewBag.Title = "میز کار پنل مدیریت";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewBag.TicketCount = Model.UnAnswerdTicketCount;
+}
+
+
+<div class="row">
+    <div class="col-sm-12"> 
+        <h4 class="page-title">میز کار</h4>
+        <p class="text-muted page-title-alt">خوش آمدید !</p>
+    </div>
+</div>
+
+
+<div class="row">
+
+    <div class="col-md-6 col-sm-6 col-lg-3">
+        <a href="#" class="card-box widget-box-1 bg-white">
+
+            <h4 class="text-dark">امروز</h4>
+            <h2 class="text-success text-center"><span data-plugin="counterup">@Utilities.Functions.ConvertNumFa2La(Utilities.Functions.String2date(DateTime.Now, 2, "D"))</span></h2>
+            <p class="text-muted text-center">@Utilities.Functions.ConvertNumFa2La(Utilities.Functions.String2date(DateTime.Now, 2, "n"))</p>
+        </a>
+    </div>
+    <div class="col-md-6 col-sm-6 col-lg-3">
+        <a href="#" class="card-box widget-box-1 bg-white">
+
+            <h4 class="text-dark">بازدید امروز</h4>
+            <h2 class="text-pink text-center"><span data-plugin="counterup">@Model.TodayViews</span></h2>
+            <p class="text-muted">
+                <small>بازدید دیروز تا همین موقع:</small> @Model.YesterDayViews
+                <span class="pull-left  ltr">
+                    @if (Model.ViewGrowth < 0)
+                    {<i class="fa fa-caret-down text-danger m-r-5"></i>}
+                    else
+                    { <i class="fa fa-caret-up text-success m-r-5"></i>}
+                    @Model.ViewGrowth%
+
+                </span>
+            </p>
+        </a>
+    </div>
+    <div class="col-md-6 col-sm-6 col-lg-3">
+        <a href="#" class="card-box widget-box-1 bg-white">
+
+            <h4 class="text-dark">پیام خوانده نشده</h4>
+            <h2 class="text-warning text-center">
+                <span data-plugin="counterup">
+
+                    @if (Model.UnAnswerdTicketCount == 0)
+                    { <text>هیچ!</text>}
+                    else
+                    { <text>@Model.UnAnswerdTicketCount</text> }
+                </span>
+            </h2>
+
+            <p class="text-muted"><small>کل پیام ها:</small> @Model.TotalTicketCount </p>
+        </a>
+    </div>
+
+
+    <div class="col-md-6 col-sm-6 col-lg-3">
+        <a href="#" class="card-box widget-box-1 bg-white">
+
+            <h4 class="text-dark">کاربران سیستم</h4>
+            <h2 class="text-primary text-center"><span data-plugin="counterup">@Model.UserCount</span> <span class="small">نفــر</span></h2>
+            <p class="text-muted">&nbsp;</p>
+            @*<p class="text-muted"><small>فروش دیروز:</small> 16,865.8 <span class="pull-left">10.25% <i class="fa fa-caret-up text-primary m-r-5"></i></span></p>*@
+        </a>
+    </div>
+</div>
+
+
+<div class="row"> 
+    <div class="col-lg-12">
+        <div class="portlet">
+            <!-- /primary heading -->
+            <div class="portlet-heading">
+                <h3 class="portlet-title text-dark"> آمار بازدید  </h3>
+
+                <div class="clearfix"></div>
+            </div>
+            <div id="portlet5" class="panel-collapse collapse in">
+                <div class="portlet-body">
+
+                    <div id="morris-area-with-dotted" style="height: 245px;"></div>
+                </div>
+            </div>
+        </div>
+        <!-- /Portlet -->
+    </div>
+    <!-- Area Chart -->
+
+</div>
+
+ 
+@section scripts{
+    <script>
+        var resizefunc = [];
+    </script>
+
+    <!--Morris Chart-->
+    <script src="~/areas/admin/content/plugins/morris/morris.min.js"></script>
+    <script src="~/areas/admin/content/plugins/raphael/raphael-min.js"></script>
+
+
+    <script>
+
+
+        !function ($) {
+            "use strict";
+
+            var MorrisCharts = function () { };
+
+
+            //creates area chart with dotted
+            MorrisCharts.prototype.createAreaChartDotted = function (element, pointSize, lineWidth, data, xkey, ykeys, labels, Pfillcolor, Pstockcolor, lineColors) {
+                Morris.Area({
+                    element: element,
+                    pointSize: 5,
+                    lineWidth: 3,
+                    data: data,
+                    xkey: xkey,
+                    ykeys: ykeys,
+                    labels: labels,
+                    hideHover: 'auto',
+                    pointFillColors: Pfillcolor,
+                    pointStrokeColors: Pstockcolor,
+                    resize: true,
+                    gridLineColor: '#eef0f2',
+                    lineColors: lineColors
+                });
+            },
+            MorrisCharts.prototype.init = function () {
+
+                //creating area chart with dotted
+                var $areaDotData = [
+                    @{
+                <text>@Html.Raw(Utilities.Functions.GetViewStat(10))</text>
+            }
+                ];
+                this.createAreaChartDotted('morris-area-with-dotted', 0, 0, $areaDotData, 'y', ['a'], ['بازدید'], ['#ffffff'], ['#999999'], ['#5d9cec']);
+
+            },
+            //init
+            $.MorrisCharts = new MorrisCharts, $.MorrisCharts.Constructor = MorrisCharts
+        }(window.jQuery),
+
+        //initializing
+        function ($) {
+            "use strict";
+            $.MorrisCharts.init();
+        }(window.jQuery);
+    </script>
+
+
+}
+
+
+
+
+

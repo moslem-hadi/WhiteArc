@@ -1,0 +1,50 @@
+﻿@model List<ViewModels.HomePagePostViewModel>
+
+<div class="section-empty border-botton ">
+
+    <div class="container content">
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-7 faq">
+                <h4 class="section-title">سوالات متداول</h4>
+ 
+                <div class="list-group accordion-list" data-time="1000" data-type="accordion">
+                    @foreach (var item in Model)
+                    {
+                        <div class="list-group-item">
+                            <a href="#">@item.Title</a>
+                            <div class="panel">
+                                <div class="inner">
+                                    @Html.Raw(item.Brief)
+                                </div>
+                            </div>
+                        </div>
+                    }
+                     
+                </div>
+
+
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-5" data-aos="flip-down">
+                <div class="askbox shadow-2">
+                    <i class="fa fa-question fa-4x pull-left"></i>
+                    <h4>ارسال سوال</h4>
+                    <p class="text-center">سوال خود را مطرح کنید. همکاران ما در اولین فرصت پاسخ خواهند داد.</p>
+                    <div class="form-group">
+                        <input id="name" name="name" placeholder="نام و نام خانوادگی" type="text" class="form-control" required="">
+                        <input id="email" name="email" placeholder="شرکت مربوطه" type="text" class="form-control" required="">
+                        <input id="email" name="email" placeholder="شماره تماس" type="text" class="form-control" required="">
+
+
+                        <textarea id="messagge" name="messagge" placeholder="سوال شما" rows="5" class="form-control" required=""></textarea>
+                        <hr class="space s">
+                        <div class="text-center">
+                            <button class="circle-button btn-primary btn-sm btn" type="submit">ارسال سوال</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

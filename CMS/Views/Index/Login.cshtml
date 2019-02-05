@@ -1,0 +1,83 @@
+﻿@model ViewModels.LoginViewModel
+@{
+    ViewBag.Title = "ورود به حساب کاربری";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div id="main" class="content-main">
+
+    <section class="banner blog-detail">
+        <div class="container">
+            <div class="morepage-banner" style="padding:80px 0 80px 0">
+            </div>
+        </div>
+    </section>
+
+
+    <section class="pagecontent padding-top-100 padding-bottom-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4 col-xs-12">
+
+                    <div class="well bg-white">
+
+
+                        @using (Html.BeginForm("Login", "Index", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationSummary("", new { @class = "text-danger" }).ToHtmlString()))
+
+
+                            <div class="">
+                                <label class="control-label">نام کاربری</label>
+                                 
+                                    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control ltr", data_toggle = "tooltip", title = "" })
+                                    @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "label label-warning" })
+                                
+                            </div>
+                            <div class="m-t-10">
+                                <label class="control-label">رمز ورود</label>
+
+                              
+                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control ltr" })
+                                 
+                            </div>
+                             <br />
+                            <div class="m-t-10">
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-info">ورود به حساب</button>
+                                </div>
+                            </div>
+                        }
+                         
+
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <br /><br /><br /><br /><br />
+</div>
+
+
+
+ 
+
+
+
+
+
+
+
+@section scripts
+{
+    @System.Web.Optimization.Scripts.Render("~/jqueryval")
+ 
+}

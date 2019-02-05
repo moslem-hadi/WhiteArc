@@ -1,0 +1,861 @@
+﻿@model ViewModels.ProjectAddViewModel
+@{
+
+    string title = @Model.ID == 0 ? "ارسال پروژه جدید" : "ویرایش پروژه";
+    ViewBag.Title = title;
+    Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@using (Html.BeginForm("add","project",FormMethod.Post, new { id="form1"}))
+            {
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(a => a.Prices)
+    <div class="row ">
+        <div class="col-sm-12">
+            <ol class="breadcrumb pull-left hidden-xs">
+                <li>
+                    @Html.ActionLink("میز کار", "index", "index")
+                </li>
+                <li>
+                    @Html.ActionLink("لیست پروژه ها", "index", "project")
+
+                </li>
+                <li class="active">
+                    @title
+                </li>
+            </ol>
+
+
+
+            <h4 class="page-title m-b-15">
+                @title
+
+            </h4>
+
+
+        </div>
+    </div>
+
+
+
+
+
+    <div class="row">
+        <div class="col-sm-12">
+
+
+
+
+
+
+
+
+            <div class="card-box ">
+
+
+
+
+                <div class="alert-info alert">
+                    <h5>لطفا قبل از ارسال درخواست خود این بخش را مطالعه نمایید</h5><ul>
+                        <li>میزان و دقت توضیحات شما نشان دهنده اهمیت آن برای شما می باشد، بنابرین توضیحات را کامل وارد نمایید.</li>
+                        <li>درج هر گونه اطلاعات تماس ممنوع است. مگر اینکه درخواست شما از نوع آگهی استخدام باشد.</li>
+                        <li class="font-red-thunderbird">
+                            جهت ثبت پروژه می بایست مبلغ
+                            @Model.Prices["Submit"]  تومان
+                            پرداخت شود.
+                            (هزینه ثبت پروژه غیرقابل بازگشت است)
+                        </li>
+                    </ul>
+                </div>
+
+
+
+                <div class="form-horizontal formhr ">
+
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger notifyjs-metro-base notifyjs-metro-error" })
+
+
+ 
+
+                    <div class="form-group">
+
+                        <label class="control-label col-md-2 col-lg-2 col-sm-3 col-xs-12"
+                               data-toggle="popover" title="عنوان پروژه" data-placement="left" data-trigger="hover"
+                               data-content="نام پروژه برای جلب توجه پیمانکاران مهم است، در چند کلمه بصورت واضح توضیح دهید به چه چیز نیاز دارید">عنوان</label>
+                        <div class="col-md-6">
+                            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control counter", maxlength = 70, autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+
+
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2 col-lg-2 col-sm-3 col-xs-12 col-lg-2 col-sm-3 col-xs-12 help"
+                               data-content="دسته بندی ای که این پروژه در آنها نمایش داده می شود."
+                               data-toggle="popover" title="دسته بندی" data-placement="left" data-trigger="hover">دسته بندی</label>
+                        <div class="col-md-4 col-lg-4 col-sm-8 col-xs-12">
+
+                            @Html.DropDownList("CategoryID", (SelectList)ViewBag.Categories,
+                            htmlAttributes: new { @class = "form-control", id = "CategoryID" })
+                            @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger"  })
+                            @*<select class="form-control" id="mainCategory">
+                                    <option value="-1">دسته بندی مرتبط را انتخاب کنید</option>
+                                    <option value="1">وب سایت و نرم افزار</option>
+                                    <option value="2">تلفن همراه و دستگاه های هوشمند</option>
+                                    <option value="3">نویسندگی، نگارش و تولید محتوا</option>
+                                    <option value="4">زبان، ترجمه و تایپ</option>
+                                    <option value="5">گرافیک، طراحی، معماری و چند رسانه ای</option>
+                                    <option value="6">فروش، بازاریابی و سئو</option>
+                                    <option value="7">کمک آموزشی</option>
+                                </select>
+
+                                <select class="form-control m-t-10 hidetemp" id="subCategory" name="CategoryID"><option></option></select>*@
+
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2 col-lg-2 col-sm-3 col-xs-12 help"
+                               data-toggle="popover" title="تخصص چیست؟" data-placement="left" data-trigger="hover"
+                               data-content="تخصص های لازم برای انجام این پروژه را انتخاب کنید. این مورد برای تخصیص هرچه بهتر مجری به پروژه موثر است.">تخصص های مورد نیاز</label>
+                        <div class="col-md-6">
+
+                            @Html.DropDownList("SkillsIds", (SelectList)ViewBag.Skills,
+                            htmlAttributes: new { @class = "form-control", id = "projectSkills", required = "required", multiple = "multiple", })
+                            @Html.ValidationMessageFor(model => model.SelectedSkills, "", new { @class = "text-danger" })
+                            @*<select id="projectSkills" name="Skills" class="form-control form-control" required="required" multiple="multiple" tabindex="-1">
+                                    <optgroup label="خدمات مرتبط با فناوری اطلاعات، نرم افزار و وب سایت">
+                                        <option value="1">.NET</option>
+                                        <option value="2">Active Directory</option>
+                                        <option value="3">توسعه با Agile</option>
+                                        <option value="4">AJAX</option>
+                                        <option value="5">Amazon Web Services</option>
+                                        <option value="6">Analytics</option>
+                                        <option value="7">Apache</option>
+                                        <option value="8">Apache Solr</option>
+                                        <option value="9">Apple Safari</option>
+                                        <option value="10">AS400 &amp; iSeries</option>
+                                        <option value="11">ASP</option>
+                                        <option value="12">برنامه نویسی با اسمبلی</option>
+                                        <option value="13">Asterisk PBX</option>
+                                        <option value="14">AutoHotkey</option>
+                                        <option value="15">Azure</option>
+                                        <option value="17">Big Data</option>
+                                        <option value="18">BigCommerce</option>
+                                        <option value="19">Blog Install</option>
+                                        <option value="20">BMC Remedy</option>
+                                        <option value="21">Boonex Dolphin</option>
+                                        <option value="22">Business Catalyst</option>
+                                        <option value="23">برنامه نویسی با C</option>
+                                        <option value="24">برنامه نویسی با C#</option>
+                                        <option value="25">برنامه نویسی با C++</option>
+                                        <option value="26">CakePHP</option>
+                                        <option value="27">Chordiant</option>
+                                        <option value="28">Chrome OS</option>
+                                        <option value="29">Cisco</option>
+                                        <option value="30">پردازش ابری</option>
+                                        <option value="31">سیستم مدیریت محتوا</option>
+                                        <option value="32">COBOL</option>
+                                        <option value="33">Cocoa</option>
+                                        <option value="34">Codeigniter</option>
+                                        <option value="35">Cold Fusion</option>
+                                        <option value="36">گرافیک کامپیوتری</option>
+                                        <option value="37">Computer Security</option>
+                                        <option value="38">CRE Loaded</option>
+                                        <option value="39">CS-Cart</option>
+                                        <option value="40">CubeCart</option>
+                                        <option value="41">CUDA</option>
+                                        <option value="42">Dart</option>
+                                        <option value="43">مدیریت بانک اطلاعاتی</option>
+                                        <option value="44">Debugging</option>
+                                        <option value="45">Delphi</option>
+                                        <option value="46">Django</option>
+                                        <option value="47">DNS</option>
+                                        <option value="48">DOS</option>
+                                        <option value="49">DotNetNuke</option>
+                                        <option value="50">Drupal</option>
+                                        <option value="51">Dynamics AX</option>
+                                        <option value="52">تجارت الکترونیک</option>
+                                        <option value="53">آموزش الکترونیکی</option>
+                                        <option value="54">فرم های الکترونیکی</option>
+                                        <option value="55">Embedded Software</option>
+                                        <option value="56">Erlang</option>
+                                        <option value="57">Expression Engine</option>
+                                        <option value="58">تشخیص چهره</option>
+                                        <option value="59">Facebook</option>
+                                        <option value="60">FileMaker</option>
+                                        <option value="61">Firefox</option>
+                                        <option value="62">Fortran</option>
+                                        <option value="63">Forum Software</option>
+                                        <option value="64">FreelancerAPI</option>
+                                        <option value="65">کنسول های بازی</option>
+                                        <option value="66">طراحی بازی</option>
+                                        <option value="67">Gamification</option>
+                                        <option value="68">Google Analytics</option>
+                                        <option value="69">Google App Engine</option>
+                                        <option value="70">Google Buzz</option>
+                                        <option value="71">Google Checkout</option>
+                                        <option value="72">Google Chrome</option>
+                                        <option value="73">Google Earth</option>
+                                        <option value="74">Google Go</option>
+                                        <option value="75">Google Plus</option>
+                                        <option value="76">Google Wave</option>
+                                        <option value="77">Google Web Toolkit</option>
+                                        <option value="78">GPGPU</option>
+                                        <option value="79">Grease Monkey</option>
+                                        <option value="80">Hadoop</option>
+                                        <option value="81">Haskell</option>
+                                        <option value="82">HP Openview</option>
+                                        <option value="83">HTML</option>
+                                        <option value="84">HTML5</option>
+                                        <option value="85">IBM Tivoli</option>
+                                        <option value="86">IIS</option>
+                                        <option value="87">Interspire</option>
+                                        <option value="88">J2EE</option>
+                                        <option value="89">Java</option>
+                                        <option value="90">JavaFX</option>
+                                        <option value="91">Javascript</option>
+                                        <option value="92">Joomla</option>
+                                        <option value="93">jQuery</option>
+                                        <option value="94">JSP</option>
+                                        <option value="95">Kinect</option>
+                                        <option value="96">LabVIEW</option>
+                                        <option value="97">Link Building</option>
+                                        <option value="98">Linkedin</option>
+                                        <option value="99">Linux</option>
+                                        <option value="100">Lotus Notes</option>
+                                        <option value="101">Mac OS</option>
+                                        <option value="102">Magento</option>
+                                        <option value="103">Map Reduce</option>
+                                        <option value="104">Metatrader</option>
+                                        <option value="105">Microsoft</option>
+                                        <option value="106">Microsoft Access</option>
+                                        <option value="107">Microsoft Exchange</option>
+                                        <option value="108">Microsoft Expression</option>
+                                        <option value="109">MMORPG</option>
+                                        <option value="110">MODx</option>
+                                        <option value="111">Moodle</option>
+                                        <option value="112">MVC</option>
+                                        <option value="113">MySpace</option>
+                                        <option value="114">MySQL</option>
+                                        <option value="115">Nginx</option>
+                                        <option value="116">Ning</option>
+                                        <option value="117">node.js</option>
+                                        <option value="118">NoSQL Couch &amp; Mongo</option>
+                                        <option value="119">Objective C</option>
+                                        <option value="120">OCR</option>
+                                        <option value="121">Open Cart</option>
+                                        <option value="122">OpenCL</option>
+                                        <option value="123">OpenGL</option>
+                                        <option value="124">Oracle</option>
+                                        <option value="125">OSCommerce</option>
+                                        <option value="126">Parallels Automation</option>
+                                        <option value="127">Parallels Desktop</option>
+                                        <option value="128">Pattern Matching</option>
+                                        <option value="129">Paypal API</option>
+                                        <option value="130">Pentaho</option>
+                                        <option value="131">Perl</option>
+                                        <option value="132">Photoshop Coding</option>
+                                        <option value="133">PHP</option>
+                                        <option value="134">PICK Multivalue DB</option>
+                                        <option value="135">Pinterest</option>
+                                        <option value="136">Plesk</option>
+                                        <option value="137">Prestashop</option>
+                                        <option value="138">Prolog</option>
+                                        <option value="139">Protoshare</option>
+                                        <option value="140">Python</option>
+                                        <option value="141">REALbasic</option>
+                                        <option value="142">Rocket Engine</option>
+                                        <option value="143">Ruby &amp; Ruby on Rails</option>
+                                        <option value="144">SAP</option>
+                                        <option value="145">Script Install</option>
+                                        <option value="146">Scrum Development</option>
+                                        <option value="147">Sencha / YahooUI</option>
+                                        <option value="148">SEO</option>
+                                        <option value="149">Sharepoint</option>
+                                        <option value="150">Shell Script</option>
+                                        <option value="151">Shopify</option>
+                                        <option value="152">Shopping Carts</option>
+                                        <option value="153">Silverlight</option>
+                                        <option value="154">Smarty PHP</option>
+                                        <option value="155">Social Engine</option>
+                                        <option value="156">Social Networking</option>
+                                        <option value="157">Software Architecture</option>
+                                        <option value="158">Software Testing</option>
+                                        <option value="159">Solaris</option>
+                                        <option value="160">SQL</option>
+                                        <option value="161">SugarCRM</option>
+                                        <option value="162">Symfony PHP</option>
+                                        <option value="163">System Admin</option>
+                                        <option value="164">TaoBao API</option>
+                                        <option value="165">TestStand</option>
+                                        <option value="166">Tumblr</option>
+                                        <option value="167">Twitter</option>
+                                        <option value="168">طراحی UML</option>
+                                        <option value="169">Unity 3D</option>
+                                        <option value="170">UNIX</option>
+                                        <option value="171">Usability Testing</option>
+                                        <option value="172">User Interface / IA</option>
+                                        <option value="173">vBulletin</option>
+                                        <option value="174">Virtual Worlds</option>
+                                        <option value="175">Virtuemart</option>
+                                        <option value="176">Virtuozzo</option>
+                                        <option value="177">Visual Basic</option>
+                                        <option value="178">Visual Basic for Applications</option>
+                                        <option value="179">Visual Foxpro</option>
+                                        <option value="180">VoIP</option>
+                                        <option value="181">Volusion</option>
+                                        <option value="182">vTiger</option>
+                                        <option value="183">Web Hosting Issues</option>
+                                        <option value="184">Web Scraping</option>
+                                        <option value="185">امنیت Web</option>
+                                        <option value="186">webMethods</option>
+                                        <option value="187">Website Management</option>
+                                        <option value="188">Website Testing</option>
+                                        <option value="189">Windows API</option>
+                                        <option value="190">Windows Desktop</option>
+                                        <option value="191">Windows Server</option>
+                                        <option value="192">Wordpress</option>
+                                        <option value="193">WPF</option>
+                                        <option value="194">x86/x64 Assembler</option>
+                                        <option value="195">XML</option>
+                                        <option value="196">XSLT</option>
+                                        <option value="197">Yii</option>
+                                        <option value="198">YouTube</option>
+                                        <option value="199">Zen Cart</option>
+                                        <option value="200">Zend</option>
+                                        <option value="201">Zoho</option>
+                                        <option value="565">اینترنت اشیاء</option>
+                                        <option value="567">Semantic</option>
+                                        <option value="568">Mikrotik</option>
+                                        <option value="569">لاراول</option>
+                                        <option value="570">iOS</option>
+                                        <option value="571">SASS</option>
+                                        <option value="572">Less</option>
+                                        <option value="574">تجربه کاربری</option>
+                                        <option value="576">Prototype</option>
+                                    </optgroup>
+                                    <optgroup label="علوم و مهندسی"><option value="16">صنایع غذایی</option><option value="351">Aeronautical Engineering</option><option value="352">Aerospace Engineering</option><option value="353">الگوریتم</option><option value="354">Arduino</option><option value="355">Astrophysics</option><option value="356">AutoCAD</option><option value="357">زیست شناسی</option><option value="358">بیوتکنولوژی</option><option value="359">Broadcast Engineering</option><option value="360">CAD/CAM</option><option value="361">مهندسی شیمی</option><option value="362">مهندسی عمران</option><option value="363">فناوری پاک</option><option value="364">علوم هواشناسی</option><option value="365">نظارت بر ساخت</option><option value="366">رمزنگاری</option><option value="367">داده کاوی</option><option value="368">مهندسی برق</option><option value="369">الکترونیک</option><option value="370">مهندسی</option><option value="371">طراحی مهندسی</option><option value="372">Finite Element Analysis</option><option value="373">مهندسی ژنتیک</option><option value="374">زمین شناسی</option><option value="375">جغرافیا</option><option value="376">GPS</option><option value="377">طراحی خانه</option><option value="378">علوم انسانی</option><option value="379">تصویربرداری</option><option value="380">مهندسی صنایع</option><option value="381">ابزار دقیق</option><option value="382">برنامه ریزی خطی</option><option value="383">یادگیری ماشین</option><option value="384">طراحی و ساخت</option><option value="385">مهندسی مواد</option><option value="386">ریاضیات</option><option value="387">Matlab</option><option value="388">مهندسی مکانیک</option><option value="389">مکاترونیک</option><option value="390">پزشکی</option><option value="391">میکروکنترولر</option><option value="392">Microstation</option><option value="393">مهندسی معدن</option><option value="394">فناوری نانو</option><option value="395">زبان طبیعی</option><option value="396">طراحی PCB</option><option value="397">مهندسی نفت</option><option value="398">فیزیک</option><option value="399">PLC &amp; SCADA</option><option value="400">مدیریت تولید</option><option value="401">برنامه ریزی پروژه</option><option value="402">Quantum</option><option value="403">Remote Sensing</option><option value="404">رباتیک</option><option value="405">RTOS</option><option value="406">پژوهش های علمی</option><option value="407">Solidworks</option><option value="408">آمار</option><option value="409">مهندسی سازه</option><option value="410">مهندسی مخابرات</option><option value="411">مهندسی نساجی</option><option value="412">Verilog / VHDL</option><option value="413">Wireless</option><option value="554">Etabs</option><option value="555">Safe</option><option value="557">Ms Project</option><option value="558">Primavera</option><option value="559">متره و برآورد مالی</option><option value="560">صورت وضعیت نویسی</option><option value="561">Geo Studio</option><option value="562">Civil3D</option><option value="563">Tekla</option><option value="564">CSIBridge</option><option value="573">پایان نامه</option><option value="575">Mathematica</option><option value="577">Maple</option><option value="578">CATIA</option><option value="579">Comsol</option><option value="580">Ansys</option></optgroup>
+                                    <optgroup label="تلفن همراه و دستگاه های هوشمند"><option value="202">Amazon Kindle</option><option value="203">Android</option><option value="204">Android Honeycomb</option><option value="205">Appcelerator Titanium</option><option value="206">Blackberry</option><option value="207">Geolocation</option><option value="208">iPad</option><option value="209">iPhone</option><option value="210">J2ME</option><option value="211">Metro</option><option value="212">Mobile Phone</option><option value="213">Nokia</option><option value="214">Palm</option><option value="215">Samsung</option><option value="216">Symbian</option><option value="217">WebOS</option><option value="218">Windows CE</option><option value="219">Windows Mobile</option><option value="220">Windows Phone</option></optgroup>
+                                    <optgroup label="نویسندگی، نگارش و تهیه محتوا"><option value="221">نویسندگی دانشگاهی</option><option value="222">بازنویسی مقاله</option><option value="223">مقاله</option><option value="224">Astroturfing</option><option value="225">وبلاگ نویسی</option><option value="226">کتاب نویسی</option><option value="227">نقشه و نشه برداری</option><option value="228">تایپ</option><option value="229">Copywriting</option><option value="230">کتاب الکترونیکی</option><option value="231">ویراستاری</option><option value="232">داستان</option><option value="233">تحقیقات مالی</option><option value="234">ارسال در تالارهای گفتگو</option><option value="235">Ghostwriting</option><option value="236">Grant Writing</option><option value="237">LaTeX</option><option value="238">نویسندگی پزشکی</option><option value="239">خبرنامه</option><option value="240">PDF</option><option value="241">شعر</option><option value="242">Powerpoint</option><option value="243">مطبوعات</option><option value="244">توضیحات محصول</option><option value="245">غلط گیری</option><option value="246">طرح پیشنهادی</option><option value="247">انتشارات</option><option value="248">گزارش نویسی</option><option value="249">تحقیق</option><option value="250">رزومه</option><option value="251">بررسی</option><option value="252">فیلمنامه نویسی</option><option value="253">داستان کوتاه</option><option value="254">نوشتن سخنرانی</option><option value="255">نویسندگی فنی</option><option value="256">ترجمه</option><option value="257">سفرنامه</option><option value="258">WIKI</option></optgroup>
+                                    <optgroup label="طراحی، رسانه و معماری"><option value="259">3D Animation</option><option value="260">3D Modelling</option><option value="261">3D Printing</option><option value="262">3D Rendering</option><option value="263">3ds Max</option><option value="264">ActionScript</option><option value="265">Adobe LiveCycle Designer</option><option value="266">طراحی تبلیغات</option><option value="267">After Effects</option><option value="268">انیمیشن</option><option value="269">هنر و صنایع دستی</option><option value="270">سرویس های صوتی</option><option value="271">طراحی بنر</option><option value="272">طراحی وبلاگ</option><option value="273">طراحی بروشور</option><option value="274">Building Architecture</option><option value="275">Business Cards</option><option value="276">Capture NX2</option><option value="277">Caricature &amp; Cartoons</option><option value="278">CGI</option><option value="279">آگهی های بازرگانی</option><option value="280">طراحی مفهومی</option><option value="281">هویت شرکت</option><option value="282">پوشش و بسته بندی</option><option value="283">CSS</option><option value="284">Dreamweaver</option><option value="285">طراحی مد</option><option value="286">مدلسازی مد</option><option value="287">Final Cut Pro</option><option value="288">Finale / Sibelius</option><option value="289">Flash</option><option value="290">Flash 3D</option><option value="291">Flex</option><option value="292">طراحی بروشور</option><option value="293">Format &amp; Layout</option><option value="294">طراحی مبلمان</option><option value="295">Google SketchUp</option><option value="296">طراحی گرافیکی</option><option value="297">طراحی آیکون</option><option value="298">Illustration</option><option value="299">Illustrator</option><option value="300">InDesign</option><option value="301">طرحی صنعتی</option><option value="302">Infographics</option><option value="303">طراحی داخلی</option><option value="304">طراحی دعوتنامه</option><option value="305">صفحات ورود</option><option value="306">طراحی لوگو</option><option value="307">Maya</option><option value="308">Motion Graphics</option><option value="309">موسیقی</option><option value="310">ویرایش تصویر</option><option value="311">عکاسی</option><option value="312">Photoshop</option><option value="313">Photoshop Design</option><option value="314">Post-Production</option><option value="315">طراحی پوستر</option><option value="316">پیش تولید</option><option value="317">Presentations</option><option value="318">Prezi</option><option value="319">Print</option><option value="320">تبدیل PSD به HTML</option><option value="321">PSD2CMS</option><option value="322">QuarkXPress</option><option value="323">Shopify Templates</option><option value="324">طراحی لوازم التحریر</option><option value="325">طراحی برچسب</option><option value="326">T-Shirts</option><option value="327">Templates</option><option value="328">Typography</option><option value="329">Video Broadcasting</option><option value="330">Video Services</option><option value="331">Videography</option><option value="332">هنرهای تجسمی</option><option value="333">Voice Talent</option><option value="334">طراحی وب</option><option value="335">Word</option><option value="336">Yahoo! Store Design</option></optgroup>
+                                    <optgroup label="ثبت داده ها و مدیریت"><option value="337">ارسال مقاله</option><option value="338">BPO</option><option value="339">پشتیبانی مشتری</option><option value="340">ورود داده</option><option value="341">پردازش داده</option><option value="342">Desktop Support</option><option value="343">Excel</option><option value="344">پردازش سفارش</option><option value="345">پشتیبانی تلفنی</option><option value="346">پشتیبانی فنی</option><option value="347">رونویسی</option><option value="348">آپلود ویدیو</option><option value="349">دستیار مجازی</option><option value="350">جستجوی وب</option></optgroup>
+                                    <optgroup label="منبع یابی محصولات و تولید"><option value="414">Buyer Sourcing</option><option value="415">Logistics &amp; Shipping</option><option value="416">Manufacturing</option><option value="417">طراحی محصول</option><option value="418">Product Sourcing</option><option value="419">Supplier Sourcing</option></optgroup>
+                                    <optgroup label="فروش و بازاریابی"><option value="420">برنامه ریزی و خرید تبلیغات</option><option value="421">تبلیغات</option><option value="422">بازاریابی همکاران در فروش</option><option value="423">نشان تجاری و برندینگ</option><option value="424">بازاریابی انبوه</option><option value="425">Classifieds Posting</option><option value="426">CRM</option><option value="427">eBay</option><option value="428">Google Adsense</option><option value="429">Internet Marketing</option><option value="430">Leads</option><option value="431">تحقیقات بازار</option><option value="432">بازاریابی</option><option value="433">MLM</option><option value="434">فروش</option><option value="435">SEM / Adwords</option><option value="436">بازاریابی تلفنی</option><option value="437">Viral Marketing</option></optgroup>
+                                    <optgroup label="تجارت،&zwnj; حسابداری، منابع نیروی انسانی، حقوق و قوانین"><option value="438">حسابداری</option><option value="439">حسابرسی</option><option value="440">تجزیه و تحلیل کسب و کار</option><option value="441">طرح کسب و کار</option><option value="442">قراردادها</option><option value="443">قانون استخدامی</option><option value="444">ERP</option><option value="445">برنامه ریزی رویداد</option><option value="446">سرمایه گذاری</option><option value="447">جذب سرمایه</option><option value="448">منابع انسانی</option><option value="449">مدیریت موجودی</option><option value="450">ISO9001</option><option value="451">مشاوره حقوقی</option><option value="452">تحقیقات حقوقی</option><option value="453">مدیریت</option><option value="454">MYOB</option><option value="455">ثبت اختراعات</option><option value="456">حقوق و دستمزد</option><option value="457">PeopleSoft</option><option value="458">توسعه منابع انسانی</option><option value="459">مدیریت پروژه</option><option value="460">توسعه املاک</option><option value="461">قانون املاک</option><option value="462">مدیریت املاک</option><option value="463">روابط عمومی</option><option value="464">Quickbooks &amp; Quicken</option><option value="465">استخدام</option><option value="466">Salesforce.com</option><option value="467">SAS</option><option value="468">مالیات</option><option value="469">قانون مالیات</option><option value="470">ویزا / مهاجرت</option></optgroup>
+                                    <optgroup label="زبان و ترجمه"><option value="471">آفریقایی</option><option value="472">عربی</option><option value="473">باسکی</option><option value="474">بنگالی</option><option value="475">بلغاری</option><option value="476">کاتالانی</option><option value="477">کرواتی</option><option value="478">چک</option><option value="479">دانمارکی</option><option value="480">هلندی</option><option value="481">انگلیسی (بریتانیا)</option><option value="482">انگلیسی (آمریکایی)</option><option value="483">فیلیپینی</option><option value="484">فنلاندی</option><option value="485">فرانسوی</option><option value="486">فرانسه (کانادا)</option><option value="487">آلمانی</option><option value="488">یونانی</option><option value="489">زبان عبری</option><option value="490">هندی</option><option value="491">مجارستانی</option><option value="492">اندونزی</option><option value="493">ایتالیایی</option><option value="494">ژاپنی</option><option value="495">کره ای</option><option value="496">زبان لیتوانی</option><option value="497">مالایی</option><option value="498">مالایالام</option><option value="499">نروژی</option><option value="500">لهستانی</option><option value="501">پرتغالی</option><option value="502">پرتغالی (برزیل)</option><option value="503">پنجابی</option><option value="504">رومانیایی</option><option value="505">روسی</option><option value="506">صربستانی</option><option value="507">چینی ساده شده (چین)</option><option value="508">اسلواکی</option><option value="509">اسلوونیایی</option><option value="510">اسپانیایی</option><option value="511">اسپانیایی (اسپانیا)</option><option value="512">سوئدی</option><option value="513">تامیلی</option><option value="514">تلوگویی</option><option value="515">تایلندی</option><option value="516">چینی سنتی (هنگ کنگ)</option><option value="517">چینی سنتی (تایوان)</option><option value="518">ترکی</option><option value="519">اردو</option><option value="520">ویتنامی</option><option value="521">ویلزی</option></optgroup>
+                                    <optgroup label="دیگرموارد">
+                                        <option value="522">هرچیزی</option>
+                                        <option value="523">خودرو</option>
+                                        <option value="524">طوفان مغزی</option>
+                                        <option value="525">آشپزی و دستور طبخ</option>
+                                        <option value="526">آموزش و تدریس خصوصی</option>
+                                        <option value="527">انرژی</option>
+                                        <option value="528">بازارهای مالی</option>
+                                        <option value="529">Flashmob</option>
+                                        <option value="530">فریلنس</option>
+                                        <option value="531">شجره نامه</option>
+                                        <option value="532">سلامت</option>
+                                        <option value="533">تاریخ</option>
+                                        <option value="534">بیمه</option>
+                                        <option value="535">تغذیه</option>
+                                        <option value="536">ساخت الگوی</option>
+                                        <option value="537">روان شناسی</option>
+                                        <option value="538">املاک و مستغلات</option>
+                                        <option value="539">ورزش</option>
+                                        <option value="540">اتوماسیون آزمون</option>
+                                        <option value="541">تست / پرسش و پاسخ</option>
+                                        <option value="542">آموزش</option>
+                                        <option value="543">رفع اشکال</option>
+                                        <option value="544">ارزش گذاری و ارزیابی</option>
+                                    </optgroup>
+                                </select>*@
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        <label class="control-label col-md-2 col-lg-2 col-sm-3 col-xs-12 help"
+                               data-content="شرح درخواست شما باید تا حد امکان کامل باشد.<br> در آینده همین شرح پروژه مبنای تصمیم گیری خواهد بود و حکم مفاد یک قرارداد را دارد."
+                               data-toggle="popover" title="توضیح کامل" data-placement="left" data-trigger="hover" data-html="true">توضیح کامل</label>
+                        <div class="col-md-6">
+                            @Html.TextAreaFor(model => model.Description, new { @class = "form-control counter", maxlength = 3000, rows = 7 })
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2 col-lg-2 col-sm-3 col-xs-12 help"
+                               data-content="برای پروژه خود بودجه مرتبط و مناسب انتخاب کنید تا توجه فریلنسرهای بیشتری را جلب کنید."
+                               data-toggle="popover" title="بودجه پروژه" data-placement="left" data-trigger="hover" data-html="true">بودجه پروژه</label>
+                        <div class="col-md-6">
+                            @Html.DropDownListFor(model => model.budgetList, new SelectList(
+                                                        new List<Object>{
+                                               new { value = "0" , text = "اطلاعی در مورد قیمت ندارم" },
+                                               new { value = "1" , text = "پروژه ساده (30,000 تا 250,000 تومان)" },
+                                               new { value = "2" , text = "پروژه خیلی کوچک (250,000 تا 750,000 تومان)" },
+                                               new { value = "3" , text = "پروژه کوچک (750,000 تا 1,5000,000 تومان)"  },
+                                               new { value = "4" , text = "پروژه متوسط (1,500,000 تا 3,000,000 تومان)"  },
+                                               new { value = "5" , text = "پروژه بزرگ (3,000,000 الی 5,000,000 تومان)"  },
+                                               new { value = "6" , text = "پروژه بزرگتر (5,000,000 تومان به بالا)"  },
+                                               //new { value = "7" , text = "انتخاب مبلغ غیر"  },
+                                                          },
+                                                        "value",
+                                                        "text",
+                                                         "0"), new { @class = "form-control", id = "budget" })
+
+                            <div id="customeBudget" class="hidden m-t-10">
+                                <div class="input-group">
+                                    @Html.EditorFor(model => model.MinPrice, new
+                               {
+                                   htmlAttributes = new
+                                   {
+                                       @class = "form-control numericMask",
+                                       id = "minBudget",
+                                       placeholder = "حداقل",
+                                       autocomplete = "off",
+                                       min = "30000"
+                                   }
+                               })
+                                    <span class="input-group-addon">تومان</span>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.MinPrice, "", new { @class = "text-danger" })
+
+
+                                <div class="input-group m-t-10">
+                                    @Html.EditorFor(model => model.MaxPrice, new
+                               {
+                                   htmlAttributes = new
+                                   {
+                                       @class = "form-control numericMask",
+                                       id = "maxBudget",
+                                       placeholder = "حداکثر",
+                                       autocomplete = "off",
+                                       min = "30000"
+                                   }
+                               })
+
+                                    <span class="input-group-addon">تومان</span>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.MaxPrice, "", new { @class = "text-danger" })
+
+
+
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+
+
+
+                    <div class="form-group">
+
+                        <label class="control-label col-md-2 col-lg-2 col-sm-3 col-xs-12 help"
+                               data-content="ضمانت تخصص درصدی از مبلغ پیشنهاد مجری است که مجری برای تضمین صحت انجام کار خود در سایت گروگذاری می کند."
+                               data-toggle="popover" title="ضمانت تخصص چیست؟" data-placement="left" data-trigger="hover" data-html="true">ضمانت تخصص</label>
+                        <div class="col-md-6">
+                            @Html.DropDownListFor(model => model.ExpertiseGuarantee, new SelectList(
+                                                        new List<Object>{
+                                               new { value = "0" , text = "الزامی نیست"  },
+                                               new { value = "5" , text = "5% از کل مبلغ پروژه" },
+                                               new { value = "10" , text = "10% از کل مبلغ پروژه" },
+                                               new { value = "15" , text = "15% از کل مبلغ پروژه" },
+                                               new { value = "20" , text = "20% از کل مبلغ پروژه" },
+                                               new { value = "25" , text = "25% از کل مبلغ پروژه" },
+                                                          },
+                                                        "value",
+                                                        "text",
+                                                         "0"), new { @class = "form-control" })
+                        </div>
+                    </div>
+
+
+
+
+
+                    <div class="form-group">
+
+                        <label class="control-label col-md-2 col-lg-2 col-sm-3 col-xs-12 help"
+                               data-content="در صورتی که نیاز هست برای توضیحات بیشتر فایلی ضمیمه کنید، از این طریق اقدام نمایید"
+                               data-toggle="popover" title="فایل ضمیمه" data-placement="left" data-trigger="hover" data-html="true">فایل ضمیمه</label>
+                        @*<div class="col-md-6">
+                                @Html.TextBoxFor(model => model.att, new { @class = "form-control", rows = 7 })
+                                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                            </div>*@
+                    </div>
+
+
+
+                    <div class="form-group upgrade">
+                        <h5>امکانات پروژه</h5>
+                        <small>
+                            در صورتی که نیاز ثبت پروژه ویژه دارید، از لیست زیر افزونه مورد نظر را انتخاب کنید.
+                        </small>
+
+
+
+                        <label for="addProject" title="هزینه ثبت پروژه الزامی است">
+                            <div class="row disabled">
+                                <div class="col-md-3">
+                                    <span class="switchery switchery-small" style="background-color: rgb(129, 200, 104); border-color: rgb(129, 200, 104); box-shadow: rgb(129, 200, 104) 0px 0px 0px 11px inset; transition: border 0.4s, box-shadow 0.4s, background-color 1.2s; opacity: 0.5;"><small style="left: 13px; background-color: rgb(255, 255, 255); transition: background-color 0.4s, left 0.2s;"></small></span>
+                                   
+                                    <span class="badgename text-dark"> <i class="fa fa-plus"></i> هزینه ثبت پروژه</span>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="text-dark">
+                                        هزینه ارسال پروژه روی وبسایت
+                                    </p>
+                                </div>
+                                <div class="col-md-3"><h4 class="text-center">@Utilities.Functions.SetCama(Model.Prices["Submit"])  تومان</h4></div>
+                            </div>
+                        </label>
+
+
+                        <label for="SeHiddenBadge">
+                            <div class="row">
+                                <div class="col-md-3">
+
+                                    @Html.CheckBoxFor(a => a.SeHiddenBadge, new
+                               {
+
+                                   data_prom = "2",
+                                   data_price = Model.Prices["SeHiddenBadge"],
+                                   data_plugin = "switchery",
+                                   data_color = "#81c868",
+                                   data_size = "small"
+                               })
+
+                                     
+                                    <span class="badgename text-dark"> <i class="fa fa-eye-slash"></i> مخفی</span>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="text-dark">
+                                        در حالت مخفی پروژه شما صرفا از دید موتورهای جستجو و بازدیدکنندگانی که عضو سایت نیستند مخفی می شود. اما کلیه کاربران سایت که وارد سایت شده باشند می توانند جزئیات را ببینند.
+                                    </p>
+                                </div>
+                                <div class="col-md-3"><h4 class="text-center">@Utilities.Functions.SetCama(Model.Prices["SeHiddenBadge"])  تومان</h4></div>
+                            </div>
+                        </label>
+
+
+                        <label for="SpecialBadge">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    @Html.CheckBoxFor(a => a.SpecialBadge, new
+                               {
+
+                                   data_prom = "2",
+                                   data_price = Model.Prices["SpecialBadge"],
+                                   data_plugin = "switchery",
+                                   data_color = "#81c868",
+                                   data_size = "small"
+                               })
+
+                                    <span class="badgename text-success"><i class="fa fa-star"></i> پروژه ویژه</span>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="text-dark">
+                                        با انتخاب این گزینه درخواست شما به صورت ویژه تر و شاخص تر در فهرست درخواست ها دیده می شود و نظر مجریان بیش از پیش معطوف درخواست شما خواهد شد.
+                                    </p>
+                                </div>
+                                <div class="col-md-3"><h4 class="text-center">@Utilities.Functions.SetCama(Model.Prices["SpecialBadge"])  تومان</h4></div>
+                            </div>
+                        </label>
+
+
+                        <label for="ContactAllowBadge">
+                            <div class="row">
+                                <div class="col-md-3">
+
+                                    @Html.CheckBoxFor(a => a.ContactAllowBadge, new
+                               {
+
+                                   data_prom = "2",
+                                   data_price = Model.Prices["ContactAllowBadge"],
+                                   data_plugin = "switchery",
+                                   data_color = "#81c868",
+                                   data_size = "small"
+                               }) 
+                                    <span class="badgename text-primary"><i class="fa fa-bullhorn"></i> آگهی استخدام/ اعلان</span>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="text-dark">
+                                        در این نوع پروژه شما و مجری مجاز به ارسال اطلاعات تماس هستید
+                                    </p>
+                                </div>
+                                <div class="col-md-3"><h4 class="text-center">@Utilities.Functions.SetCama(Model.Prices["ContactAllowBadge"])  تومان</h4></div>
+                            </div>
+                        </label>
+
+
+
+                        <label for="UrgentBadge">
+                            <div class="row">
+                                <div class="col-md-3">
+
+                                    @Html.CheckBoxFor(a => a.UrgentBadge, new
+                               {
+
+                                   data_prom = "2",
+                                   data_price = Model.Prices["UrgentBadge"],
+                                   data_plugin = "switchery",
+                                   data_color = "#81c868",
+                                   data_size = "small"
+                               }) 
+                                    <span class="badgename text-pink"><i class="fa fa-clock-o"></i> پروژه فوری</span>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="text-dark">
+                                        پروژه فوری نشانگر عجله کارفرما برای انجام هرچه سریع تر پروژه است و مورد توجه پیمانکارانی حرفه ای که علاقه دارند زودتر پروژه ای دریافت کنند قرار می گیرد.
+                                    </p>
+                                </div>
+                                <div class="col-md-3"><h4 class="text-center">@Utilities.Functions.SetCama(Model.Prices["UrgentBadge"])  تومان</h4></div>
+                            </div>
+                        </label>
+
+
+
+                        <label for="LadderBadge">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    @Html.CheckBoxFor(a => a.LadderBadge, new
+                                 {
+
+                                     data_prom = "2",
+                                     data_price = Model.Prices["LadderBadge"],
+                                     data_plugin = "switchery",
+                                     data_color = "#81c868",
+                                     data_size = "small"
+                                 })
+                                     
+                                    <span class="badgename text-purple"><i class="fa fa-chevron-up"></i> نردبان</span>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="text-dark">
+                                        پروژه شما تا زمان تایید پیشنهاد یا اتمام مهلت، بالای سایر پروژه ها قرار می گیرد که این امر موجب توجه بیشتر
+                                        مجری ها خواهد شد
+                                    </p>
+                                </div>
+                                <div class="col-md-3"><h4 class="text-center">@Utilities.Functions.SetCama(Model.Prices["LadderBadge"])  تومان</h4></div>
+                            </div>
+                        </label>
+
+
+
+                        <label for="HiddenOffersBadge">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    @Html.CheckBoxFor(a => a.HiddenOffersBadge, new
+                                   {
+
+                                       data_prom = "2",
+                                       data_price = Model.Prices["HiddenOffersBadge"],
+                                       data_plugin = "switchery",
+                                       data_color = "#81c868",
+                                       data_size = "small"
+                                   })
+                                     
+                                    <span class="badgename text-info"><i class="fa fa-shield"></i> پیشنهادات مخفی</span>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="text-dark">
+                                        چنانچه قصد دارید پیشنهاد هایی که برای پروژه شما ثبت می شود برای دیگر کاربران قابل نمایش نباشد این گزینه را انتخاب کنید.
+                                    </p>
+                                </div>
+                                <div class="col-md-3"><h4 class="text-center">@Utilities.Functions.SetCama(Model.Prices["HiddenOffersBadge"])  تومان</h4></div>
+                            </div>
+                        </label>
+
+
+
+                    </div>
+
+
+
+                    <div class="alert alert-info" id="mustPay">
+                        <i class="fa fa-info-circle"></i>
+                        هزینه ثبت ارسال این پروژه
+                        <b id="project_Cost">000</b>
+                        تومان
+                        است که با زدن کلید ارسال درخواست از حساب شما کسر خواهد شد. در صورت عدم وجود موجودی به صفحه پرداخت هدایت خواهید شد.
+                    </div>
+ 
+                    <div class="mainbtns text-center m-t-10">
+                        <button type="submit" name="postType" value="save-continue" class="btn btn-default"><i class="fa fa-floppy-o  delay"></i>ذخیره و ادامه</button>
+                        <button type="submit" name="postType" value="save" class="btn btn-success"><i class="fa fa-clock-o delay"></i>پیش نویس</button>
+
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/jqueryval")
+
+    <script>
+
+
+
+
+
+        jQuery(document).ready(function () {
+
+
+
+            budget = new Array();
+            budget = [
+                ['0', '0'],
+                ['30000', '250000'],
+                ['250000', '750000'],
+                ['750000', '1500000'],
+                ['1500000', '3000000'],
+                ['3000000', '5000000'],
+                ['5000000', '100000000'],
+                ['', '']
+            ];
+            $('select#budget').change(function () {
+                i = $(this).val();
+                if ($(this).val() == 7) {
+                    $('#customeBudget').removeClass('hidden');
+                } else {
+                    $('#minBudget').val(budget[i][0]);
+                    $('#maxBudget').val(budget[i][1]);
+                    $('#customeBudget').addClass('hidden');
+                }
+            });
+
+
+
+
+
+
+
+            $("#CategoryID").select2({
+                dir:"rtl"
+            });
+            $("#projectSkills").select2({
+                placeholder: "5 تخصص مرتبط با پروژه را انتخاب کنید",
+                allowClear: true,
+                dir: "rtl",
+                maximumSelectionLength: 5,
+                language: {
+                    //http://stackoverflow.com/a/39648262/709340
+                    maximumSelected: function (e) {
+                        var t = "فقط می توانید " + e.maximum + " تخصص انتخاب کنید";
+                        return t ;
+                    }
+                }
+            });
+
+
+            var catData = @Html.Raw(ViewBag.SkillData);
+
+            $('#CategoryID').change(function () {
+                var cat = $('#CategoryID');
+                var id = cat.val();
+                $(catData).each(function () {
+                    if (this.ID == id) {
+
+
+                        var skills = [];
+                        $(this.Skills).each(function () {
+                            skills[skills.length] = this;
+                        });
+                        $("#projectSkills").val(skills).trigger("change");
+
+
+                        //$(this.children).each(function () {
+                        //    if (this.id == id2) {
+                        //        var skills = [];
+                        //        $(this.skills).each(function () {
+                        //            skills[skills.length] = this.id;
+                        //        });
+                        //        $("#projectSkills").val(skills).trigger("change");
+                        //    }
+
+                        //});
+                    }
+                });
+            });
+
+
+            $('[data-prom]').on('change', function (event) {
+                calculatePrice();
+            });
+            calculatePrice();
+            $('#CategoryID').change();
+            $('select#budget').change();
+
+            $("#form1").on("submit",function(){
+                if($(this).valid()) {
+                    $("#loader").show();
+                }
+            });
+
+        });
+        function calculatePrice() {
+            var cost = 0;
+            cost= @Model.Prices["Submit"];
+            $('[data-prom]:checked').each(function () {
+                cost += $(this).data('price');
+            });
+            if (cost > 0) {
+                $("#mustPay").show();
+                $("#project_Cost").text(addCommas(cost));
+            } else {
+                $("#mustPay").hide();
+            }
+        }
+
+
+
+         
+
+
+
+
+
+    </script>
+
+}   
+
+
+
+
+<div class="page-loader palette-Teal bg" id="loader" style="display: none;">
+    <div class="preloader pl-xl pls-white">
+        <svg class="pl-circular" viewBox="25 25 50 50">
+            <circle class="plc-path" cx="50" cy="50" r="20"></circle>
+        </svg>
+    </div>
+</div>
+
+
+
+
+
+
+

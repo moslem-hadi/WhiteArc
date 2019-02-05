@@ -1,0 +1,65 @@
+﻿@model ViewModels.RoleViewModel
+
+@{
+    ViewBag.Title = "ویرایش رول";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+
+        <ol class="breadcrumb">
+            <li>
+                @Html.ActionLink("میز کار", "index", "index")
+            </li>
+            <li>
+                @Html.ActionLink("مدیریت سیستم", "index", "sysadmin")
+            </li>
+            <li>
+                @Html.ActionLink("لیست رول ها", "roleslist", "sysadmin")
+            </li>
+            <li class="active">
+                ویرایش رول
+            </li>
+        </ol>
+
+        <div id="sticky-anchor"></div>
+        <div class="tobesticky" id="sticky">
+
+            <h4 class="page-title">ویرایش رول</h4>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="card-box  ">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="form-group">
+                <label class="control-label col-md-2">نام رول</label>
+                <div class="col-md-2">
+                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control ltr" })
+                    @Html.ValidationMessageFor(model => model.Name)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="ویــــرایش" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+     
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

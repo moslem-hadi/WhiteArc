@@ -1,0 +1,161 @@
+﻿@{
+    ViewBag.Title = "گالری تصاویر "; 
+}
+
+
+
+
+<div id="main" class="content-main">
+    <section class="pagecontent ">
+        <div class="container">
+            <div class="big-title text-center mt40">
+                <a href="/gallery"><h2 class="tt02">گالری تصاویر</h2></a>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+
+
+                    <div>
+
+
+                        <div id="folderlist">
+                            @{
+
+                                DirectoryInfo dir;
+                                DirectoryInfo[] files;
+                                string path = "";
+                                if (Request.QueryString["gallery"] != null)
+                                {
+                                    path = Request.QueryString["gallery"].Replace("-", " ");
+                                }
+                                if (!string.IsNullOrEmpty(path))
+                                {
+                                    <text> <a href="/gallery"><i class="fa fa-chevron-left"></i> بازگشت به گالری</a><br /></text>
+                                }
+
+                                dir = new DirectoryInfo(Server.MapPath("~/media/uploads/gallery/" + path));
+                                try
+                                {
+                                    files = dir.GetDirectories();
+                                    foreach (DirectoryInfo f in files)
+                                    {
+                            <text>
+                                <a class="folder" href="@Url.Action("index", "gallery", new { gallery = path.Replace(" ", " -") + "/" + f.Name.ToString().ToLower().Replace(" ", "-") })">
+                                <span class="x-item-icon basefileicons96-icon-folder x-select-target" id="ext-element-14"></span>
+                                <span>
+                                    @f.Name.ToString()
+                                </span>
+                                </a>
+                            </text>
+
+                                    }
+                                }
+                                catch { Response.Redirect("/gallery"); }
+                                }
+                        </div>
+
+                        <div class="clearfix"></div>
+
+
+                        <div class="loadinggal" id="loading"></div>
+
+                        <div id="filelist"></div>
+
+
+                        <div class="clearfix"></div>
+                        <br /><br />
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+</div>
+
+
+
+
+ 
+@section scripts{
+
+
+    <script type="text/javascript">
+
+
+
+        $(document).ready(function () {
+            var dirFolder = "";
+            @{
+                if (Request.QueryString["gallery"] != null)
+                {
+                    <text>dirFolder = '@Request.QueryString["gallery"].Replace("-", " ")';</text>
+                }
+            }
+            $.ajax({
+                url: '@Url.Action("filesinfolder", "gallery")', // don't hardcode
+                dataType: "json",
+                //data: JSON.stringify({ dir: dirFolder }),
+                data: { 'gallery': dirFolder },
+                contentType: "application/json; charset=utf-8",
+
+                success: function (data) {
+
+                    $.each(data, function (index, item) {
+                        $('#filelist').append($('<div class="box"></div>').html('<div class="innerContent"><img onclick="openmodal(this)" src="/media/Thumbs/gallery' + dirFolder + "/" + item + '" /><span>' + item.slice(0,item.indexOf('.')) + '</span></div>'));
+                    });
+
+                    $('#loading').hide();
+                },
+                error: function () {
+
+                }
+            });
+        });
+    </script>
+
+
+
+
+
+
+    <script>
+        // Get the modal
+
+        function openmodal(item) {
+            var modal = document.getElementById('myModal');
+
+            // Get the image and insert it inside the modal - use its "alt" text as a caption
+            var img = item;
+            var modalImg = document.getElementById("img01");
+
+            modal.style.display = "block";
+            modalImg.src = img.src.replace("Thumbs","uploads");
+
+        }
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementById("myModal");
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            this.style.display = "none";
+        }
+    </script>
+
+
+
+
+
+}
+
+
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+    <span class="close">×</span>
+    <img class="modal-content" id="img01">
+    <div id="caption"></div>
+</div>

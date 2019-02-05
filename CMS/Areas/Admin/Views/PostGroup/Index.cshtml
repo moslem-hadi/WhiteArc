@@ -1,0 +1,134 @@
+﻿@using CMS.Helpers
+@model IList<DomainClasses.CategoryNode>
+@{
+    string typeName = ViewBag.TypeName;
+    string type = ViewBag.Type;
+
+
+    ViewBag.Title = $"دسته بندی {typeName}";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var getTreeJsonUrl = Url.Action("GetTreeGroupJson", "postgroup", ViewBag.TypeCode);
+    var doJsTreeOperationUrl = Url.Action("DoJsTreeOperation", "postgroup");
+
+}
+<div class="row">
+    <div class="col-sm-12">
+
+        <ol class="breadcrumb">
+            <li>
+                @Html.ActionLink("میز کار", "index", "index")
+            </li>
+            <li>
+                @Html.ActionLink($"لیست {typeName} ها", "index", type)
+            </li>
+            <li class="active">
+                لیست @($"دسته بندی {typeName}")
+            </li>
+        </ol>
+
+
+
+        <div id="sticky-anchor"></div>
+        <div class="tobesticky" id="sticky">
+            <div class="pull-left mainbtns">
+                <a href="@Url.Action("add",$"{type}group")" class="btn btn-inverse waves-effect"><i class='fa fa-plus'></i> افزودن دسته  بندی</a>
+            </div>
+
+            <h4 class="page-title">       لیست @($"دسته بندی {typeName}")</h4>
+
+        </div>
+
+
+
+
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+
+
+            @Html.AntiForgeryToken()
+
+
+            <div>
+                <b>دسته بندی مقالات</b> &nbsp;&nbsp;&nbsp;&nbsp;
+                <div style="width:110px;" class="inline">
+                    @Html.DropDownList("LanguageID", (SelectList)ViewBag.LanguageList,
+                           htmlAttributes: new { @class = "form-control", id = "LanguageList" })
+
+                </div>
+                <img src="@Url.Content("~/areas/admin/content/images/loading.gif")" id="imgloading" />
+            </div>
+
+
+
+
+
+
+            <div class="treeViews">
+
+                @(Html.TreeView(Model)
+                .EmptyContent("هنوز دسته بندی ای تعریف نشده است!")
+                .Children(m => m.Children)
+                .HtmlAttributes(new { id = "tree", @class = "collapsibleList" })
+                .ChildrenHtmlAttributes(new { @class = "subItem" })
+                .ItemText(m => m.Text)
+                .ItemTemplate(
+                @<text>
+                    <div>
+                        <span>@item.Text</span>
+
+                        <div class="gridbtn">
+                            <a title="ویرایش رکورد" href="/admin/@(type)group/edit/@item.Id"><i class="fa fa-edit"></i></a>
+                            <a title="حذف رکورد" class="deleteconfirm" onclick="deletePostGroupRecord(@item.Id);"><i class="fa fa-times"></i></a>
+                        </div>
+
+                    </div>
+                </text>)
+                )
+            </div>
+
+
+
+
+        </div>
+    </div>
+</div>
+
+
+@section  Styles{
+    <link href="~/Areas/Admin/Content/plugins/JsTree1.1/themes/default/style.min.css" rel="stylesheet" />
+}
+
+@section Scripts {
+    <script>
+
+
+        $("#LanguageList").select2({
+            dir: "rtl",
+            minimumResultsForSearch: Infinity,
+            templateResult: formatLang,
+            templateSelection: formatLang
+        }).on("change", function (e) {
+            $("#imgloading").show();
+            window.location = "/admin/@(type)group?langID=" + this.value;
+        });
+
+        function formatLang(state) {
+            if (!state.id) { return state.text; }
+            var $state = $(
+              '<span><img src="/areas/admin/Content/images/flags/' + state.element.value.toLowerCase() + '.png" class="img-flag" /> ' + state.text + '</span>'
+            );
+            return $state;
+        };
+    </script>
+    <script src="~/Scripts/CollapsibleLists.compressed.js"></script>
+    <script>
+        CollapsibleLists.apply();
+
+    </script>
+
+} 

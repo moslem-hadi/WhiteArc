@@ -1,0 +1,78 @@
+﻿@using Westwind.Globalization
+@using PagedList
+@using PagedList.Mvc
+
+@model List <ViewModels.PostListViewModel>
+@{
+    ViewBag.Title = DbRes.T("BlogListTitle", "Words");
+}
+
+
+<div id="main" class="content-main">
+    <section class="banner blog">
+        <div class="container">
+            <div class="morepage-banner">
+                <h2 class="title">
+    @if (!string.IsNullOrEmpty(ViewBag.GroupTitle))
+    { <text>@ViewBag.GroupTitle</text>}
+    else{@DbRes.T("BlogListTitle", "Words")}
+            </h2>
+                <ol class="breadcrumb">
+                    <li><a href="/" class="link">@DbRes.T("Home", "Words")</a></li>
+                    <li><a href="/blog" class="link">@DbRes.T("BlogListTitle", "Words")</a></li>
+@if (!string.IsNullOrEmpty(ViewBag.GroupTitle))
+{<li>@ViewBag.GroupTitle</li>}
+                </ol>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <section class="page-main padding-top-100 padding-bottom-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-xs-12 main-left blog-wrapper">
+
+
+                    @if (!string.IsNullOrEmpty(ViewBag.Text))
+                    {
+<p>@Html.Raw(ViewBag.Text)</p>
+                    }
+
+
+                    @if (Model.Count > 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                            @Html.Partial("_ArticleBox", @item)
+                        }
+
+                    }
+
+
+                    <div class="clearfix clear"></div>
+                    <div class="text-center m-b-10">
+                        <div class="info-pagination">
+                            @Html.PagedListPager((IPagedList)ViewBag.posts, page => Url.Action("new", "post", new { page = page }),
+new PagedListRenderOptions { LinkToPreviousPageFormat = DbRes.T("PreviousPageFormat", "Words"), LinkToNextPageFormat = DbRes.T("NextPageFormat", "Words"), UlElementClasses = new List<string> { "pagination pagination-lg" } })
+
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <div class="col-md-4 col-xs-12 sidebar">
+                    @{Html.RenderAction("SideBarArticlePartial");
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+
+

@@ -1,0 +1,40 @@
+﻿@model DataLayer.getProductByLang_Result
+@using Westwind.Globalization;
+@{
+    ViewBag.Title = Model.SeoTitle;
+}
+
+@section head{
+    <title>@Model.SeoTitle</title>
+    <meta http-equiv="content-language" content="@DbRes.T("LangMeta", "AppInfo")" />
+    <meta name="description" content="@Model.SeoDescription" />
+    <meta http-equiv="Cache-control" content="private" />
+    <meta name="robots" content="index, follow" />
+    <meta name="expires" content="" />
+}
+
+
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 "><br /><br />
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">@DbRes.T("Home.Menu.Home", "txt")</a></li>
+                        <li class="breadcrumb-item"><a href="/project">@DbRes.T("Home.Menu.AllProjects", "txt")</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">@Model.Title</li>
+                    </ol>
+                </nav>
+           <div class="prcontent">
+             <div class="prtitle">
+                 <h1>@Model.Title</h1>
+                 <h5>@Model.GroupTitle</h5>
+             </div>
+               <div class="txt">
+                   @Html.Raw(Model.FullDescription)
+               </div>
+           </div>
+            </div>
+        </div>
+    </div>
+</section>

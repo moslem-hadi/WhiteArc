@@ -1,0 +1,48 @@
+﻿@model List<ViewModels.HomePagePostViewModel>
+
+<div class="section-empty section-bg-color border-botton">
+    <div class="container content  pt-30 pb-30">
+        <div class="row">
+
+
+            <div class="col-xs-12 ">
+
+                <h4 class="section-title">پـایـگاه دانـــشـــ  </h4>
+                <p class="section-sub">
+                    مقالات مرتبط با مسائل مالی و مدیریتی و....
+                </p>
+                <div class="flexslider carousel ltr" data-aos="fade-up" data-options="numItems:3,minWidth:250,itemMargin:30,directionNav:false">
+                    <ul class="slides">
+                        @foreach (var item in Model)
+                        {
+                            <li>
+                                <div class="advs-box advs-box-top-icon-img niche-box-post boxed-inverse" data-anima="scale-rotate" data-trigger="hover">
+                                    <!--<div class="block-infos">
+                                        <div class="block-data">
+                                            <p class="bd-month">مدیریت مالی</p>
+                                        </div>
+                                        <a class="block-comment" href="#">2 <i class="fa fa-comment-o"></i></a>
+                                    </div>-->
+                                    <a class="img-box" href="/article/@item.ID/@item.Url"><img class="anima" src="@item.Pic" alt="@item.Title" /></a>
+                                    <div class="advs-box-content">
+                                        <h4><a href="/article/@item.ID/@item.Url">@item.Title</a></h4>
+
+                                        <p class="niche-box-content">
+                                            @item.Brief
+                                        </p>
+                                        <a class="btn-text pull-left" href="/article/@item.ID/@item.Url">ادامه مطلب</a>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                        
+                         
+                    </ul>
+                </div>
+                <a href="/articles" class="btn btn-primary btn-sm pull-left">ادامه لیست مقالات <i class="fa fa-angle-left"></i></a>
+
+            </div>
+        </div>
+    </div>
+</div>

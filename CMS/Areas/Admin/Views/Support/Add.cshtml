@@ -1,0 +1,142 @@
+﻿@model ViewModels.WebtinaSupportViewModel
+
+@{
+    ViewBag.Title = "ارسال درخواست پشتیبانی";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+@using (Html.BeginForm())
+            {
+    <div class="row ">
+        <div class="col-sm-12">
+            <ol class="breadcrumb">
+                <li>
+                    @Html.ActionLink("میز کار", "index", "index")
+                </li>
+                <li>
+                    @Html.ActionLink("لیست تیکت ها", "index", "support")
+
+                </li>
+                <li class="active">
+                    ارسال تیکت جدید
+                </li>
+            </ol>
+
+            <div id="sticky-anchor"></div>
+            <div class="tobesticky" id="sticky">
+                <div class="pull-left mainbtns">
+                    <button type="submit" name="postType" value="save" class="btn btn-success"><i class="fa fa-floppy-o delay"></i>ارسال تیکت</button>
+                     
+                </div>
+
+                <h4 class="page-title">
+                    ارسال تیکت جدید
+                    <a href="@Url.Action("index","support")" class="innersmall"> لیست تیکت ها</a>
+                </h4>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card-box">
+
+
+
+                @Html.AntiForgeryToken()
+
+
+                <div class="form-horizontal formhr">
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2">اولویت</label>
+                        <div class="col-md-6">
+                            <div style="width:120px;" class="inline">
+                                @Html.DropDownListFor(model => model.Priority, new SelectList(
+                                                        new List<Object>{
+                                               new { value = "متوسط" , text = "متوسط" },
+                                               new { value = "خیلی زیاد" , text = "خیلی زیاد" },
+                                               new { value = "کم" , text = "کم" },
+                                                          },
+                                                        "value",
+                                                        "text",
+                                                         false), new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">بخش مربوطه</label>
+                        <div class="col-md-6">
+                            <div style="width:220px;" class="inline">
+                                @Html.DropDownListFor(model => model.Part, new SelectList(
+                                                        new List<Object>{
+                                               new { value = "تیم توسعه و طراحی" , text = "تیم توسعه و طراحی" },
+                                               new { value = "پشتیبانی کاربران" , text = "پشتیبانی کاربران" },
+                                               new { value = "بخش مالی" , text = "بخش مالی" },
+                                               new { value = "انتقاد و پیشنهاد" , text = "انتقاد و پیشنهاد" },
+                                               new { value = "مدیریت سایت" , text = "مدیریت سایت" },
+                                                          },
+                                                        "value",
+                                                        "text",
+                                                         false), new { @class = "form-control" })
+                            </div>
+                            </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2">عنوان تیکت</label>
+                        <div class="col-md-6">
+                            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2">توضیحات</label>
+
+                        <div class="col-md-9">
+                            @Html.TextAreaFor(model => model.Text, new {   @class = "form-control editor"  })
+                            @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+ 
+
+                </div> 
+            </div>
+        </div>
+    </div>
+
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+ <script>
+
+     $("#Part").select2({
+         minimumResultsForSearch: Infinity,
+         dir: "rtl"
+     });
+
+     $("#Priority").select2({
+         minimumResultsForSearch: Infinity,
+         dir: "rtl"
+     });
+
+
+    </script>
+}

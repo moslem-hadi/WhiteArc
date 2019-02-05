@@ -1,0 +1,556 @@
+﻿@model ViewModels.ProductViewModel
+@{
+
+    string title = @Model.ID == 0 ? "ایجاد محصول جدید" : "ویرایش محصول";
+    ViewBag.Title = title;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var lanquages = ViewBag.LanguageList;
+    string SiteUrl = Utilities.Functions.GetSettingVal("siteurl");
+}
+
+
+
+@using (Html.BeginForm())
+            {
+    @Html.AntiForgeryToken()
+
+    <div class="row ">
+        <div class="col-sm-12">
+            <ol class="breadcrumb">
+                <li>
+                    @Html.ActionLink("میز کار", "index", "index")
+                </li>
+                <li>
+                    @Html.ActionLink("لیست محصولات", "index", "Product")
+
+                </li>
+                <li class="active">
+                    @title
+                </li>
+            </ol>
+
+            <div id="sticky-anchor"></div>
+            <div class="tobesticky" id="sticky">
+                <div class="pull-left mainbtns">
+                 
+
+
+
+
+
+                    <button type="submit" name="postType" value="save-continue" class="btn btn-default"><i class="fa fa-retweet delay"></i>ذخیره و ادامه</button>
+                    <button type="submit" name="postType" value="save" class="btn btn-success"><i class="fa fa-floppy-o delay"></i>ذخیــره</button>
+                    @if (Model.ID != 0)
+                    {
+                    <div class="btn-group product-action-links">
+                        <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light" 
+                                data-toggle="dropdown" aria-expanded="false">لینک ها <span class="caret"></span></button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li><a href="#"><i class="fa fa-list-ol"></i> مشخصات</a></li>
+                            <li><a href="#"><i class="fa fa-puzzle-piece"></i> ویژگی های مرتبط</a></li>
+                            <li><a href="#"><i class="fa fa-picture-o"></i> تصاویر</a></li>
+                            <li><a href="#"><i class="fa fa-link"></i> محصولات مرتبط</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#"><i class="fa fa-eye"></i>  نمایش</a></li>
+                            <li><a href="#"><i class="fa fa-copy"></i> کپی محصول</a></li>
+                            <li><a href="#"><i class="fa fa-shopping-cart"></i> فروش ها</a></li>
+                            <li>
+                                <button type="submit" name="postType" value="delete" class="text-danger"><i class="fa fa-times delay"></i> حذف</button>
+                            </li>
+                        </ul>
+                    </div>
+                        }
+                </div>
+
+                <h4 class="page-title">
+                    @title
+                    <a href="@Url.Action("index","Product")" class="innersmall"> لیست محصولات</a>
+                </h4>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="row">
+        <div class="col-sm-12">
+
+
+
+
+
+
+
+
+            <div class="card-box padding0 nobg">
+
+
+
+
+
+
+
+
+
+                @Html.HiddenFor(model => model.ViewCount)
+                @Html.HiddenFor(model => model.RegDate)
+                @Html.HiddenFor(model => model.LastRenewal)
+                @Html.HiddenFor(model => model.SpecialPriceStartDateTimeUtc)
+                @Html.HiddenFor(model => model.SpecialPriceEndDateTimeUtc)
+                @Html.HiddenFor(model => model.AllowCustomerReviews)
+                @Html.HiddenFor(model => model.IsActive)
+
+                <div class="form-horizontal formhr ">
+
+
+                    <div class="tabs-vertical-env">
+                        <ul class="nav tabs-vertical">
+                            <li class="active">
+                                <a href="#main" data-toggle="tab" aria-expanded="false">اطلاعات اصلی</a>
+                            </li>
+
+                            <li class="">
+                                <a href="#seo" data-toggle="tab" aria-expanded="false">سئو و جستجو</a>
+                            </li>
+                            @*<li class="">
+                                <a href="#inventory" data-toggle="tab" aria-expanded="false">انبار و موجودی   </a>
+                            </li>
+
+                            <li class="">
+                                <a href="#price" data-toggle="tab" aria-expanded="false">قیمت و تخفیف</a>
+                            </li>*@
+                        </ul>
+                        <div class="tab-content">
+
+                            <div class="tab-pane active" id="main">
+
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger notifyjs-metro-base notifyjs-metro-error" })
+
+
+
+                                @if (Model.ID != 0)
+                                {
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2">کد محصول</label>
+                                        <div class="col-md-6">
+                                            @Model.ID
+                                        </div>
+                                    </div>
+                                     
+                                }
+
+
+
+
+
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2 help" data-toggle="tooltip" title="دسته بندی(ها)ای که این محصول در آنها نمایش داده می شود.">دسته بندی</label>
+                                    <div class="col-md-6"> 
+                                        @Html.ListBoxFor(model => model.SelectedGroupIDs, (MultiSelectList)ViewBag.Categories,
+                            htmlAttributes: new { @class = "form-control", id = "groups", multiple = "multiple" })
+
+
+
+                                    </div>
+                                </div>
+
+
+
+
+                                @*<div class="form-group">
+                                    <label class="control-label col-md-2">برند</label>
+                                    <div class="col-md-6">
+                                        @Html.EditorFor(model => model.PrivateDesc, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.PrivateDesc, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>*@
+
+
+
+                                <div class="form-group">
+
+                                    <div class="well well-small localize @(lanquages.Count<=0 ? "nolang" :"")">
+
+
+                                        <ul class="nav nav-pills">
+                                            <li class="active"><a href="#standard" data-toggle="tab" data-loaded="true"><img src="~/areas/admin/Content/images/flags/4.png" alt="Icon"> فارسی</a></li>
+
+                                            @foreach (var item in lanquages)
+                                            {
+                                                <li class="">
+                                                    <a href="#lang_@item.ID" data-toggle="tab" data-loaded="true">
+                                                        <img src="~/areas/admin/Content/images/flags/@(item.ID).png" alt="Icon">@item.Name
+                                                    </a>
+                                                </li>
+                                            }
+
+                                        </ul>
+
+
+
+
+
+
+
+
+                                        <div class="tab-content br-n pn">
+                                            <div id="standard" class="tab-pane in fade active">
+                                                <div>
+
+                                                    <div class="form-group">
+
+                                                        <label class="control-label col-md-2">عنوان</label>
+                                                        <div class="col-md-6">
+                                                            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control counter", maxlength = 70, onblur = "setUrl(this,'Url')", autocomplete = "off" } })
+                                                            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div> 
+
+                                                    <div class="form-group">
+
+                                                        <label class="control-label col-md-2">توضیح کامل</label>
+                                                        <div class="col-md-10">
+                                                            @Html.EditorFor(model => model.FullDescription, new { htmlAttributes = new { @class = "form-control editor" } })
+                                                            @Html.ValidationMessageFor(model => model.FullDescription, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            @for (int i = 0; i < lanquages.Count; i++)
+                                            {
+                                                @Html.HiddenFor(model => model.Locales[i].LanguageId)
+
+                                                <div id="lang_@lanquages[i].ID" class="tab-pane  fade">
+                                                    <div>
+                                                        <div class="form-group">
+                                                            @Html.LabelFor(model => model.Locales[i].Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                            <div class="col-md-6">
+                                                                @Html.EditorFor(model => model.Locales[i].Title, new { htmlAttributes = new { @class = "form-control  counter" + (lanquages[i].Rtl ? "" : " ltr"), maxlength = 70 } })
+                                                            </div>
+                                                        </div>
+
+
+
+                                                        <div class="form-group">
+                                                            @Html.LabelFor(model => model.Locales[i].FullDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                            <div class="col-md-10">
+                                                                @Html.EditorFor(model => model.Locales[i].FullDescription, new { htmlAttributes = new { @class = "form-control editor" } })
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                            }
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+
+
+
+
+
+
+                                @*<div class="form-group">
+                                    <label class="control-label col-md-2">وزن</label>
+                                    <div class="col-md-6">
+                                        @Html.EditorFor(model => model.Weight, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Weight, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">توضیحات مدیر</label>
+                                    <div class="col-md-6">
+                                        @Html.EditorFor(model => model.PrivateDesc, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.PrivateDesc, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>*@
+
+
+
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">وضعیت</label>
+                                    <div class="col-md-10">
+                                        <input type="checkbox" name="IsActive" id="IsActive" checked data-plugin="switchery" data-color="#81c868" data-size="small" /><label for="IsActive">فعال و نمایش</label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input type="checkbox" name="IsNew" id="IsNew" data-plugin="switchery" data-color="#81c868" data-size="small" /><label for="IsNew">جدید</label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input type="checkbox" name="IsHot" id="IsHot" data-plugin="switchery" data-color="#81c868" data-size="small" /><label for="IsHot">فروش ویژه</label>
+                                        
+                                    </div>
+                                </div>
+
+
+                                @*<div class="form-group">
+                                    <label class="control-label col-md-2">وضعیت موجودی</label>
+                                    <div class="col-md-6">
+                                        <select>
+                                            <option>موجود</option>
+                                        </select>
+                                    </div>
+                                </div>*@
+
+
+
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">تصویر اصلی</label>
+                                    <div class="col-md-6"> 
+                                        <div class="input-group">
+                                            @Html.EditorFor(model => model.Pic, new { htmlAttributes = new { @class = "form-control ltr" } })
+
+                                            <span class="input-group-btn">
+                                                <a data-toggle="modal" class="btn btn-info" href="javascript:void(0);" data-target="#picSelectModal">انتخاب عکس</a>
+                                            </span>
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+                               
+                                 
+
+                            </div>
+
+                            <!---------------------SEO---------------------------->
+                            <div class="tab-pane" id="seo">
+
+
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2 help" data-toggle="tooltip" title="آدرسی که در Url قرار می گیرد. تغییر آدرس پس از انتشار موجب کاهش رتبه سایت می شود. ترجیحا انگلیسی باشد.">
+                                        آدرس در URL
+                                    </label>
+                                    <div class="col-md-6">
+                                        <div class="input-group urlinput">
+                                            @Html.EditorFor(model => model.Url, new { htmlAttributes = new { @class = "form-control ltr nospaces counter", autocomplete = "off", maxlength = 70, onkeyup = "nospaces(this)" } })
+                                            <i class="fa fa-copy waves-effect waves-green" data-toggle="tooltip" data-placement="left" title="کپی کردن آدرس" onclick="copyTextToClipboard('@SiteUrl/product/','Url')"></i>
+                                            <span class="input-group-addon">@SiteUrl/product/</span>
+
+                                        </div>
+
+                                        @Html.ValidationMessageFor(model => model.Url, "", new { @class = "text-danger" })
+
+
+                                    </div>
+                                </div>
+
+
+
+                                <div class="form-group">
+
+                                    <div class="well well-small localize @(lanquages.Count<=0 ? "nolang" :"")">
+
+
+                                        <ul class="nav nav-pills  ">
+                                            <li class="active"><a href="#seostandard" data-toggle="tab" data-loaded="true"><img src="~/areas/admin/Content/images/flags/4.png" alt="Icon"> فارسی</a></li>
+                                            @foreach (var item in lanquages)
+                                            {
+                                                <li class="">
+                                                    <a href="#seolang_@item.ID" data-toggle="tab" data-loaded="true">
+                                                        <img src="~/areas/admin/Content/images/flags/@(item.ID).png" alt="Icon">@item.Name
+                                                    </a>
+                                                </li>
+                                            }
+
+                                        </ul>
+                                        <div class="tab-content br-n pn">
+                                            <div id="seostandard" class="tab-pane in fade active">
+                                                <div>
+
+
+
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(model => model.SeoTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                        <div class="col-md-5">
+                                                            @Html.EditorFor(model => model.SeoTitle, new { htmlAttributes = new { @class = "form-control counter", maxlength = 70 } })
+                                                            @Html.ValidationMessageFor(model => model.SeoTitle, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(model => model.SeoDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                        <div class="col-md-5">
+                                                            @Html.EditorFor(model => model.SeoDescription, new { htmlAttributes = new { @class = "form-control counter", maxlength = 150 } })
+                                                            @Html.ValidationMessageFor(model => model.SeoDescription, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-2 help" data-toggle="tooltip" title="هر کلمه کلیدی با , جدا شود. حداکثر 10 کلمه و 150 حرف باشد">
+                                                            کلمات کلیدی
+                                                        </label>
+                                                        <div class="col-md-5">
+                                                            @Html.EditorFor(model => model.KeyWords, new { htmlAttributes = new { @class = "form-control counter", maxlength = 150 } })
+                                                            @Html.ValidationMessageFor(model => model.KeyWords, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            @for (int i = 0; i < lanquages.Count; i++)
+                                            {
+                                                @Html.HiddenFor(model => model.Locales[i].LanguageId)
+
+                                                <div id="seolang_@lanquages[i].ID" class="tab-pane  fade">
+                                                    <div>
+                                                        <div class="form-group">
+                                                            @Html.LabelFor(model => model.Locales[i].SeoTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                            <div class="col-md-5">
+                                                                @Html.EditorFor(model => model.Locales[i].SeoTitle, new { htmlAttributes = new { @class = "form-control counter" + (lanquages[i].Rtl ? "" : " ltr"), maxlength = 70 } })
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            @Html.LabelFor(model => model.Locales[i].SeoDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                            <div class="col-md-5">
+                                                                @Html.EditorFor(model => model.Locales[i].SeoDescription, new { htmlAttributes = new { @class = "form-control counter" + (lanquages[i].Rtl ? "" : " ltr"), maxlength = 150 } })
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-2 help" data-toggle="tooltip" title="هر کلمه کلیدی با , جدا شود. حداکثر 10 کلمه و 150 حرف باشد">
+                                                                کلمات کلیدی
+                                                            </label>
+                                                            <div class="col-md-5">
+                                                                @Html.EditorFor(model => model.Locales[i].KeyWords, new { htmlAttributes = new { @class = "form-control counter" + (lanquages[i].Rtl ? "" : " ltr"), maxlength = 150 } })
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            }
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+
+
+
+
+                                @*<div class="form-group">
+                                    <label class="control-label col-md-2" data-toggle="tooltip" title="کلمات و عباراتی که ممکن است کاربر برای رسیدن این محصول آنها را در سایت جستجو کند. هرکلمه در یک خط.">کلمات جستجو</label>
+                                    <div class="col-md-6">
+                                        <textarea name="SpecialKeywords" rows="7" class="form-control"></textarea>
+                                        @Html.ValidationMessageFor(model => model.KeyWords, "", new { @class = "text-danger" })
+
+                                    </div>
+                                </div>*@
+
+
+
+
+                            </div>
+
+                            <!---------------------inventory---------------------------->
+                            @*<div class="tab-pane" id="inventory">
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">حداقل خرید</label>
+                                    <div class="col-md-6">
+                                        @Html.EditorFor(model => model.PrivateDesc, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.PrivateDesc, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">حداکثر خرید</label>
+                                    <div class="col-md-6">
+                                        @Html.EditorFor(model => model.PrivateDesc, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.PrivateDesc, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">میزان موجودی</label>
+                                    <div class="col-md-6">
+                                        @Html.EditorFor(model => model.PrivateDesc, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.PrivateDesc, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">اطلاع به مدیر کمتر از</label>
+                                    <div class="col-md-6">
+                                        @Html.EditorFor(model => model.PrivateDesc, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.PrivateDesc, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+
+
+                            </div>*@
+
+
+
+                            <!---------------------price---------------------------->
+                            <div class="tab-pane" id="price"></div>
+
+                            </div>
+                    </div>
+
+
+
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script>
+
+
+        $("#groups").select2({
+            dir: "rtl"
+        });
+
+    </script>
+
+}
+
+<div class="modal fade" id="picSelectModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">انتخاب تصویر</h4>
+            </div>
+            <div class="modal-body">
+                <iframe src="/filemanager/dialog.php?type=1&fldr=&field_id=Pic" frameborder="0" style="overflow:hidden;min-height:600px; height:100%;width:100%" height="100%" width="100%"></iframe>
+            </div>
+        </div>
+    </div>
+</div>

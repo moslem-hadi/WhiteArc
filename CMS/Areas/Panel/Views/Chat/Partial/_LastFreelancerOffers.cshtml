@@ -1,0 +1,76 @@
+﻿@model List<ViewModels.OfferListViewModel>
+
+@{
+    Layout = null;
+}
+
+
+
+
+
+
+
+@if (Model.Count > 0)
+{
+
+    <h4 class="m-t-0">آخرین پیشنهادات ارائه شده <i class="fa fa-refresh pointer pull-left small" id="refereshoffers"></i></h4>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th class="text-center" width="20%">تاریخ پیشنهاد</th>
+                    <th width="50%">پروژه</th>
+                    <th class="text-center" width="20%">به کاربر</th>
+                    <th class="text-center" width="10%">پیام ها</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-center"> @item.RegDateEn</td>
+                        <td class="text-right"><a href="/job/@item.ProjectID-@item.Url">@item.Title</a></td>
+                        <td class="text-center ltr"><a href="/profile/@item.ToUser">@@@item.ToUser</a></td>
+                        <td class="text-center">
+                            <a href="/panel/chat/@item.ID"><label class="label label-success">@item.ChatCount پیام</label></a>
+                        </td>
+
+                    </tr>
+
+                }
+
+            </tbody>
+        </table>
+
+    </div>
+
+
+
+    <div class="text-left m-t-20">
+
+        <a href="/panel/offer" class="btn btn-success">لیست پیشنهادها</a>
+    </div>
+
+}
+else
+{
+    <div class="text-center">
+
+
+        <img src="~/Areas/Panel/Content/images/chat.png" alt="" width="150" />
+        <h4 class="text-muted m-t-20">هنوز پیشنهادی ارسال نکرده اید.</h4>
+
+
+    </div>
+}
+<script>
+    $(function () {
+        $("#refereshoffers").click(function () {
+            getOffers();
+        });
+
+    });
+</script>

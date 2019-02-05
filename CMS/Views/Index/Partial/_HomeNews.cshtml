@@ -1,0 +1,64 @@
+﻿@model List<ViewModels.HomePagePostViewModel>
+<div class="section-empty border-botton news border-botton ">
+    <div class="container content">
+
+        <div class="row">
+            <div class="col-md-4 col-sm-12" data-aos="fade-left">
+
+                <h4>اخبــــار</h4>
+                <p class="text-justify">
+                    اخبار مرتبط با فعالیت خود را در بخش اخبار آرمان سیستم دنبال کنید. جدیدترین و مهمترین اخبار
+                    اقتصادی، مالی، تراژدیک و... را دریافت کنید.
+                    <br />
+                    میتوانید به هر دسته بندی مربوط مراجعه کنید...
+                </p>
+                <hr class="space m">
+
+                <ul class="ul-dots">
+                    <li>اخبار اقتصادی</li>
+                    <li>اخبار دنیای تجارت</li>
+                    <li>اخبار مالی</li>
+                    <li>اخبار بازرگانی</li>
+                </ul>
+
+            </div>
+
+            <div class="col-md-8 col-sm-12 " data-aos="fade-right">
+                @foreach (var item in Model)
+                {
+
+                    <div class="row single">
+                        <div class="col-sm-3 col-xs-4">
+                            <div class="pic">
+                                <img src="@item.Pic" alt="@item.Title" class="img-responsive" />
+                                <span>@item.RegDate</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-9 col-xs-8">
+                            <div class="caption-box">
+                                <h6><a href="/news/@item.ID/@item.Url">@item.Title</a></h6>
+                                <p class="text-justify">
+                                    @item.Brief
+
+                                    <a class="btn-text pull-left"  href="/news/@item.ID/@item.Url">ادامه خبر</a>
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+                 
+
+
+
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <a class="btn btn-primary btn-sm pull-left" href="/news">ادامه لیست اخبار <i class="fa fa-angle-left"></i></a>
+
+
+    </div>
+</div>
+
+
+ 

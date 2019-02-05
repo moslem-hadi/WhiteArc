@@ -1,0 +1,141 @@
+﻿@model ViewModels.SendTicketViewModel
+
+@{
+    ViewBag.Title = "ارسال درخواست پشتیبانی";
+    Layout = "~/Areas/panel/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row ">
+    <div class="col-sm-12">
+        <ol class="breadcrumb">
+            <li>
+                @Html.ActionLink("میز کار", "index", "index")
+            </li>
+            <li>
+                @Html.ActionLink("لیست تیکت ها", "index", "support")
+
+            </li>
+            <li class="active">
+                ارسال تیکت جدید
+            </li>
+        </ol>
+
+        <div id="sticky-anchor"></div>
+        <div class="tobesticky" id="sticky">
+            <h4 class="page-title">
+                ارسال تیکت جدید
+                <a href="@Url.Action("index","support")" class="innersmall"> لیست تیکت ها</a>
+            </h4>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+@using (Html.BeginForm())
+            {
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card-box">
+                @Html.AntiForgeryToken()
+                <div class="form-horizontal formhr">
+                    @if (ViewBag.HasContract == null || ViewBag.HasContract == false)
+                    {
+                        <div class="alert alert-info">در حال حاضر قرارداد فعالی ندارید. ما همچنان به پرسش های شما پاسخ می دهیم. در صورت نیاز برای تمدید قرارداد اقدام کنید.</div>
+
+                    }
+
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2 help"
+                               data-toggle="tooltip" title="نرم افزاری که در رابطه با آن تیکت ارسال می کنید را انتخاب کنید.">مربوط به</label>
+                        <div class="col-md-6">
+                            <div style="max-width:300px;" class="">
+                                @Html.DropDownListFor(model => model.System, (SelectList)ViewBag.Systems, "سایر"
+                               , new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6 col-xs-12">
+                                <label class="control-label col-md-2 help"
+                                       data-toggle="tooltip" title="نام شخص ارسال کننده تیکت یا شخص مرتبط که در مواقع لزوم با ایشان تماس گرفته شود">نام ارسال کننده</label>
+                                <div class="col-md-6">
+                                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xs-12">
+                                <label class="control-label col-md-2">شماره تماس</label>
+                                <div class="col-md-6">
+                                    @Html.EditorFor(model => model.Tell, new { htmlAttributes = new { @class = "form-control ltr" , maxlength = "11"} })
+                                    @Html.ValidationMessageFor(model => model.Tell, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2">توضیحات</label>
+
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.Text, new { htmlAttributes = new { @class = "form-control editor", rows = "10" } })
+                            @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2 help"
+                               data-toggle="tooltip" title="در صورتی که نیاز به ارسال تصویر یا فایل مرتبط هست، از این قسمت اقدام کنید">ضمیمه</label>
+
+                        <div class="col-md-9">
+                            @*@Html.EditorFor(model => model.Attachment, new { htmlAttributes = new { @class = "form-control editor" } })
+                                @Html.ValidationMessageFor(model => model.Attachment, "", new { @class = "text-danger" })*@
+                            <input type="file" name="FileUpload1" />
+
+                        </div>
+                    </div>
+
+                    <div class="mainbtns text-center">
+                        <button type="submit" name="postType" value="save" class="btn btn-success">
+                            <i class="fa fa-floppy-o delay"></i>ارسال تیکت
+                        </button>
+
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+
+        $("#System").select2({
+            minimumResultsForSearch: Infinity,
+            dir: "rtl"
+        });
+
+    </script>
+}

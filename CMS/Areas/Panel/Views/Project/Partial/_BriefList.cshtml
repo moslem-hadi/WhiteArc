@@ -1,0 +1,84 @@
+﻿@model List<ViewModels.ProjectList>
+
+@{
+    Layout = null;
+}
+
+
+
+
+
+
+
+@if (Model.Count > 0)
+{
+
+    <h4 class="m-t-0">پروژه ها <span class="small">@ViewBag.TotalCount پروژه</span><i class="fa fa-refresh pointer pull-left small" id="refreshprojects"></i></h4>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+
+                    <th width="50%">نام پروژه</th>
+                    <th width="25%" class="text-center">وضعیت</th>
+                    <th width="25%" class="text-center">پیشنهاد</th>
+                </tr>
+            </thead>
+            <tbody>
+
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td class="text-right"><a href="/job/@item.ID-@item.Url">@item.Title</a></td>
+                        <td class="text-center"> @Html.Raw(item.ProjectStatus )</td>
+                        <td class="text-center">
+                            <label class="label label-success">@item.OffersCount پیشنهاد</label>
+                            @if (item.OffersAvgAmount > 0)
+                            {
+                                <small class="center-block m-t-10">میانگین: @Utilities.Functions.SetCama(item.OffersAvgAmount) تومان</small>
+                            }
+                            else
+                            {
+                                <small class="center-block m-t-10 text-muted">بدون قیمت</small>
+
+                            }
+                        </td>
+
+                    </tr>
+
+                }
+
+            </tbody>
+        </table>
+
+    </div>
+
+
+
+    <div class="text-left m-t-20">
+       
+        <a href="/panel/project" class="btn btn-success">لیست پروژه ها</a>
+    </div>
+
+}
+else
+{
+    <div class="text-center">
+
+
+        <img src="~/Areas/Panel/Content/images/job-board.png" alt="" width="150" />
+        <h4 class="text-muted m-t-20">پروژه ای درج نشده است.</h4>
+        
+
+    </div>
+}
+<script>
+    $(function () { 
+        $("#refreshprojects").click(function () { 
+            getprojects();
+        });
+
+    });
+</script>

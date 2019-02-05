@@ -1,0 +1,15 @@
+﻿@model ViewModels.ProductGroupListUiViewModel
+
+<li class="product-item col-xs-6 col-md-2 col-sm-4">
+    <a href="/category/@Model.Url">
+        <div class="flip-image">
+            @if (Model.Pic != null)
+            {
+            <div class="pic"><img src="@Model.Pic" class="img-responsive" alt=""></div>
+            }
+            <div class="product-meta text-center">
+                <div class="name">@Model.Title</div>
+            </div>
+        </div>
+    </a>
+</li>

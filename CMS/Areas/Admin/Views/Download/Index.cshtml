@@ -1,0 +1,144 @@
+﻿
+@{
+    ViewBag.Title = "لیست دانلودی ها";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+
+        <ol class="breadcrumb">
+            <li>
+                @Html.ActionLink("میز کار", "index", "index")
+            </li>
+            <li class="active">
+                لیست دانلودی ها
+            </li>
+        </ol>
+         
+
+
+        <div id="sticky-anchor"></div>
+        <div class="tobesticky" id="sticky">
+            <div class="pull-left mainbtns">
+                <a href="@Url.Action("add","download")" class="btn btn-inverse waves-effect"><i class='fa fa-plus'></i> افزودن فایل</a>
+   </div>
+             
+                <h4 class="page-title">لیست دانلودی ها</h4>
+             
+        </div>
+
+
+
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="k-rtl">
+            
+
+            @Html.AntiForgeryToken()
+
+            <div class="dataloading"></div>
+
+
+            <div id="grid"></div>
+
+
+        
+
+             
+
+
+        </div>
+    </div>
+</div>
+ 
+
+ 
+@section Scripts {
+
+
+<script>
+    
+    $(function () {
+            $("#grid").kendoGrid({
+             
+                scrollable: false   ,
+                columns: [
+                     {
+                         field: "Title", title: 'عنوان فایل', template: "<div class='grid-photo leftrectangle'" +
+                                     "style='background-image: url(\"#:data.PicUrl#\");'></div>#if(IsPrivate == true) {# <i class='fa fa-bell isfeatured' title='اختصاصی'></i> #}#" +
+                                 "<div class=''><a  href='/admin/download/edit/#=ID#' target='_blank' class='text-bold'>#: Title #</a><br>#: SubTitle #</div>"
+                     },
+                    { field: "GroupName", title: 'گروه', template: "<div class='text-center text-bold'>#=GroupName#</div>" },
+                    { field: "Priority", title: 'اولویت', width: 90, template: "<div class='text-center'>#=Priority#</div>" },
+                    { field: "DownloadCount", title: 'دانلود', width: 100, template: "<div class='text-center'>#=DownloadCount#</div>" },
+                    {
+                        field: "", title: "تنظیمات", width:120,
+                        template: "<div class='text-center gridbtn'><a title=\"دانلود\" class=\"\" href=\"#=FileUrl#\"  ><i class=\"fa fa-download\"></i></a>  <a title=\"ویرایش رکورد\" href=\"/admin/download/edit/#=ID#\"><i class=\"fa fa-edit\"></i></a> <a title=\"حذف رکورد\" class=\"deleteconfirm\" onclick=\"deleteDownloadRecord(#=ID#);\"  ><i class=\"fa fa-times\"></i></a> </div>"
+                    }
+
+
+                ],
+                editable: false, // enable editing
+
+                pageable: {
+                    pageSizes: [5, 10, 20, 50, 100],
+                    messages: {
+                        itemsPerPage: ""
+                    }, buttonCount: 4
+                },
+                sortable: true,
+                filterable: true, 
+                dataSource: {
+                    serverPaging: true,
+                    serverFiltering: true,
+                    serverSorting: true,
+                    pageSize: 20,
+                    schema: {
+                        data: "Data",
+                        total: "Total",
+                        model: { // define the model of the data source. Required for validation and property types.
+                            id: "ID",
+                            fields: {
+                                ID: { type: "number" },
+                                Title: { type: "string"},
+                                SubTitle: { type: "string" },
+                                FileUrl: { type: "string" },
+                                DownloadCount: { type: "number" }
+                            }
+                        }
+                    },
+
+                    batch: false, // enable batch editing - changes will be saved when the user clicks the "Save changes" button
+                    transport: {
+                        read: {
+                            url: "@Url.Action("getList", "download")", //specify the URL which should return the records. This is the Read method of the HomeController.
+                            contentType: "application/json",
+                            type: "POST" //use HTTP POST request as by default GET is not allowed by ASP.NET MVC
+
+                        },
+                        parameterMap: function (data, operation) {
+                            if (operation == "read") {
+                                $('.dataloading').hide();
+                                return JSON.stringify(data)
+                            }
+                        }
+                    }
+                }
+            });
+
+
+
+             
+
+    });
+
+ 
+
+
+</script>
+     }

@@ -1,0 +1,78 @@
+﻿@model ViewModels.ProductGroupDetailUiViewModel
+@using Westwind.Globalization;
+@{
+    ViewBag.Title = Model.SeoTitle;
+}
+
+@section head{
+
+    
+<meta name="description" content="@Model.SeoDescription" />
+<meta name="keywords" content="@Model.SeoKeywords" />
+<meta name="Title" content="@Model.SeoTitle" /> 
+
+<meta itemprop="name" content="@Model.SeoTitle">
+<meta itemprop="description" content="@Model.SeoDescription">
+<meta itemprop="image" content="http://pcarena.ir/images/logo.png">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="@Model.SeoTitle">
+<meta name="twitter:description" content="@Model.SeoDescription">
+<meta name="twitter:image:src" content="@Model.Pic">
+
+<meta property="og:title" content="@Model.SeoTitle" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="@Model.Pic" />
+<meta property="og:description" content="@Model.SeoDescription" />
+
+}
+
+<div id="main" class="content-main">
+    <section class="pagecontent">
+        <div class="container">
+            <div class="big-title text-center mt40">
+                <h2 class="tt02">@Model.FullTitle</h2>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+
+                    @Html.Raw(Model.Text)
+
+
+                    <article class="article-content">
+                        <div class="product-listing-wp"> 
+
+
+                            @Html.Action("SubGroups", "Category", new { groupID= Model.ID})
+
+
+
+                            <hr />
+
+
+
+
+
+
+                            <div class="col-md-12 primary-content">
+
+                                @Html.Action("GroupProducts", "product", new { groupID = Model.ID })
+                                
+                            </div>
+
+
+
+
+
+
+
+
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div><br /><br />
+    </section>
+
+
+    </div>

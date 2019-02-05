@@ -1,0 +1,70 @@
+﻿@model ViewModels.PostUiViewModel 
+@{
+    ViewBag.Title = Model.SeoTitle;
+}
+
+@section head{
+
+
+    <meta name="description" content="@Model.SeoDescription" />
+    <meta name="keywords" content="@Model.KeyWords" />
+    <meta name="Title" content="@Model.SeoTitle" />
+
+    <meta itemprop="name" content="@Model.SeoTitle">
+    <meta itemprop="description" content="@Model.SeoDescription"> 
+
+    <meta name="twitter:card" content="@Model.Pic">
+    <meta name="twitter:title" content="@Model.SeoTitle">
+    <meta name="twitter:description" content="@Model.SeoDescription">
+
+    <meta property="og:title" content="@Model.SeoTitle" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="@Model.SeoDescription" />
+
+}
+
+<div id="main" class="content-main">
+    <section class="pagecontent">
+        <div class="container">
+            <div class="big-title text-center mt40">
+                <h2 class="tt02">@Model.Title</h2>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+
+                    @Html.Raw(Model.Text)
+
+                    <div class="clearfix"></div>
+                    <br />
+                    <br />
+
+
+                    <div class="action-button text-left">
+                        <a class="btn-yellow" href="/news">آرشیو اخبار</a>
+                    </div><br />
+                    <br />
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+</div>
+
+
+
+
+
+@section scripts{
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            var id = @Model.ID;
+            addPostViewCount(id);
+        });
+    </script>
+
+} 
+

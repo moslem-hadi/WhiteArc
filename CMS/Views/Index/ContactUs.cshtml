@@ -1,0 +1,187 @@
+﻿@using Westwind.Globalization; 
+@model ViewModels.ContactUsForm
+@{
+    ViewBag.Title = DbRes.T("ContactUs.PageSeoTitle", "Sentence");
+
+}
+<div id="main" class="content-main">
+
+    <section class="banner blog-detail">
+        <div class="container">
+            <div class="morepage-banner">
+                <h2 class="title">@DbRes.T("ContactUs.PageSeoTitle", "Sentence")</h2>
+                <ol class="breadcrumb">
+                    <li><a href="/" class="link">@DbRes.T("Home", "Words")</a></li>
+                    <li><a href="/ContactUs" class="link">@DbRes.T("ContactUs", "Words")</a></li>
+
+                </ol>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="contact-us padding-top-100 padding-bottom-100">
+        <div class="container">
+            <div class="main-titles-2">
+                <h1 class="title">@DbRes.T("ContactUs.PageHeader", "Sentence")</h1>
+            </div>
+            <div class="main-content">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="contact-us-item">
+                            <div class="icons-wrapper">
+                                <i class="icons fa fa-clock-o"></i>
+                                <div data-parallax="{&quot;rotateX&quot;: 120}" class="border"></div>
+                                <div data-parallax="{&quot;rotateY&quot;: 150}" class="border"></div>
+                                <div data-parallax="{&quot;rotateX&quot;: 150}" data-parallax2="{&quot;rotateY&quot;: 150}" class="border"></div>
+                                <div data-parallax="{&quot;rotateX&quot;: -120}" data-parallax2="{&quot;rotateY&quot;: 120}" class="border"></div>
+                            </div>
+                            <h4 class="title">@DbRes.T("ContactUs.WorkingHours", "Sentence")</h4>
+                           @Html.Raw(DbRes.T("ContactUs.WorkingHoursDetail", "Sentence"))
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="contact-us-item">
+                            <div class="icons-wrapper">
+                                <i class="icons fa fa-map-marker"></i>
+                                <div data-parallax="{&quot;rotateX&quot;: 120}" class="border"></div>
+                                <div data-parallax="{&quot;rotateY&quot;: 120}" class="border"></div>
+                                <div data-parallax="{&quot;rotateX&quot;: 100}" data-parallax2="{&quot;rotateY&quot;: 100}" class="border"></div>
+                                <div data-parallax="{&quot;rotateX&quot;: -100}" data-parallax2="{&quot;rotateY&quot;: 100}" class="border"></div>
+                            </div>
+                            <h4 class="title">@DbRes.T("ContactUs.CentralOfficeAddress", "Sentence")</h4>
+                            
+                            @Html.Raw(DbRes.T("ContactUs.CetralOfficeAddressDetail", "Sentence"))
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="contact-us-item">
+                            <div class="icons-wrapper">
+                                <i class="icons fa fa-commenting"></i>
+                                <div data-parallax="{&quot;rotateX&quot;: 180}" class="border"></div>
+                                <div data-parallax="{&quot;rotateY&quot;: 100}" class="border"></div>
+                                <div data-parallax="{&quot;rotateX&quot;: 100}" data-parallax2="{&quot;rotateY&quot;: 100}" class="border"></div>
+                                <div data-parallax="{&quot;rotateX&quot;: -150}" data-parallax2="{&quot;rotateY&quot;: 150}" class="border"></div>
+                            </div>
+                            <h4 class="title">@DbRes.T("ContactUs.ContactInfo", "Sentence")</h4>
+                            @Html.Raw(DbRes.T("ContactUs.ContactInfoDetail", "Sentence"))
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="contact-form-wrapper padding-top-100 padding-bottom-100">
+        <div class="container">
+            <div class="main-titles-2">
+                <h1 class="title">@DbRes.T("ContactUs.SendMsgTitle", "Sentence")</h1>
+            </div>
+            <div class="main-content">
+                <form id="contactForm" novalidate="novalidate" class="contact-form"></form>
+
+
+                <div id="divForm">
+
+                    @using (Ajax.BeginForm("ContactUs", "Index",
+            new AjaxOptions { HttpMethod = "POST",
+                OnBegin = "submitForm", /*UpdateTargetId = "divEmp" */ OnSuccess = "OnSuccess", OnFailure = "OnFailure" }))
+                    {
+                                    @Html.AntiForgeryToken()
+
+
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+
+                                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = DbRes.T("ContactUs.Form.YourName", "Sentence"), required = "required", data_validation_required_message = "Please enter your name." } })
+                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                    <div class="line-effect"></div>
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { type = "email", @class = "form-control", placeholder = DbRes.T("ContactUs.Form.YourEmail", "Sentence"), required = "required", data_validation_required_message = "Please enter your email address." } })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                    <div class="line-effect"></div>
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+
+
+                                    @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", placeholder = DbRes.T("ContactUs.Form.YourPhoneNum", "Sentence"), required = "required", data_validation_required_message = "Please enter your phone number." } })
+                                    @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+
+                                    <div class="line-effect"></div>
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+
+
+                                    @Html.EditorFor(model => model.Message, new { htmlAttributes = new { type = "email", @class = "form-control form-textarea", placeholder = DbRes.T("ContactUs.Form.YourMessage", "Sentence"), required = "required", data_validation_required_message = "Please enter a message." } })
+                                    @Html.ValidationMessageFor(model => model.Message, "", new { @class = "text-danger" })
+                                     
+                                    <div class="line-effect"></div>
+                                    <p class="help-block text-danger"></p>
+                                </div>
+
+                                <div class="text-center"><button type="submit" class="btn btn-maincolor" id="btnsubmit" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> @DbRes.T("Loading","Words")">@DbRes.T("ContactUs.Form.SubmitButton", "Sentence")</button></div>
+
+                            </div>
+                        </div>
+
+                    }
+
+
+                </div>
+
+
+
+            </div>
+        </div><img src="/content/images/background-full/cafe-1.png" alt="" data-parallax="{&quot;y&quot;: 150}" class="img-bg img-responsive"><img src="assets/images/background-full/cafe-2.png" alt="" data-parallax="{&quot;y&quot;: -200}" class="img-bg img-responsive">
+    </section>
+
+
+
+
+
+
+ 
+</div>
+
+@section scripts{
+<script type="text/javascript">
+
+
+    $(function () { 
+
+    });
+    function submitForm() { 
+        $('#btnsubmit').button('loading');
+    }
+    function OnSuccess(data) {
+        if (data.hasOwnProperty('stat')) {
+            $("#divForm").prepend('<div class="alert alert-warning">@DbRes.T("ContactUs.FailMessage", "Sentence")</div>');
+        } else
+            $("#divForm").html(data);
+        $('#btnsubmit').button('reset');
+     }
+    function OnFailure(data) {
+        $("#divForm").prepend('<div class="alert alert-warning">@DbRes.T("ContactUs.FailMessage", "Sentence")</div>');
+        $('#btnsubmit').button('reset');
+     }
+</script>
+
+    
+<script src="~/Content/js/jquery.unobtrusive-ajax.min.js"></script>
+    }

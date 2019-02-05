@@ -1,0 +1,76 @@
+﻿@model ViewModels.ForgotPasswordViewModel
+@{
+    ViewBag.Title = "فراموشی رمز عبور";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="pt-60 pb-50 bg-light botrdertop">
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-xs-12 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+
+                <h4 class="text-center text-dark">فراموشی رمز عبور</h4>
+
+
+                <div class="well bg-white">
+
+
+                    @using (Html.BeginForm("ForgotPass", "Index", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationSummary("", new { @class = "text-danger" }).ToHtmlString()))
+
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">ایمیل</label>
+                            <div class="col-md-9">
+
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "label label-warning" })
+                            </div>
+                        </div> 
+                         
+                        <div class="form-group">
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-info">درخواست رمز ورود جدید</button>
+                            </div>
+                        </div>
+                    }
+
+                  
+                </div>
+
+            </div>
+
+
+
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@section scripts
+{
+    @System.Web.Optimization.Scripts.Render("~/jqueryval")
+ 
+}

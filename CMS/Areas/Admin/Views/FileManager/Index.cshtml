@@ -1,0 +1,65 @@
+﻿@using GleamTech.Web.Mvc
+@using GleamTech.FileUltimate
+@model FileManager
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <script src="~/Areas/Admin/Content/js/jquery-3.2.1.slim.js"></script>
+    <title>فایل منیجر</title>
+    @Html.RenderCss(Model)
+    @Html.RenderJs(Model)
+    <style>
+        html,body{
+    min-height: 100%;
+    height: 100%;}
+    </style>
+
+
+
+
+    <script type="text/javascript">
+        function fileManagerChosen(sender, e) {
+                var funcNum = getUrlParam('CKEditorFuncNum');
+
+                if (!e.IsCanceled) {
+                    var filesRoot = "/media/";
+                    var fullPath = e.Items[0].FullPath;
+                    var delimiterIndex = fullPath.indexOf("]:");
+                    var rootName = fullPath.substr(1, delimiterIndex - 1);
+                    var remaining = fullPath.substr(delimiterIndex + 2).replace(/\\/g, '/');
+
+                    var fileUrl = filesRoot + (rootName + remaining).toLowerCase();
+                 
+                    if (funcNum)//از دیتور
+                        window.opener.CKEDITOR.tools.callFunction(funcNum, fileUrl);
+                    else {//از لینک
+                        var element = getUrlParam('element'); 
+                        window.opener.setUrlToElement(element, fileUrl);
+                    }
+
+                }
+
+                window.close();
+            }
+
+            // Helper function to get parameters from the query string.
+            function getUrlParam( paramName ) {
+                var reParam = new RegExp( '(?:[\?&]|&)' + paramName + '=([^&]+)', 'i' ) ;
+                var match = window.location.search.match(reParam) ;
+
+                return ( match && match.length > 1 ) ? match[ 1 ] : null ;
+            }
+    </script>
+
+</head>
+<body style="margin:0 !important">
+
+
+    @Html.RenderControl(Model)
+
+</body>
+
+</html>

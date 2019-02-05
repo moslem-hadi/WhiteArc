@@ -1,0 +1,10 @@
+﻿@using Microsoft.AspNet.Identity
+@using CMS.Models
+@if (Request.IsAuthenticated)
+{
+    <ul class="nav navbar-nav">
+        <li><a href="/panel" class="text-success"><b>@User.Identity.GetFullName()</b></a></li>
+        <li><a href="/logoff" class="text-danger"> <b>خروج</b></a></li>
+    </ul>
+}
+ 

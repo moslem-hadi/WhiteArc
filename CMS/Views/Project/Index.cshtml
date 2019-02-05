@@ -1,0 +1,64 @@
+﻿@model ViewModels.ProductGroupDetailUiViewModel
+@using Westwind.Globalization;
+@{
+    ViewBag.Title = Model.SeoTitle;
+}
+
+@section head{
+
+
+    <meta name="description" content="@Model.SeoDescription" />
+    <meta name="keywords" content="@Model.SeoKeywords" />
+    <meta name="Title" content="@Model.SeoTitle" />
+    <meta itemprop="name" content="@Model.SeoTitle">
+    <meta itemprop="description" content="@Model.SeoDescription">
+    <meta name="twitter:title" content="@Model.SeoTitle">
+    <meta name="twitter:description" content="@Model.SeoDescription">
+    <meta name="twitter:image:src" content="@Model.Pic">
+    <meta property="og:title" content="@Model.SeoTitle" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="@Model.SeoDescription" />
+
+}
+
+
+
+<br /><br />
+<section id="portfolio" class="section p-b-20px">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-7">
+                <div class="section-title text-center m-b-80px">
+                    <h3>@Model.FullTitle </h3>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+   @if (Model.ID == 0)
+   {
+    <div class="portfolio-filter m-b-15px">
+        <ul class="filter text-center">
+            <li class="active" data-filter="*">@DbRes.T("Projects.AllText", "txt")</li>
+            @foreach (var item in (Dictionary < string, string> )ViewBag.Cats)
+            {
+                <li data-filter=".@item.Value">@item.Key</li>
+
+            } 
+        </ul>
+    </div> 
+   }
+
+    <div class="portfolio-content min-300">
+
+
+        @Html.Action("GroupProducts", "project", new { groupID = Model.ID })
+
+
+    </div>
+
+
+</section>
+
+

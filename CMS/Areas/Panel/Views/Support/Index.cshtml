@@ -1,0 +1,129 @@
+﻿@model List<ViewModels.SupportListViewModel>
+@using PagedList
+@using PagedList.Mvc;
+@using Microsoft.AspNet.Identity;
+@{
+
+    ViewBag.Title = "لیست تیکت های پشتیبانی";
+    Layout = "~/Areas/panel/Views/Shared/_Layout.cshtml";
+     
+}
+
+@{
+    var pger = (IPagedList)ViewBag.Pager;
+    var curpage = pger.PageCount < pger.PageNumber ? 0 : pger.PageNumber;
+    var total = pger.PageCount;
+    var offercount = pger.TotalItemCount;
+}
+
+
+<div class="row">
+    <div class="col-sm-12">
+
+        <ol class="breadcrumb">
+            <li>
+                @Html.ActionLink("میز کار", "index", "index")
+            </li>
+            <li class="active">
+                لیست تیکت ها
+            </li>
+        </ol>
+         
+
+
+        <div id="sticky-anchor"></div>
+        <div class="tobesticky" id="sticky">
+            <div class="pull-left mainbtns">
+                <a href="@Url.Action("add","support")" class="btn btn-inverse waves-effect"><i class='fa fa-plus'></i> ارسال تیکت جدید</a>
+   </div>
+             
+                <h4 class="page-title">لیست تیکت ها <span class="small">&nbsp;&nbsp;@offercount تیکت</span></h4>
+             
+        </div>
+
+
+
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+       
+            
+
+            @Html.AntiForgeryToken()
+
+             
+
+            <div class="card-box">
+
+
+
+                @if (Model.Count > 0)
+            {
+                    <div class="table-responsive">
+
+                        <table class="table-striped table table-tickets">
+                            <thead>
+                                <tr>
+                                    <th class="text-center ">شماره تیکت</th>
+                                    <th class="text-center">تاریخ ارسال</th>
+                                    <th>شرح</th>
+                                    <th class="text-center">طرف</th>
+                                    <th class="text-center">وضعیت</th>
+                                    <th class="text-center">آخرین پاسخ</th>
+                                </tr>
+                            </thead>
+                            @foreach (var item in Model)
+                {
+                                <tr>
+                                    <td class="text-center text-bold">@item.ISID</td>
+                                    <td class="text-center">@item.ADate</td>
+                                    <td>
+                                        <a href="/panel/support/view/@item.ISID" class="text-bold">
+                                            @if (item.UnreadCount > 0)
+                                            {
+                                                <label class="badge badge-danger pull-left unread">@item.UnreadCount</label>
+                                            }
+                                            @Utilities.Functions.SubStringHtml(item.CDesc,0,200)
+                                        </a>
+
+                                    </td>
+                                    <td class="text-center">@item.CCustName</td>
+                                    <td class="text-center">@Html.Raw(item.IsClosed ? "<div class='label label-default'>اتمام</span>" : "<div class='label label-success'>جاری</span>")</td>
+                                    <td class="text-center">@item.LastResponseDate</td>
+                                </tr>
+
+
+                            }
+
+                        </table>
+
+                    </div>
+                }
+            </div>
+
+
+            <div class="clearfix clear"></div>
+            @if (total > 1)
+            {
+                <div class="text-left mb-10">
+
+
+                    <div class="info-pagination" id="contentPager">
+                        @Html.PagedListPager(pger, page => Url.Action("index", "Support", new {   page = page }),
+                    new PagedListRenderOptions { LinkToPreviousPageFormat = "<i class='fa fa-chevron-right'></i>", LinkToNextPageFormat = "<i class='fa fa-chevron-left'></i>", UlElementClasses = new List<string> { "pagination" } })
+
+                        <span class="small pull-left"> صفحه @curpage  از @total</span> 
+                    </div>
+                </div>
+            }
+
+         
+    </div>
+</div>
+ 
+
+ 
+@section Scripts {}
