@@ -29,61 +29,57 @@
 </head>
 <body class="@DbRes.T("Direction", "AppInfo")" data-spy="scroll" data-target="#navbarshark" data-offset="98">
 
-  <!-- Loading -->
-  <div id="loading">
-    <div class="load-circle"><span class="one"></span></div>
-  </div>
-  <!-- / -->
-
-  <!-- Header -->
-  <header>
-    <nav class="navbar header-nav fixed-top navbar-expand-lg">
-      <div class="container">
-        <!-- Brand
-        <a class="navbar-brand" href="#">Shark <span class="theme-bg"></span></a>
-         -->
-
-        <!-- Mobile Toggle -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarshark" aria-controls="navbarshark" aria-expanded="false" aria-label="Toggle navigation">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-        <!-- / -->
-
-        <!-- Top Menu -->
-        <div class="collapse navbar-collapse justify-content-start" id="navbarshark">
-          <ul class="navbar-nav">
-            <li><a class="nav-link active" href="/#home">@DbRes.T("Home.Menu.Home","txt")</a></li>
-            <li><a class="nav-link" href="/#aboutus">@DbRes.T("Home.Menu.About", "txt")</a></li>
-            <li><a class="nav-link" href="/#services">@DbRes.T("Home.Menu.Services", "txt")</a></li>
-            <li><a class="nav-link" href="/#portfolio">@DbRes.T("Home.Menu.Portfolio", "txt")</a></li>
-            <li><a class="nav-link" href="/#team">@DbRes.T("Home.Menu.Team", "txt")</a></li>
-            <li><a class="nav-link" href="/#contact">@DbRes.T("Home.Menu.Contact", "txt")</a></li>
-              @if (User.Identity.IsAuthenticated)
-              {
-                  <li><a class="nav-link" href="/admin" style="background: #dc3545;padding: 5px 10px;border-radius: 5px;color: #fff;">مدیریت سایت</a></li>
-              }
-          </ul>
+    <!-- Loading -->
+    <div id="loading">
+        <div class="load-circle"><span class="one"></span></div>
+    </div>
+    <!-- / -->
+    <!-- Header -->
+    <header>
+        <nav class="navbar header-nav fixed-top navbar-expand-lg">
+            <div class="container">
+                <!-- Brand
+                <a class="navbar-brand" href="#">Shark <span class="theme-bg"></span></a>
+                 -->
+                <!-- Mobile Toggle -->
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarshark" aria-controls="navbarshark" aria-expanded="false" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <!-- / -->
+                <!-- Top Menu -->
+                <div class="collapse navbar-collapse justify-content-start" id="navbarshark">
+                    <ul class="navbar-nav">
+                        <li><a class="nav-link active" href="/#home">@DbRes.T("Home.Menu.Home", "txt")</a></li>
+                        <li><a class="nav-link" href="/#aboutus">@DbRes.T("Home.Menu.About", "txt")</a></li>
+                        <li><a class="nav-link" href="/#services">@DbRes.T("Home.Menu.Services", "txt")</a></li>
+                        <li><a class="nav-link" href="/#portfolio">@DbRes.T("Home.Menu.Portfolio", "txt")</a></li>
+                        <li><a class="nav-link" href="/#team">@DbRes.T("Home.Menu.Team", "txt")</a></li>
+                        <li><a class="nav-link" href="/#contact">@DbRes.T("Home.Menu.Contact", "txt")</a></li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li><a class="nav-link" href="/admin" style="background: #dc3545;padding: 5px 10px;border-radius: 5px;color: #fff;">مدیریت سایت</a></li>
+                        }
+                    </ul>
 
 
-            <div class="lang pull-left">
-                <a title="English (United States)" rel="tooltip nofollow" class="language flag  @(Thread.CurrentThread.CurrentUICulture.IetfLanguageTag== "en" ? "selected":"")" href="/index/changelanguage?langName=en&returnurl=@Request.RawUrl">
-                    <img src="/content/images/en.png" alt="English" title="English" />
-                </a>
-                <a title="فارسى (ایران)" rel="tooltip nofollow" class="language flag @(Thread.CurrentThread.CurrentUICulture.IetfLanguageTag== "fa" ? "selected":"")" href="/index/changelanguage?langName=fa&returnurl=@Request.RawUrl">
-                    <img src="/content/images/fa.png" alt="فارسی" title="Persian" />
-                </a>
-            </div>
-        </div>
-        <!-- / -->
+                    <div class="lang pull-left">
+                        <a title="English (United States)" rel="tooltip nofollow" class="language flag  @(Thread.CurrentThread.CurrentUICulture.IetfLanguageTag== "en" ? "selected":"")" href="/index/changelanguage?langName=en&returnurl=@Request.RawUrl">
+                            <img src="/content/images/en.png" alt="English" title="English" />
+                        </a>
+                        <a title="فارسى (ایران)" rel="tooltip nofollow" class="language flag @(Thread.CurrentThread.CurrentUICulture.IetfLanguageTag== "fa" ? "selected":"")" href="/index/changelanguage?langName=fa&returnurl=@Request.RawUrl">
+                            <img src="/content/images/fa.png" alt="فارسی" title="Persian" />
+                        </a>
+                    </div>
+                </div>
+                <!-- / -->
 
-      </div><!-- Container -->
-    </nav> <!-- Navbar -->
-  </header>
-  <!-- Header End -->
-  
-  <!-- Main Start -->
+            </div><!-- Container -->
+        </nav> <!-- Navbar -->
+    </header>
+    <!-- Header End -->
+    <!-- Main Start -->
     <main>
 
         @RenderBody()
@@ -101,7 +97,7 @@
                 <li><a href="#"><i class="ti-pinterest"></i></a></li>
             </ul>
             <p class="copyright">
-               @DbRes.T("Home.FooterCopyRight", "txt")<br />
+                @DbRes.T("Home.FooterCopyRight", "txt")<br />
                 <a href="http://webtina.ir" class="webtina" target="_blank">@DbRes.T("Webtina", "AppInfo")</a>
             </p>
         </div>
@@ -113,10 +109,11 @@
     <script src="/content/plugin/bootstrap/js/popper.min.js"></script>
     <script src="/content/plugin/bootstrap/js/bootstrap.min.js"></script>
     <script src="/content/plugin/owl-carousel/js/owl.carousel.min.js"></script>
-    <script src="/content/plugin/isotope/isotope.pkgd.min.js"></script> 
+    <script src="/content/plugin/isotope/isotope.pkgd.min.js"></script>
+    <script src="/content/plugin/magnific/jquery.magnific-popup.min.js"></script>
 
     <script src="/content/js/custom.js"></script>
-  
+
 
     @RenderSection("scripts", required: false)
 </body>

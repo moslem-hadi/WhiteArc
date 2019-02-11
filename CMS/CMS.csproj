@@ -1032,6 +1032,7 @@
     <Content Include="Content\css\fonts\iranyekanwebregular.ttf" />
     <Content Include="Content\css\fonts\iranyekanwebregular.woff" />
     <Content Include="Content\css\fonts\iranyekanwebregular.woff2" />
+    <Content Include="HPicturer.ashx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -1126,6 +1127,7 @@
     <Content Include="Views\Project\view.cshtml" />
     <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Views\Project\_GroupProducts.cshtml" />
+    <Content Include="Views\Shared\_ProductBox2.cshtml" />
     <None Include="Web References\Webtina\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>

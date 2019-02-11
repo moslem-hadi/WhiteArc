@@ -9,24 +9,24 @@ Copyright (c) 2018 - ThemePaa
   
 
 (function($){
-    "use strict"
+    "use strict";
     var SHARK = {};
 
     /*--------------------
       * Pre Load
     ----------------------*/
-    SHARK.WebLoad = function(){
-      document.getElementById("loading").style.display = "none"; 
-    }
+    SHARK.WebLoad = function () {
+        document.getElementById("loading").style.display = "none";
+    };
 
     /*--------------------
         * Header Class
     ----------------------*/
-    SHARK.HeaderSticky = function(){
-        $(".navbar-toggler").on("click", function(a) {
+    SHARK.HeaderSticky = function () {
+        $(".navbar-toggler").on("click", function (a) {
             a.preventDefault(), $(".navbar").addClass("fixed-header")
         });
-    }
+    };
 
     /*--------------------
         * Menu Close
@@ -111,26 +111,26 @@ Copyright (c) 2018 - ThemePaa
     /*--------------------
     * Isotope
     ----------------------*/
-    //SHARK.MasoNry = function () {
-    //  var portfolioWork = $('.portfolio-content');
-    //    $(portfolioWork).isotope({
-    //        resizable: false,
-    //        itemSelector: '.portfolio-item',
-    //        layoutMode: 'masonry',
-    //        filter: '*'
-    //      });
-    //      //Filtering items on portfolio.html
-    //      var portfolioFilter = $('.filter li');
-    //      // filter items on button click
-    //      $(portfolioFilter).on( 'click', function() {
-    //        var filterValue = $(this).attr('data-filter');
-    //        portfolioWork.isotope({ filter: filterValue });
-    //      });
-    //      //Add/remove class on filter list
-    //      $(portfolioFilter).on( 'click', function() {
-    //        $(this).addClass('active').siblings().removeClass('active');
-    //      });
-    //}
+    SHARK.MasoNry = function () {
+      var portfolioWork = $('.portfolio-content.all');
+        $(portfolioWork).isotope({
+            resizable: false,
+            itemSelector: '.portfolio-item',
+            layoutMode: 'masonry',
+            filter: '*'
+          });
+          //Filtering items on portfolio.html
+          var portfolioFilter = $('.filter li');
+          // filter items on button click
+          $(portfolioFilter).on( 'click', function() {
+            var filterValue = $(this).attr('data-filter');
+            portfolioWork.isotope({ filter: filterValue });
+          });
+          //Add/remove class on filter list
+          $(portfolioFilter).on( 'click', function() {
+            $(this).addClass('active').siblings().removeClass('active');
+          });
+    }
 
     /*--------------------
     * owl Slider
@@ -203,7 +203,7 @@ Copyright (c) 2018 - ThemePaa
     });
 
     $(document).on("ready", function(){
-        //SHARK.MasoNry(),
+        SHARK.MasoNry(),
         SHARK.ClientSlider(),
         SHARK.MenuClose(),
         SHARK.BlogSlider(),
