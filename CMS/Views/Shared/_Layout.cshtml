@@ -14,14 +14,14 @@
     <link href="/content/plugin/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="/content/plugin/owl-carousel/css/owl.carousel.min.css" rel="stylesheet">
     <link href="/content/plugin/magnific/magnific-popup.css" rel="stylesheet">
-    <link href="/content/css/styles.css" rel="stylesheet">
+    <link href="/content/css/styles.css?v=1" rel="stylesheet">
     <link rel="icon" href="/content/images/fav.png" />
 
     <link rel="shortcut icon" href="/content/images/fav.png">
     @if (@DbRes.T("Direction", "AppInfo") == "rtl")
     {
         <link href="/content/css/bootstrap-rtl.min.css" rel="stylesheet">
-        <link href="/content/css/styles.fa.css" rel="stylesheet">
+        <link href="/content/css/styles.fa.css?v=1" rel="stylesheet">
 
 
     }
@@ -91,8 +91,6 @@
     <footer class="footer">
         <div class="container text-center">
             <ul class="social-icons">
-                <li><a href="#"><i class="ti-facebook"></i></a></li>
-                <li><a href="#"><i class="ti-twitter"></i></a></li>
                 <li><a href="#"><i class="ti-instagram"></i></a></li>
                 <li><a href="#"><i class="ti-pinterest"></i></a></li>
             </ul>
@@ -112,7 +110,7 @@
     <script src="/content/plugin/isotope/isotope.pkgd.min.js"></script>
     <script src="/content/plugin/magnific/jquery.magnific-popup.min.js"></script>
 
-    <script src="/content/js/custom.js"></script>
+    <script src="/content/js/custom.js?v=1"></script>
 
 
     @RenderSection("scripts", required: false)

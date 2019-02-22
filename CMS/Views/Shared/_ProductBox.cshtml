@@ -1,9 +1,9 @@
 ﻿@model ViewModels.ProductListUiViewModel
 
-<div class="brick @Model.GroupUrl">
+<li class="portfolio-item @Model.GroupUrl">
     <div class="portfolio-col portfolio-hover-01">
         <a href="/view/@Model.Url">
-            <img src="/HPicturer.ashx?img=@Model.Pic&w=250&h=400" title="@Model.Title" alt="@Model.Title">
+            <img src="/HPicturer.ashx?img=@Model.Pic&w=200&h=400" title="@Model.Title" alt="@Model.Title">
         </a>
 
         <div class="hover text-center theme-bg">
@@ -11,7 +11,7 @@
                 <p class="font-w-700 theme-1st">@Model.Title</p>
                 <label class="theme-1st">@Model.GroupTitle</label>
                 <div class="action-btn">
-                    <a class="lightbox-gallery theme-color" href="/view/@Model.Url" title="@Model.Title">
+                    <a class=" theme-color" href="/view/@Model.Url" title="@Model.Title">
                         <i class="ti-layout-slider"></i>
                     </a>
                 </div>  
@@ -19,7 +19,7 @@
         </div> 
 
     </div> 
-</div>
+</li>
 
 
 

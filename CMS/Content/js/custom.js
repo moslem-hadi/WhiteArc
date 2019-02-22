@@ -117,7 +117,9 @@ Copyright (c) 2018 - ThemePaa
             resizable: false,
             itemSelector: '.portfolio-item',
             layoutMode: 'masonry',
-            filter: '*'
+            filter: '*',
+            columnWidth: 200
+
           });
           //Filtering items on portfolio.html
           var portfolioFilter = $('.filter li');
