@@ -608,7 +608,7 @@ text-align:center;line-height:30px;
     right: 0;
     margin: auto;
     bottom: 0;
-    top: 0;
+    top: 100%;
     z-index: 0;
     -webkit-transition: ease all 0.4s;
     -moz-transition: ease all 0.4s;
